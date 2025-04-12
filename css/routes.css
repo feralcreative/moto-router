@@ -1,0 +1,191 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700');
+
+body {
+	margin: 10px;
+	font-family: 'Roboto Slab', "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, "sans-serif";
+}
+div.route {
+    margin-bottom: 25px;
+}
+div.altRoute {
+    border-color: #aaa;
+    margin-bottom: 25px;
+    color: #999;
+}
+div.route fieldset legend   {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 0;
+    font-size: 1.5em;
+    padding-top: 0px;
+}
+div.altRoute fieldset {
+    border-color: #999;
+    border-style: dotted;
+}
+div.altRoute fieldset legend   {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 0;
+    font-size: 1.5em;
+    padding-top: 0px;
+    color: #888;
+    line-height: 1em;
+}
+div.altRoute fieldset legend span.eyeBrow  {
+    font-size: .4em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Roboto',sans-serif;
+    font-weight: 900;
+    line-height: 1em;
+}
+.subroute {
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 0 10px;
+    font-size: 0.8em;
+    font-family: 'Roboto', sans-serif;
+}
+table.routeDetails {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+table.routeDetails tbody tr th {
+    text-align: left;
+    font-family: 'Robot',sans-serif;
+    text-transform: uppercase;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    font-size: .7em;
+    padding-top: 10px;
+}
+table.routeDetails tbody tr td {
+    font-family: 'Roboto Mono';
+}
+.banner {
+    margin: 0 auto;
+    width: 100%;
+    /* [disabled]max-width: 600px; */
+}
+.clearFloat {
+	clear: both;
+}
+h1 {
+	text-align: center;
+	font-size: 2em;
+}
+h2 {
+	text-align:center;
+	font-size: 1em;
+	padding-bottom:2em;
+}
+div.instructions {
+	border: 1px #aaa solid;
+	padding:0 20px;
+	background-color:#efefef;
+	margin: 50px 0	
+
+}
+.buttonQuote{
+	font-size: .7em;
+	font-weight:bold;
+	border: 1px blue solid;
+	padding:2px 6px;
+	margin: 0 2px;	
+	border-radius: 10px;
+	background-color: blue;
+	color:white;
+}
+div.instructions li {
+	line-height: 1.3em;
+	padding-bottom: 1em;
+}
+div.instructions h4 {
+	text-decoration: underline;
+}
+
+
+
+
+
+
+
+ol.routes li {
+	line-height: 1.3em;
+	font-size: 1.3em;
+	padding-bottom: 1em;
+	padding-top: .5em;
+/*	border-bottom: 1px #ccc solid;
+*/	font-weight: 700;
+}
+.date {
+	font-family: 'Roboto Mono','Consolas', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'Monaco', 'Courier New', 'monospace';
+	font-size: .7em;
+	text-transform: capitalize;
+	font-weight:normal;	
+	baseline-shift: super;
+	padding-left:20px;
+}
+p {
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	font-weight: 700;
+	text-decoration: none;
+}
+.Button {
+    display: inline-block;
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: bold;
+  	padding: 10px 5px;
+    text-align: center;
+    text-decoration: none;
+    min-width: 40%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+
+}
+.iPhoneButton {
+    background-color: #eef;
+    color: #1841FF;
+    border: 1px #1841FF solid;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.iPhoneButton:hover {
+	background-color: #1841FF;
+	color: #fff;
+}
+.androidButton {
+    background-color: #efe;
+    margin-right: 10px;
+    margin-left: 0;
+    border: 1px #008100 solid;
+    color: #008100;
+}
+.androidButton:hover {
+	background-color: #008100;
+	color: #fff;
+}
+.mapsButton {
+    background-color: #eef;
+    color: #1841FF;
+    border: 1px #1841FF solid;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.mapsButton:hover {
+	background-color: #1841FF;
+	color: #fff;
+}
