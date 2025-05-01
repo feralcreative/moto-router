@@ -1,0 +1,103 @@
+#map {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.floating-panel {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  padding: 18px 18px 14px 18px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  min-width: 180px;
+  max-width: 250px;
+  font-family: inherit;
+}
+.floating-panel.right-panel {
+  left: auto;
+  right: 24px;
+  bottom: 24px;
+}
+.floating-panel .panel-title {
+  font-weight: bold;
+  font-size: 1.08em;
+  margin-bottom: 8px;
+  color: #1565c0;
+  letter-spacing: 0.02em;
+}
+.floating-panel button {
+  font-size: 0.95em;
+  padding: 7px 13px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+.floating-panel button.gpx-btn {
+  background: #43a047;
+  color: #fff;
+  border-color: #1b5e20;
+}
+.floating-panel button.gpx-btn:hover {
+  background: #2e7031;
+  border-color: #1b5e20;
+}
+.floating-panel button.kml-btn {
+  background: #1976d2;
+  color: #fff;
+  border-color: #0d47a1;
+}
+.floating-panel button.kml-btn:hover {
+  background: #1565c0;
+  border-color: #0d47a1;
+}
+.floating-panel label {
+  margin-top: 8px;
+  cursor: pointer;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95em;
+}
+.floating-panel label input[type=checkbox] {
+  accent-color: #f00;
+  width: 1.1em;
+  height: 1.1em;
+}
+.floating-panel .info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1em;
+  color: #333;
+  margin-top: 4px;
+}
+.floating-panel .info-table td {
+  padding: 4px 8px 4px 0;
+  vertical-align: top;
+}
+.floating-panel .info-table td:first-child {
+  font-weight: bold;
+  color: #1976d2;
+  width: 1px;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+.floating-panel .info-table td:last-child {
+  color: #444;
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}/*# sourceMappingURL=style.css.map */
