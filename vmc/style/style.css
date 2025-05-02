@@ -1,3 +1,7 @@
+:root {
+  font: 300 16px/1.5 Lato, sans-serif;
+}
+
 #map {
   display: block;
   height: 100%;
@@ -93,6 +97,14 @@
 }
 .floating-panel .info-table td:last-child {
   color: #444;
+}
+
+table {
+  border: 1px solid red;
+}
+table td {
+  width: fit-content;
+  white-space: nowrap;
 }
 
 body,
