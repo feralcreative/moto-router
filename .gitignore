@@ -6,6 +6,7 @@
 **/_*
 # Ignore design files
 **/*.psd
+**/*.ai
 # Ignore Adobe Premiere project files
 **/*.prproj
 **/*.aep
