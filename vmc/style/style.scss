@@ -1,106 +1,24 @@
+// Color Variables
+$mra: #1565c0;
+$gpx: #43a047;
+$kml: #d32f2f;
+$white: #fff;
+$grey: #ddd;
+$panel-bg: rgba(255, 255, 255, 0.97);
+$panel-shadow: rgba(0, 0, 0, 0.18);
+
 :root {
   font: 300 16px/1.5 Lato, sans-serif;
 }
 
 #map {
   display: block;
-  height: 100%;
-  width: 100%;
-}
-
-.floating-panel {
   position: fixed;
-  left: 24px;
-  bottom: 24px;
-  background: rgba(255, 255, 255, 0.97);
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
-  padding: 18px 18px 14px 18px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 10px;
-  min-width: 180px;
-  max-width: 250px;
-  font-family: inherit;
-  &.right-panel {
-    left: auto;
-    right: 24px;
-    bottom: 24px;
-  }
-  .panel-title {
-    font-weight: bold;
-    font-size: 1.08em;
-    margin-bottom: 8px;
-    color: #1565c0;
-    letter-spacing: 0.02em;
-  }
-  button {
-    font-size: 0.95em;
-    padding: 7px 13px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    transition: background 0.2s, border 0.2s;
-    &.gpx-btn {
-      background: #43a047;
-      color: #fff;
-      border-color: #1b5e20;
-      &:hover {
-        background: #2e7031;
-        border-color: #1b5e20;
-      }
-    }
-    &.kml-btn {
-      background: #1976d2;
-      color: #fff;
-      border-color: #0d47a1;
-      &:hover {
-        background: #1565c0;
-        border-color: #0d47a1;
-      }
-    }
-  }
-  label {
-    margin-top: 8px;
-    cursor: pointer;
-    color: #222;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.95em;
-    input[type="checkbox"] {
-      accent-color: #f00;
-      width: 1.1em;
-      height: 1.1em;
-    }
-  }
-  .info-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1em;
-    color: #333;
-    margin-top: 4px;
-    td {
-      padding: 4px 8px 4px 0;
-      vertical-align: top;
-      &:first-child {
-        font-weight: bold;
-        color: #1976d2;
-        width: 1px;
-        white-space: nowrap;
-        padding-right: 10px;
-      }
-      &:last-child {
-        color: #444;
-      }
-    }
-  }
+  width: 100vw;
+  height: 100vh;
 }
-
 table {
-  border: 1px solid red;
+  // border: 1px solid red;
   td {
     width: fit-content;
     white-space: nowrap;
@@ -108,7 +26,108 @@ table {
 }
 body,
 html {
-  height: 100%;
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+
+.floating-panel {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  z-index: 1000;
+  box-shadow: 0 2px 12px $panel-shadow;
+  border-radius: 12px;
+  background: $panel-bg;
+  padding: 18px 18px 14px 18px;
+  min-width: 180px;
+  max-width: 250px;
+  font-family: inherit;
+  &.right-panel {
+    right: 24px;
+    bottom: 24px;
+    left: auto;
+  }
+  .panel-title {
+    margin-bottom: 8px;
+    color: $mra;
+    font-weight: bold;
+    font-size: 1.08em;
+    letter-spacing: 0.02em;
+  }
+
+  .buttons {
+    // border: 1px solid green;
+    div {
+      //   border: 1px solid red;
+    }
+    button {
+      align-items: center;
+      transition: background 0.2s, border 0.2s;
+      cursor: pointer;
+      border: 1px solid $grey;
+      border-radius: 5px;
+      padding: 0 13px 0.5em 13px;
+      font-size: 0.95em;
+
+      &.gpx-btn,
+      &.kml-btn,
+      &.mra-btn {
+        display: block;
+        white-space: nowrap;
+        width: fit-content;
+        &::before {
+          display: inline-block;
+          position: relative;
+          transform: translate(-25%, 25%);
+          filter: invert(1);
+          width: 1.5em;
+          height: 1.5em;
+          pointer-events: none;
+          content: "";
+        }
+      }
+      &.gpx-btn {
+        border-color: darken($gpx, 20%);
+        background: $gpx;
+        color: $white;
+        &:hover {
+          border-color: darken($gpx, 20%);
+          background: darken($gpx, 15%);
+        }
+        &::before {
+          background: url("/img/dl.svg") no-repeat center/contain;
+        }
+      }
+      &.kml-btn {
+        border-color: darken($kml, 20%);
+        background: url("../../../img/dl.svg") no-repeat center/contain;
+        background: $kml;
+        color: $white;
+        &:hover {
+          border-color: darken($kml, 20%);
+          background: darken($kml, 10%);
+        }
+        &::before {
+          background: url("/img/dl.svg") no-repeat center/contain;
+        }
+      }
+      &.mra-btn {
+        border-color: darken($mra, 25%);
+        background: url("../../../img/dl.svg") no-repeat center/contain;
+        background: lighten($mra, 15%);
+        color: $white;
+        &:hover {
+          border-color: darken($mra, 25%);
+          background: $mra;
+        }
+        &::before {
+          background: url("/img/link.svg") no-repeat center/contain;
+        }
+      }
+    }
+  }
 }
