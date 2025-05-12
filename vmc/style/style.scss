@@ -1,35 +1,50 @@
+@import url("https://feralcreative.dev/utils.min.css");
+
 // Color Variables
 $mra: #1565c0;
 $gpx: #43a047;
 $kml: #d32f2f;
 $white: #fff;
 $grey: #ddd;
+$text: #333;
 $panel-bg: rgba(255, 255, 255, 0.97);
 $panel-shadow: rgba(0, 0, 0, 0.18);
 
 :root {
-  font: 300 16px/1.5 Lato, sans-serif;
+  font: 400 16px/1.5 Lato, sans-serif;
 }
-
+.desktop {
+  display: none;
+}
+a {
+  &:link {
+    text-decoration: none;
+    font-weight: 600;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+}
 #map {
   display: block;
   position: fixed;
   width: 100vw;
   height: 100vh;
 }
-table {
-  // border: 1px solid red;
-  td {
-    width: fit-content;
-    white-space: nowrap;
-  }
+#info-panel {
+  padding: 1.5em 2em;
 }
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+
+// Redwood Road Closure checkbox - make red
+#toggle-redwood-road {
+  accent-color: #d32f2f; // modern browsers
 }
+
+// Optional: fallback for older browsers
+#toggle-redwood-road:checked {
+  /* fallback for old browsers could use a custom solution if needed */
+}
+
 
 .floating-panel {
   position: fixed;
@@ -43,40 +58,37 @@ html {
   border-radius: 12px;
   background: $panel-bg;
   padding: 18px 18px 14px 18px;
-  min-width: 180px;
-  max-width: 250px;
+  width: 85vw;
   font-family: inherit;
   &.right-panel {
-    right: 24px;
-    bottom: 24px;
-    left: auto;
+    bottom: 2vw;
+    left: 2vw;
   }
   .panel-title {
     margin-bottom: 8px;
-    color: $mra;
+    color: $text;
     font-weight: bold;
-    font-size: 1.08em;
+    font-size: 1.5em;
     letter-spacing: 0.02em;
   }
 
   .buttons {
-    // border: 1px solid green;
-    div {
-      //   border: 1px solid red;
-    }
-    button {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    a {
+      display: block;
+      width: 30%;
       align-items: center;
       transition: background 0.2s, border 0.2s;
       cursor: pointer;
       border: 1px solid $grey;
       border-radius: 5px;
-      padding: 0 13px 0.5em 13px;
       font-size: 0.95em;
-
+      padding: 0 0.5em;
       &.gpx-btn,
       &.kml-btn,
       &.mra-btn {
-        display: block;
         white-space: nowrap;
         width: fit-content;
         &::before {
@@ -84,8 +96,8 @@ html {
           position: relative;
           transform: translate(-25%, 25%);
           filter: invert(1);
-          width: 1.5em;
-          height: 1.5em;
+          width: 1em;
+          height: 1em;
           pointer-events: none;
           content: "";
         }
@@ -130,4 +142,94 @@ html {
       }
     }
   }
+}
+
+table {
+  width: 100%;
+  tr {
+    td {
+      padding: 0.25em;
+      font-size: 0.8em;
+      vertical-align: top;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-bottom: 1px dotted;
+      br {
+        display: inline-block;
+      }
+
+      &.label {
+        vertical-align: top;
+        font-weight: bold;
+      }
+      &.value {
+      }
+    }
+    &:first-child {
+      td {
+        border-top: 1px solid #333;
+      }
+    }
+    &:last-child {
+      border-bottom: 1px solid #333;
+    }
+  }
+}
+
+//@ XXL >1400px
+@media (min-width: 1400px) {
+}
+
+//@ XL >1200px
+@media (min-width: 1200px) {
+}
+
+//@ LG >992px
+@media (min-width: 992px) {
+}
+
+//@ MD >768px
+@media (min-width: 768px) {
+  .floating-panel {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    z-index: 1000;
+    box-shadow: 0 2px 12px $panel-shadow;
+    border-radius: 12px;
+    background: $panel-bg;
+    width: fit-content;
+    font-family: inherit;
+    &.right-panel {
+      bottom: 2vw;
+      left: 2vw;
+    }
+    .panel-title {
+      margin-bottom: 8px;
+      color: $text;
+      font-weight: bold;
+      font-size: 1.5em;
+      letter-spacing: 0.02em;
+    }
+    .desktop {
+      display: inherit;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+  }
+}
+
+//@ SM >576px
+@media (min-width: 576px) {
+}
+
+//@ XS <576px
+@media (max-width: 575px) {
 }
