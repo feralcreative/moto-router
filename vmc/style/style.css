@@ -1,5 +1,18 @@
+@import url("https://feralcreative.dev/utils.min.css");
 :root {
-  font: 300 16px/1.5 Lato, sans-serif;
+  font: 400 16px/1.5 Lato, sans-serif;
+}
+
+.desktop {
+  display: none;
+}
+
+a:link {
+  text-decoration: none;
+  font-weight: 600;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 #map {
@@ -9,16 +22,8 @@
   height: 100vh;
 }
 
-table td {
-  width: fit-content;
-  white-space: nowrap;
-}
-
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+#info-panel {
+  padding: 1.5em 2em;
 }
 
 .floating-panel {
@@ -33,81 +38,147 @@ html {
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.97);
   padding: 18px 18px 14px 18px;
-  min-width: 180px;
-  max-width: 250px;
+  width: 85vw;
   font-family: inherit;
 }
 .floating-panel.right-panel {
-  right: 24px;
-  bottom: 24px;
-  left: auto;
+  bottom: 2vw;
+  left: 2vw;
 }
 .floating-panel .panel-title {
   margin-bottom: 8px;
-  color: #1565c0;
+  color: #333;
   font-weight: bold;
-  font-size: 1.08em;
+  font-size: 1.5em;
   letter-spacing: 0.02em;
 }
-.floating-panel .buttons button {
+.floating-panel .buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.floating-panel .buttons a {
+  display: block;
+  width: 30%;
   align-items: center;
   transition: background 0.2s, border 0.2s;
   cursor: pointer;
   border: 1px solid #ddd;
   border-radius: 5px;
-  padding: 0 13px 0.5em 13px;
   font-size: 0.95em;
+  padding: 0 0.5em;
 }
-.floating-panel .buttons button.gpx-btn, .floating-panel .buttons button.kml-btn, .floating-panel .buttons button.mra-btn {
-  display: block;
+.floating-panel .buttons a.gpx-btn, .floating-panel .buttons a.kml-btn, .floating-panel .buttons a.mra-btn {
   white-space: nowrap;
   width: fit-content;
 }
-.floating-panel .buttons button.gpx-btn::before, .floating-panel .buttons button.kml-btn::before, .floating-panel .buttons button.mra-btn::before {
+.floating-panel .buttons a.gpx-btn::before, .floating-panel .buttons a.kml-btn::before, .floating-panel .buttons a.mra-btn::before {
   display: inline-block;
   position: relative;
   transform: translate(-25%, 25%);
   filter: invert(1);
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
   pointer-events: none;
   content: "";
 }
-.floating-panel .buttons button.gpx-btn {
+.floating-panel .buttons a.gpx-btn {
   border-color: #255827;
   background: #43a047;
   color: #fff;
 }
-.floating-panel .buttons button.gpx-btn:hover {
+.floating-panel .buttons a.gpx-btn:hover {
   border-color: #255827;
   background: #2c6a2f;
 }
-.floating-panel .buttons button.gpx-btn::before {
+.floating-panel .buttons a.gpx-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
-.floating-panel .buttons button.kml-btn {
+.floating-panel .buttons a.kml-btn {
   border-color: #811b1b;
   background: url("../../../img/dl.svg") no-repeat center/contain;
   background: #d32f2f;
   color: #fff;
 }
-.floating-panel .buttons button.kml-btn:hover {
+.floating-panel .buttons a.kml-btn:hover {
   border-color: #811b1b;
   background: #ab2424;
 }
-.floating-panel .buttons button.kml-btn::before {
+.floating-panel .buttons a.kml-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
-.floating-panel .buttons button.mra-btn {
+.floating-panel .buttons a.mra-btn {
   border-color: #08294d;
   background: url("../../../img/dl.svg") no-repeat center/contain;
   background: #388be9;
   color: #fff;
 }
-.floating-panel .buttons button.mra-btn:hover {
+.floating-panel .buttons a.mra-btn:hover {
   border-color: #08294d;
   background: #1565c0;
 }
-.floating-panel .buttons button.mra-btn::before {
+.floating-panel .buttons a.mra-btn::before {
   background: url("/img/link.svg") no-repeat center/contain;
+}
+
+table {
+  width: 100%;
+}
+table tr td {
+  padding: 0.25em;
+  font-size: 0.8em;
+  vertical-align: top;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px dotted;
+}
+table tr td br {
+  display: inline-block;
+}
+table tr td.label {
+  vertical-align: top;
+  font-weight: bold;
+}
+table tr:first-child td {
+  border-top: 1px solid #333;
+}
+table tr:last-child {
+  border-bottom: 1px solid #333;
+}
+
+@media (min-width: 768px) {
+  .floating-panel {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    z-index: 1000;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.97);
+    width: fit-content;
+    font-family: inherit;
+  }
+  .floating-panel.right-panel {
+    bottom: 2vw;
+    left: 2vw;
+  }
+  .floating-panel .panel-title {
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.5em;
+    letter-spacing: 0.02em;
+  }
+  .floating-panel .desktop {
+    display: inherit;
+  }
+  .floating-panel .buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
 }/*# sourceMappingURL=style.css.map */

@@ -11,318 +11,80 @@
 <link rel="stylesheet" href="../../style/style.min.css">
 <link href="https://fonts.googleapis.com/css?family=Lato:100,100italic,300,300italic,regular,italic,700,700italic,900,900italic" rel="stylesheet" />
 <script src="main.js" defer></script>
-  <!-- Custom JS moved to main.js -->
-
-    console.log('initMap called');
-    const mapDiv = document.getElementById('map');
-    const center = { lat: 37.665817, lng: -121.949321 };
-    const map = new google.maps.Map(mapDiv, {
-      center,
-      zoom: 10,
-      mapTypeId: 'terrain',
-      mapId: 'a14091e53ca43382'
-    });
-    console.log('Map instance created');
-
-    // --- Redwood Road Closure KML Layer ---
-    const redwoodKmlUrl = 'data/2024-redwood-road-closure.kml';
-    let redwoodPolyline = null;
-    function loadRedwoodKml() {
-      fetch(redwoodKmlUrl)
-        .then(res => {
-          if (!res.ok) throw new Error('Redwood KML fetch error ' + res.status);
-          return res.text();
-        })
-        .then(kmlText => {
-          const xmlIdx = kmlText.indexOf('<?xml');
-          const cleanText = xmlIdx >= 0 ? kmlText.slice(xmlIdx) : kmlText;
-          const parser = new DOMParser();
-          const kmlDoc = parser.parseFromString(cleanText, 'application/xml');
-          const ns = kmlDoc.documentElement.namespaceURI;
-          let coordsEls = kmlDoc.getElementsByTagNameNS(ns, 'coordinates');
-          if ((!coordsEls || coordsEls.length === 0)) coordsEls = kmlDoc.getElementsByTagNameNS('*', 'coordinates');
-          if ((!coordsEls || coordsEls.length === 0)) coordsEls = kmlDoc.getElementsByTagName('coordinates');
-          if (!coordsEls || coordsEls.length === 0) {
-            console.error('No <coordinates> elements found in Redwood KML', kmlDoc);
-            return;
-          }
-          let maxCount = 0;
-          let coordEl = coordsEls[0];
-          Array.from(coordsEls).forEach(el => {
-            const count = el.textContent.trim().split(/\s+/).length;
-            if (count > maxCount) {
-              maxCount = count;
-              coordEl = el;
-            }
-          });
-          const coordText = coordEl.textContent.trim();
-          const path = coordText.split(/\s+/).map(pair => {
-            const [lng, lat] = pair.split(',').map(Number);
-            return { lat, lng };
-          }).filter(pt => !isNaN(pt.lat) && !isNaN(pt.lng));
-          console.log('[Redwood] Parsed path:', path);
-          if (!path.length) {
-            console.error('[Redwood] No valid path points parsed!');
-            return;
-          }
-          if (redwoodPolyline) redwoodPolyline.setMap(null);
-          function safeGetRedwoodCheckbox() {
-            return document.getElementById('toggle-redwood-road');
-          }
-          function isRedwoodChecked() {
-            const cb = safeGetRedwoodCheckbox();
-            return cb ? cb.checked : true; // default to true if not found
-          }
-          redwoodPolyline = new google.maps.Polyline({
-            path,
-            strokeColor: '#F00', // bright red
-            strokeOpacity: 0.8,     // 50% opacity
-            strokeWeight: 15,
-            map: isRedwoodChecked() ? map : null,
-            zIndex: 1
-          });
-        })
-        .catch(err => console.error('Failed to load Redwood KML:', err));
-    }
-    // Initial load (only after controls exist)
-    loadRedwoodKml();
-    // Checkbox toggle logic
-    const redwoodCb = document.getElementById('toggle-redwood-road');
-    if (redwoodCb) {
-      redwoodCb.addEventListener('change', function (e) {
-        if (redwoodPolyline) {
-          redwoodPolyline.setMap(this.checked ? map : null);
-        } else if (this.checked) {
-          loadRedwoodKml();
-        }
-      });
-    }
-
-    // --- Main Route KML (drawn after Redwood for stacking) ---
-    const kmlUrl = 'data/2025-05-18-jfreb.kml';
-    fetch(kmlUrl)
-      .then(res => {
-        console.log('KML fetch status:', res.status, 'Content-Type:', res.headers.get('Content-Type'));
-        if (!res.ok) {
-          console.error('Failed to fetch KML file:', res.statusText);
-          throw new Error('KML fetch error ' + res.status);
-        }
-        return res.text();
-      })
-      .then(kmlText => {
-        console.log('Raw KML length:', kmlText.length);
-        // Strip leading junk before XML prolog
-        const xmlIdx = kmlText.indexOf('<?xml');
-        const cleanText = xmlIdx >= 0 ? kmlText.slice(xmlIdx) : kmlText;
-        console.log('Cleaned KML starts with:', cleanText.substr(0, 40));
-        const parser = new DOMParser();
-        const kmlDoc = parser.parseFromString(cleanText, 'application/xml');
-        console.log('Root element:', kmlDoc.documentElement.localName, 'namespaceURI:', kmlDoc.documentElement.namespaceURI);
-        const ns = kmlDoc.documentElement.namespaceURI;
-        const exactEls = kmlDoc.getElementsByTagNameNS(ns, 'coordinates');
-        console.log('getElementsByTagNameNS(ns):', exactEls.length);
-        const wildEls = kmlDoc.getElementsByTagNameNS('*', 'coordinates');
-        console.log('getElementsByTagNameNS(*):', wildEls.length);
-        const tagEls = kmlDoc.getElementsByTagName('coordinates');
-        console.log('getElementsByTagName:', tagEls.length);
-        const coordsEls = exactEls.length ? exactEls : wildEls.length ? wildEls : tagEls;
-        if (!coordsEls || coordsEls.length === 0) {
-          console.error('No <coordinates> elements found in KML via any retrieval', kmlDoc);
-          return;
-        }
-        console.log('Using coordsEls with length:', coordsEls.length);
-        // Pick element with most coordinate pairs
-        let maxCount = 0;
-        let coordEl = coordsEls[0];
-        Array.from(coordsEls).forEach(el => {
-          const count = el.textContent.trim().split(/\s+/).length;
-          if (count > maxCount) {
-            maxCount = count;
-            coordEl = el;
-          }
-        });
-        console.log('Selected <coordinates> under', coordEl.parentNode.localName, 'with', maxCount, 'points');
-        const coordText = coordEl.textContent.trim();
-        const path = coordText.split(/\s+/).map(pair => {
-          const [lng, lat] = pair.split(',').map(Number);
-          return { lat, lng };
-        }).filter(pt => !isNaN(pt.lat) && !isNaN(pt.lng));
-        console.log('[MainRoute] Parsed path:', path);
-        if (!path.length) {
-          console.error('[MainRoute] No valid path points parsed!');
-          return;
-        }
-        // Draw main route as blue polyline, above Redwood
-        const mainRoutePolyline = new google.maps.Polyline({
-          path,
-          strokeColor: '#000',
-          strokeOpacity: 1,
-          strokeWeight: 3, // thinner line
-          map,
-          zIndex: 2
-        });
-        window.routePath = path;
-        console.log('[MainRoute] Parsed path:', path);
-        if (path.length) {
-          const bounds = new google.maps.LatLngBounds();
-          path.forEach(point => bounds.extend(point));
-          map.fitBounds(bounds);
-        } else {
-          console.error('[MainRoute] No valid path points parsed!');
-        }
-        // Add KML waypoints as markers (first/last markers 150% size)
-        const placemarks = kmlDoc.getElementsByTagNameNS(ns, 'Placemark');
-        const allPMs = Array.from(placemarks);
-        const pointPMs = allPMs.filter(pm => pm.getElementsByTagNameNS(ns, 'Point').length > 0);
-        console.log('Found Placemarks with Point:', pointPMs.length);
-        pointPMs.forEach((pm, i) => {
-          const pointEl = pm.getElementsByTagNameNS(ns, 'Point')[0]; if (!pointEl) return;
-          const coordsEl = pointEl.getElementsByTagNameNS(ns, 'coordinates')[0]; if (!coordsEl) return;
-          const [lng, lat] = coordsEl.textContent.trim().split(',').map(Number);
-          const nameEl = pm.getElementsByTagNameNS(ns, 'name')[0]; const name = nameEl ? nameEl.textContent : '';
-          const descEl = pm.getElementsByTagNameNS(ns, 'description')[0]; const desc = descEl ? descEl.textContent : '';
-          // Icon: circle for start and intermediates, X shape for ending point
-          let iconOpts;
-          if (i === pointPMs.length - 1) {
-            // Draw blue X (outline, bottom)
-            new google.maps.Marker({
-              position: { lat, lng },
-              map,
-              icon: {
-                path: 'M -0.7,-0.7 L 0.7,0.7 M 0.7,-0.7 L -0.7,0.7',
-                strokeColor: '#000',
-                strokeWeight: 4,
-                scale: 8,
-                strokeOpacity: 1
-              },
-              clickable: false,
-              zIndex: 999
-            });
-            // Draw black X (center, top)
-            iconOpts = {
-              path: 'M -0.7,-0.7 L 0.7,0.7 M 0.7,-0.7 L -0.7,0.7',
-              strokeColor: '#000000',
-              strokeWeight: 6,
-              scale: 8,
-              strokeOpacity: 1
-            };
-          } else {
-            // Blue circle for start and others (start scaled 6)
-            iconOpts = {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillColor: '#fff',
-              fillOpacity: 0.9,
-              strokeColor: '#000',
-              strokeWeight: 4,
-              scale: (i === 0 ? 6 : 4)
-            };
-          }
-          const marker = new google.maps.Marker({ position: { lat, lng }, map, title: name, icon: iconOpts });
-          const infowindow = new google.maps.InfoWindow({ content: `<strong>${name}</strong><br/>${desc}`, disableAutoPan: false, shouldFocus: false });
-          google.maps.event.addListener(infowindow, 'domready', () => {
-            const iw = document.querySelector('.gm-style-iw');
-            if (iw) {
-              const closeBtn = iw.parentElement.querySelector('button[aria-label="Close"]');
-              if (closeBtn) closeBtn.style.display = 'none';
-            }
-          });
-          let popupOpen = false;
-          marker.addListener('mouseover', () => {
-            if (!popupOpen) infowindow.open({ map, anchor: marker });
-          });
-          marker.addListener('mouseout', () => {
-            if (!popupOpen) infowindow.close();
-          });
-          marker.addListener('click', () => {
-            if (!popupOpen) {
-              infowindow.open({ map, anchor: marker });
-              popupOpen = true;
-            } else {
-              infowindow.close();
-              popupOpen = false;
-            }
-          });
-          infowindow.addListener('closeclick', () => { popupOpen = false; });
-        });
-      })
-      .catch(err => console.error('Failed to load KML:', err));
-  }
-</script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap" onload="console.log('maps API loaded');" onerror="console.error('maps API failed to load');" async defer></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap" onload="console.log('maps API loaded');" onerror="console.error('maps API failed to load');"></script>
 
 </head>
 <body>
 
-  <div id="map"></div>
-
-
-
-
-  <div id="map-controls" class="floating-panel">
-    <div class="panel-title">Routes</div>
-
-    <div class="buttons container-flex">
-      <div class="row gap-2">
-        <div class="col-3"><button class="gpx-btn" onclick="window.open('data/2025-05-18-jfreb.gpx', '_blank')">GPX</button></div>
-        <div class="col-3"><button class="kml-btn" onclick="window.open('data/2025-05-18-jfreb.kml', '_blank')">KML</button></div>
-        <div class="col-3"><button class="mra-btn" onClick="window.open('https://www.myrouteapp.com/en/social/route/11011013?mode=share', '_blank')">MRA</button>
+  <!-- <section class="viewport-widget top container-fluid">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="viewport-size">Viewport:
         </div>
       </div>
     </div>
-    <label>
-      <input type="checkbox" id="toggle-redwood-road" checked>
-      2024 Closure
-    </label>
-  </div>
+  </section> -->
 
 
+  <div id="map"></div>
 
 
   <div id="info-panel" class="floating-panel right-panel">
     <div class="panel-title">Ride Info</div>
     <table class="info-table">
       <tr>
-        <td>Meet:</td>
-        <td><a href="https://maps.app.goo.gl/6WjZmxmjAzkeiuKw9" target="_blank">Daybreak Donuts &amp; Ice Cream</a><br>3263 Sierra Rd, San Jose, CA 95132</td>
+        <td class="label">Start:</td>
+        <td class="value"><a href="https://maps.app.goo.gl/6WjZmxmjAzkeiuKw9" target="_blank">Daybreak Donuts &amp; Ice Cream<span class="desktop"><br>3263 Sierra Rd<br>San Jose, CA 95132</span></td>
+        </td>
       </tr>
+
       <tr>
         <td class="label">KSU:</td>
-        <td class="value">10am</td>
+        <td class="value">10:00</td>
       </tr>
       <tr>
         <td class="label">End:</td>
-        <td class="value">725 54th Street<br>Oakland, CA 94609</td>
+        <td class="value"><a href="https://maps.app.goo.gl/BEcgew5hyEo38wi79" target="_blank">Ziad's House<span class="desktop">
+              <br>725 54th Street<br>Oakland, CA 94609</span></a></td>
       </tr>
       <tr>
         <td class="label">Lunch:</td>
         <td class="value">BBQ</td>
       </tr>
+
+      </tr>
       <tr>
         <td class="label">Miles:</td>
-        <td class="value">67 (≈2 hours)</td>
+        <td class="value">66.6 (≈2 hours)</td>
       </tr>
+
+      <tr>
+        <td class="label">Route</td>
+        <td class="value">
+          <div class="buttons">
+
+
+            <a role="button" class="gpx-btn" href="data/2025-05-18-jfreb.gpx" target="_blank">GPX</a>
+
+
+            <a role="button" class="kml-btn" href="data/2025-05-18-jfreb.kml" target="_blank">KML</a>
+
+
+            <a role="button" class="mra-btn" href="https://www.myrouteapp.com/en/social/route/11011013?mode=share" target="_blank">MRA</a>
+
+
+          </div>
+        </td>
+      </tr>
+      <tr>
+
+        <td colspan="2" class="value">
+          <input type="checkbox" id="toggle-redwood-road" checked>
+          <label for="toggle-redwood-road">2024 Redwood Road Closure</label>
+        </td>
     </table>
   </div>
 
-
-
-
-
-
-
-
-
-
-</body>
-</html>
-<td class="value">BBQ</td>
-</tr>
-<tr>
-  <td class="label">Miles:</td>
-  <td class="value">67 (≈2 hours)</td>
-</tr>
-</table>
-</div>
 
 </body>
 </html>
