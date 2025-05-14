@@ -16,10 +16,13 @@ $panel-shadow: rgba(0, 0, 0, 0.18);
 .desktop {
   display: none;
 }
+.mobile {
+  display: inherit;
+}
 a {
   &:link {
-    text-decoration: none;
     font-weight: 600;
+    text-decoration: none;
   }
   &:hover {
     text-decoration: underline;
@@ -44,7 +47,6 @@ a {
 #toggle-redwood-road:checked {
   /* fallback for old browsers could use a custom solution if needed */
 }
-
 
 .floating-panel {
   position: fixed;
@@ -71,26 +73,49 @@ a {
     font-size: 1.5em;
     letter-spacing: 0.02em;
   }
-
+  table {
+    // border: 4px solid purple;
+    width: 100%;
+    tr {
+      border-bottom: 1px dotted gray;
+      &:first-child {
+        border-top: 2px solid black;
+      }
+      &:last-child {
+        border-bottom: 2px solid black;
+      }
+      td {
+        &.label {
+          vertical-align: top;
+          font-weight: 800;
+          width: 100px;
+        }
+        &.value {
+          // border: 2px solid orange;
+          min-width: 100%;
+        }
+      }
+    }
+  }
   .buttons {
     display: flex;
     flex-direction: row;
     gap: 10px;
     a {
       display: block;
-      width: 30%;
       align-items: center;
       transition: background 0.2s, border 0.2s;
       cursor: pointer;
       border: 1px solid $grey;
       border-radius: 5px;
-      font-size: 0.95em;
       padding: 0 0.5em;
+      width: 30%;
+      font-size: 0.95em;
       &.gpx-btn,
       &.kml-btn,
       &.mra-btn {
-        white-space: nowrap;
         width: fit-content;
+        white-space: nowrap;
         &::before {
           display: inline-block;
           position: relative;
@@ -116,7 +141,7 @@ a {
       }
       &.kml-btn {
         border-color: darken($kml, 20%);
-        background: url("../../../img/dl.svg") no-repeat center/contain;
+        background: url("../../img/dl.svg") no-repeat center/contain;
         background: $kml;
         color: $white;
         &:hover {
@@ -129,7 +154,7 @@ a {
       }
       &.mra-btn {
         border-color: darken($mra, 25%);
-        background: url("../../../img/dl.svg") no-repeat center/contain;
+        background: url("../../img/dl.svg") no-repeat center/contain;
         background: lighten($mra, 15%);
         color: $white;
         &:hover {
@@ -140,39 +165,6 @@ a {
           background: url("/img/link.svg") no-repeat center/contain;
         }
       }
-    }
-  }
-}
-
-table {
-  width: 100%;
-  tr {
-    td {
-      padding: 0.25em;
-      font-size: 0.8em;
-      vertical-align: top;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      border-bottom: 1px dotted;
-      br {
-        display: inline-block;
-      }
-
-      &.label {
-        vertical-align: top;
-        font-weight: bold;
-      }
-      &.value {
-      }
-    }
-    &:first-child {
-      td {
-        border-top: 1px solid #333;
-      }
-    }
-    &:last-child {
-      border-bottom: 1px solid #333;
     }
   }
 }
@@ -191,41 +183,33 @@ table {
 
 //@ MD >768px
 @media (min-width: 768px) {
+  .desktop {
+    display: inherit;
+  }
+  .mobile {
+    display: none;
+  }
   .floating-panel {
-    position: fixed;
-    bottom: 24px;
-    left: 24px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    z-index: 1000;
-    box-shadow: 0 2px 12px $panel-shadow;
-    border-radius: 12px;
-    background: $panel-bg;
+    // border: 5px solid green;
     width: fit-content;
-    font-family: inherit;
-    &.right-panel {
-      bottom: 2vw;
-      left: 2vw;
-    }
-    .panel-title {
-      margin-bottom: 8px;
-      color: $text;
-      font-weight: bold;
-      font-size: 1.5em;
-      letter-spacing: 0.02em;
-    }
-    .desktop {
-      display: inherit;
-    }
-    .buttons {
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
+  }
+
+  table.info-table {
+    max-width: fit-content;
+
+    tr {
+      td {
+        padding: 0.25em;
+        br {
+          display: inline-block;
+        }
+        &.value {
+          width: fit-content;
+        }
+      }
     }
   }
 }
-
 //@ SM >576px
 @media (min-width: 576px) {
 }
