@@ -152,6 +152,30 @@ a {
           background: url("/img/dl.svg") no-repeat center/contain;
         }
       }
+      &.gpx-berfj-btn {
+        border-color: #7a3e9d;
+        background: #b266ff;
+        color: $white;
+        &:hover {
+          border-color: #5a2c70;
+          background: #a259e6;
+        }
+        &::before {
+          background: url("/img/dl.svg") no-repeat center/contain;
+        }
+      }
+      &.kml-berfj-btn {
+        border-color: #1e5c5c;
+        background: #26c6da;
+        color: $white;
+        &:hover {
+          border-color: #174141;
+          background: #00acc1;
+        }
+        &::before {
+          background: url("/img/dl.svg") no-repeat center/contain;
+        }
+      }
       &.mra-btn {
         border-color: darken($mra, 25%);
         background: url("../../img/dl.svg") no-repeat center/contain;
@@ -165,6 +189,35 @@ a {
           background: url("/img/link.svg") no-repeat center/contain;
         }
       }
+    }
+  }
+}
+
+table {
+  width: 100%;
+  tr {
+    td {
+      padding: 0.25em;
+      font-size: 0.8em;
+      vertical-align: top;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-bottom: 1px dotted;
+      br {
+        display: inline-block;
+      }
+
+      &.label {
+        vertical-align: top;
+        font-weight: bold;
+      }
+      &.value {
+      }
+    }
+
+    &:last-child {
+      border-bottom: 1px solid #333;
     }
   }
 }

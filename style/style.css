@@ -139,6 +139,30 @@ a:hover {
 .floating-panel .buttons a.kml-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
+.floating-panel .buttons a.gpx-berfj-btn {
+  border-color: #7a3e9d;
+  background: #b266ff;
+  color: #fff;
+}
+.floating-panel .buttons a.gpx-berfj-btn:hover {
+  border-color: #5a2c70;
+  background: #a259e6;
+}
+.floating-panel .buttons a.gpx-berfj-btn::before {
+  background: url("/img/dl.svg") no-repeat center/contain;
+}
+.floating-panel .buttons a.kml-berfj-btn {
+  border-color: #1e5c5c;
+  background: #26c6da;
+  color: #fff;
+}
+.floating-panel .buttons a.kml-berfj-btn:hover {
+  border-color: #174141;
+  background: #00acc1;
+}
+.floating-panel .buttons a.kml-berfj-btn::before {
+  background: url("/img/dl.svg") no-repeat center/contain;
+}
 .floating-panel .buttons a.mra-btn {
   border-color: #08294d;
   background: url("../../img/dl.svg") no-repeat center/contain;
@@ -151,6 +175,29 @@ a:hover {
 }
 .floating-panel .buttons a.mra-btn::before {
   background: url("/img/link.svg") no-repeat center/contain;
+}
+
+table {
+  width: 100%;
+}
+table tr td {
+  padding: 0.25em;
+  font-size: 0.8em;
+  vertical-align: top;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px dotted;
+}
+table tr td br {
+  display: inline-block;
+}
+table tr td.label {
+  vertical-align: top;
+  font-weight: bold;
+}
+table tr:last-child {
+  border-bottom: 1px solid #333;
 }
 
 @media (min-width: 768px) {
