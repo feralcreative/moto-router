@@ -1,0 +1,19 @@
+main.js:371 Uncaught SyntaxError: await is only valid in async functions and the top level bodies of modules (at main.js:371:3)
+js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:296 Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+vda @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:296
+google.maps.Load @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:14
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538
+index.html:15 maps API loaded
+js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:183 Uncaught (in promise) InvalidValueError: initMap is not a function
+    at _.Ul (js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:183:214)
+    at uda (js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:301:228)
+    at js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:300:294
+_.Ul @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:183
+uda @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:301
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:300
+Promise.then
+vda @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:300
+google.maps.Load @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:14
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538

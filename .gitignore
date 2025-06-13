@@ -39,3 +39,4 @@ license.txt
 /index.php
 # Ignore well-known directory
 .well-known/
+_archive

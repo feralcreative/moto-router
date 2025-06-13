@@ -1,0 +1,918 @@
+main.js:1 Inline JS: head tag parsed
+js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:296 Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+vda @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:296
+google.maps.Load @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:14
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538
+main.js:9 initMap called
+main.js:18 Map instance created
+index.html:15 maps API loaded
+main.js:456 Inline JS: body tag parsed, running under http://127.0.0.1:5500/template/index.html
+main.js:457 Post-map script: map in DOM: <div id=​"map">​…​</div>​
+main.js:27 KML fetch status for data/01-Oakland-to-Mt-Madonna.kml: 200 Content-Type: application/vnd.google-earth.kml+xml
+main.js:27 KML fetch status for data/02-Campsite-to-Meeting-Point.kml: 200 Content-Type: application/vnd.google-earth.kml+xml
+main.js:27 KML fetch status for data/03-Test-Route.kml: 200 Content-Type: application/vnd.google-earth.kml+xml
+main.js:35 [data/01-Oakland-to-Mt-Madonna.kml] Raw KML length: 114606
+main.js:65 [data/01-Oakland-to-Mt-Madonna.kml] Parsed path: (4848) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, …]
+js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:209 As of February 21st, 2024, google.maps.Marker is deprecated. Please use google.maps.marker.AdvancedMarkerElement instead. At this time, google.maps.Marker is not scheduled to be discontinued, but google.maps.marker.AdvancedMarkerElement is recommended over google.maps.Marker. While google.maps.Marker will continue to receive bug fixes for any major regressions, existing bugs in google.maps.Marker will not be addressed. At least 12 months notice will be given before support is discontinued. Please see https://developers.google.com/maps/deprecations for additional details and https://developers.google.com/maps/documentation/javascript/advanced-markers/migration for the migration guide.
+_.qo @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:209
+(anonymous) @ main.js:191
+(anonymous) @ main.js:94
+Promise.then
+loadKmlRoute @ main.js:34
+(anonymous) @ main.js:446
+loadAllKmlRoutes @ main.js:443
+await in loadAllKmlRoutes
+window.initMap @ main.js:452
+await in window.initMap
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:301
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:300
+Promise.then
+vda @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:300
+google.maps.Load @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:14
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538
+(anonymous) @ js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap:538
+main.js:35 [data/02-Campsite-to-Meeting-Point.kml] Raw KML length: 22280
+main.js:65 [data/02-Campsite-to-Meeting-Point.kml] Parsed path: (853) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, …]
+main.js:35 [data/03-Test-Route.kml] Raw KML length: 47635
+main.js:65 [data/03-Test-Route.kml] Parsed path: (2002) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, …]
+main.js:348 setRouteHighlight called with activeIndex: 1
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=1: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: 0
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=0, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=0, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=0, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=0: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+ Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+   [CIRCLE] Marker markerIdx=0, routeIdx=0
+   [CIRCLE] Marker markerIdx=1, routeIdx=0
+   [CIRCLE] Marker markerIdx=2, routeIdx=0
+   [CIRCLE] Marker markerIdx=3, routeIdx=0
+   [CIRCLE] Marker markerIdx=4, routeIdx=0
+   [CIRCLE] Marker markerIdx=5, routeIdx=0
+   [CIRCLE] Marker markerIdx=6, routeIdx=0
+   [CIRCLE] Marker markerIdx=7, routeIdx=0
+   [CIRCLE] Marker markerIdx=8, routeIdx=0
+   [CIRCLE] Marker markerIdx=9, routeIdx=0
+   [CIRCLE] Marker markerIdx=10, routeIdx=0
+   [CIRCLE] Marker markerIdx=11, routeIdx=0
+   [CIRCLE] Marker markerIdx=12, routeIdx=0
+   [CIRCLE] Marker markerIdx=13, routeIdx=0
+   [CIRCLE] Marker markerIdx=14, routeIdx=0
+   [CIRCLE] Marker markerIdx=15, routeIdx=0
+   [CIRCLE] Marker markerIdx=16, routeIdx=0
+   [CIRCLE] Marker markerIdx=17, routeIdx=0
+   [CIRCLE] Marker markerIdx=18, routeIdx=0
+   [CIRCLE] Marker markerIdx=19, routeIdx=0
+   [CIRCLE] Marker markerIdx=20, routeIdx=0
+   [CIRCLE] Marker markerIdx=21, routeIdx=0
+   [CIRCLE] Marker markerIdx=22, routeIdx=0
+   [CIRCLE] Marker markerIdx=23, routeIdx=0
+   [CIRCLE] Marker markerIdx=24, routeIdx=0
+   [CIRCLE] Marker markerIdx=25, routeIdx=0
+   [CIRCLE] Marker markerIdx=26, routeIdx=0
+   [CIRCLE] Marker markerIdx=27, routeIdx=0
+   [CIRCLE] Marker markerIdx=28, routeIdx=0
+   [CIRCLE] Marker markerIdx=29, routeIdx=0
+   [CIRCLE] Marker markerIdx=30, routeIdx=0
+   [CIRCLE] Marker markerIdx=31, routeIdx=0
+   [CIRCLE] Marker markerIdx=32, routeIdx=0
+   [CIRCLE] Marker markerIdx=33, routeIdx=0
+   [CIRCLE] Marker markerIdx=34, routeIdx=0
+   [CIRCLE] Marker markerIdx=35, routeIdx=0
+   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: 1
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=1: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: 2
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=2, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=2, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=2, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=2: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+ window.routeMarkers: [Array(48)]
+ Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+ Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+ Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+ Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+   [CIRCLE] Marker markerIdx=0, routeIdx=0
+   [CIRCLE] Marker markerIdx=1, routeIdx=0
+   [CIRCLE] Marker markerIdx=2, routeIdx=0
+   [CIRCLE] Marker markerIdx=3, routeIdx=0
+   [CIRCLE] Marker markerIdx=4, routeIdx=0
+   [CIRCLE] Marker markerIdx=5, routeIdx=0
+   [CIRCLE] Marker markerIdx=6, routeIdx=0
+   [CIRCLE] Marker markerIdx=7, routeIdx=0
+   [CIRCLE] Marker markerIdx=8, routeIdx=0
+   [CIRCLE] Marker markerIdx=9, routeIdx=0
+   [CIRCLE] Marker markerIdx=10, routeIdx=0
+   [CIRCLE] Marker markerIdx=11, routeIdx=0
+   [CIRCLE] Marker markerIdx=12, routeIdx=0
+   [CIRCLE] Marker markerIdx=13, routeIdx=0
+   [CIRCLE] Marker markerIdx=14, routeIdx=0
+   [CIRCLE] Marker markerIdx=15, routeIdx=0
+   [CIRCLE] Marker markerIdx=16, routeIdx=0
+   [CIRCLE] Marker markerIdx=17, routeIdx=0
+   [CIRCLE] Marker markerIdx=18, routeIdx=0
+   [CIRCLE] Marker markerIdx=19, routeIdx=0
+   [CIRCLE] Marker markerIdx=20, routeIdx=0
+   [CIRCLE] Marker markerIdx=21, routeIdx=0
+   [CIRCLE] Marker markerIdx=22, routeIdx=0
+   [CIRCLE] Marker markerIdx=23, routeIdx=0
+   [CIRCLE] Marker markerIdx=24, routeIdx=0
+   [CIRCLE] Marker markerIdx=25, routeIdx=0
+   [CIRCLE] Marker markerIdx=26, routeIdx=0
+   [CIRCLE] Marker markerIdx=27, routeIdx=0
+   [CIRCLE] Marker markerIdx=28, routeIdx=0
+   [CIRCLE] Marker markerIdx=29, routeIdx=0
+   [CIRCLE] Marker markerIdx=30, routeIdx=0
+   [CIRCLE] Marker markerIdx=31, routeIdx=0
+   [CIRCLE] Marker markerIdx=32, routeIdx=0
+   [CIRCLE] Marker markerIdx=33, routeIdx=0
+   [CIRCLE] Marker markerIdx=34, routeIdx=0
+   [CIRCLE] Marker markerIdx=35, routeIdx=0
+   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: 1
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=1: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+ window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+ window.routeMarkers: [Array(48)]
+ Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+ Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+ Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+ Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+   [CIRCLE] Marker markerIdx=0, routeIdx=0
+   [CIRCLE] Marker markerIdx=1, routeIdx=0
+   [CIRCLE] Marker markerIdx=2, routeIdx=0
+   [CIRCLE] Marker markerIdx=3, routeIdx=0
+   [CIRCLE] Marker markerIdx=4, routeIdx=0
+   [CIRCLE] Marker markerIdx=5, routeIdx=0
+   [CIRCLE] Marker markerIdx=6, routeIdx=0
+   [CIRCLE] Marker markerIdx=7, routeIdx=0
+   [CIRCLE] Marker markerIdx=8, routeIdx=0
+   [CIRCLE] Marker markerIdx=9, routeIdx=0
+   [CIRCLE] Marker markerIdx=10, routeIdx=0
+   [CIRCLE] Marker markerIdx=11, routeIdx=0
+   [CIRCLE] Marker markerIdx=12, routeIdx=0
+   [CIRCLE] Marker markerIdx=13, routeIdx=0
+   [CIRCLE] Marker markerIdx=14, routeIdx=0
+   [CIRCLE] Marker markerIdx=15, routeIdx=0
+   [CIRCLE] Marker markerIdx=16, routeIdx=0
+   [CIRCLE] Marker markerIdx=17, routeIdx=0
+   [CIRCLE] Marker markerIdx=18, routeIdx=0
+   [CIRCLE] Marker markerIdx=19, routeIdx=0
+   [CIRCLE] Marker markerIdx=20, routeIdx=0
+   [CIRCLE] Marker markerIdx=21, routeIdx=0
+   [CIRCLE] Marker markerIdx=22, routeIdx=0
+   [CIRCLE] Marker markerIdx=23, routeIdx=0
+   [CIRCLE] Marker markerIdx=24, routeIdx=0
+   [CIRCLE] Marker markerIdx=25, routeIdx=0
+   [CIRCLE] Marker markerIdx=26, routeIdx=0
+   [CIRCLE] Marker markerIdx=27, routeIdx=0
+   [CIRCLE] Marker markerIdx=28, routeIdx=0
+   [CIRCLE] Marker markerIdx=29, routeIdx=0
+   [CIRCLE] Marker markerIdx=30, routeIdx=0
+   [CIRCLE] Marker markerIdx=31, routeIdx=0
+   [CIRCLE] Marker markerIdx=32, routeIdx=0
+   [CIRCLE] Marker markerIdx=33, routeIdx=0
+   [CIRCLE] Marker markerIdx=34, routeIdx=0
+   [CIRCLE] Marker markerIdx=35, routeIdx=0
+   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: 0
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=0, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=0, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=0, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=0: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+   [CIRCLE] Marker markerIdx=1, routeIdx=0
+   [CIRCLE] Marker markerIdx=2, routeIdx=0
+   [CIRCLE] Marker markerIdx=3, routeIdx=0
+   [CIRCLE] Marker markerIdx=4, routeIdx=0
+   [CIRCLE] Marker markerIdx=5, routeIdx=0
+   [CIRCLE] Marker markerIdx=6, routeIdx=0
+   [CIRCLE] Marker markerIdx=7, routeIdx=0
+   [CIRCLE] Marker markerIdx=8, routeIdx=0
+   [CIRCLE] Marker markerIdx=9, routeIdx=0
+   [CIRCLE] Marker markerIdx=10, routeIdx=0
+   [CIRCLE] Marker markerIdx=11, routeIdx=0
+   [CIRCLE] Marker markerIdx=12, routeIdx=0
+   [CIRCLE] Marker markerIdx=13, routeIdx=0
+   [CIRCLE] Marker markerIdx=14, routeIdx=0
+   [CIRCLE] Marker markerIdx=15, routeIdx=0
+   [CIRCLE] Marker markerIdx=16, routeIdx=0
+   [CIRCLE] Marker markerIdx=17, routeIdx=0
+   [CIRCLE] Marker markerIdx=18, routeIdx=0
+   [CIRCLE] Marker markerIdx=19, routeIdx=0
+   [CIRCLE] Marker markerIdx=20, routeIdx=0
+   [CIRCLE] Marker markerIdx=21, routeIdx=0
+   [CIRCLE] Marker markerIdx=22, routeIdx=0
+   [CIRCLE] Marker markerIdx=23, routeIdx=0
+   [CIRCLE] Marker markerIdx=24, routeIdx=0
+   [CIRCLE] Marker markerIdx=25, routeIdx=0
+   [CIRCLE] Marker markerIdx=26, routeIdx=0
+   [CIRCLE] Marker markerIdx=27, routeIdx=0
+   [CIRCLE] Marker markerIdx=28, routeIdx=0
+   [CIRCLE] Marker markerIdx=29, routeIdx=0
+   [CIRCLE] Marker markerIdx=30, routeIdx=0
+   [CIRCLE] Marker markerIdx=31, routeIdx=0
+   [CIRCLE] Marker markerIdx=32, routeIdx=0
+   [CIRCLE] Marker markerIdx=33, routeIdx=0
+   [CIRCLE] Marker markerIdx=34, routeIdx=0
+   [CIRCLE] Marker markerIdx=35, routeIdx=0
+   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: 1
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=1, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=1: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: 2
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=2, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=2, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=2, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=2: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
+main.js:348 setRouteHighlight called with activeIndex: null
+main.js:349 window.routePolylines: (3) [_.Eu, _.Eu, _.Eu]
+main.js:350 window.routeMarkers: [Array(48)]
+main.js:353 Polyline idx=0, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=1, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:353 Polyline idx=2, activeIndex=null, polyline= _.Eu {nm: false, Vu: false, Ig: false, gm_accessors_: {…}, latLngs: _.Io, …}
+main.js:361 Markers for route idx=0, activeIndex=null: (48) [_.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo, _.qo]
+main.js:370   [CIRCLE] Marker markerIdx=0, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=1, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=2, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=3, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=4, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=5, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=6, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=7, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=8, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=9, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=10, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=11, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=12, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=13, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=14, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=15, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=16, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=17, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=18, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=19, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=20, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=21, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=22, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=23, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=24, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=25, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=26, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=27, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=28, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=29, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=30, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=31, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=32, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=33, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=34, routeIdx=0
+main.js:370   [CIRCLE] Marker markerIdx=35, routeIdx=0
+main.js:368   [SVG] Marker markerIdx=36, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-meet.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=37, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=38, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-camp.svg', polylineColor: '#FF0000'}
+main.js:368   [SVG] Marker markerIdx=39, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=40, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#4800FF'}
+main.js:368   [SVG] Marker markerIdx=41, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-poi.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=42, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-charge.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=43, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-gas.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=44, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-view.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=45, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-food.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=46, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-hotel.svg', polylineColor: '#aa00aa'}
+main.js:368   [SVG] Marker markerIdx=47, routeIdx=0, iconPath= {iconPath: '/img/icons/icon-drinks.svg', polylineColor: '#aa00aa'}
