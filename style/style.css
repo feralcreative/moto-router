@@ -68,21 +68,65 @@ a:hover {
   width: 100%;
 }
 .floating-panel table tr {
-  border-bottom: 1px dotted gray;
+  border-bottom: 1px dotted;
 }
-.floating-panel table tr:first-child {
-  border-top: 2px solid black;
+.floating-panel table tr td {
+  vertical-align: middle;
+  padding: 0.5em;
+  overflow: hidden;
+  font-size: 0.8em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.floating-panel table tr td br {
+  display: inline-block;
+}
+.floating-panel table tr td.label, .floating-panel table tr td.route-label {
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  cursor: pointer;
+  margin: 0.2em 2em 0.2em 0;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+  background: #fff;
+  padding: 0;
+  width: 100%;
+  min-height: fit-content;
+  color: #333;
+  font-weight: 800;
+  font-size: 0.8em;
+  line-height: 1em;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+.floating-panel table tr td.label .route-icon-bg, .floating-panel table tr td.route-label .route-icon-bg {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  background: #1565c0;
+  width: 1.8em;
+  height: 1.8em;
+}
+.floating-panel table tr td.label .route-icon, .floating-panel table tr td.route-label .route-icon {
+  display: block;
+  width: 1.1em;
+  height: 1.1em;
+}
+.floating-panel table tr td.label[data-color], .floating-panel table tr td.route-label[data-color] {
+  border-color: attr(data-color color, #1565c0);
+}
+.floating-panel table tr td.label:hover, .floating-panel table tr td.label:focus, .floating-panel table tr td.route-label:hover, .floating-panel table tr td.route-label:focus {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: #0d417b;
+  background: var(--route-color-bg, #b9d6f7);
 }
 .floating-panel table tr:last-child {
-  border-bottom: 2px solid black;
-}
-.floating-panel table tr td.label {
-  vertical-align: top;
-  font-weight: 800;
-  width: 100px;
-}
-.floating-panel table tr td.value {
-  min-width: 100%;
+  border-bottom: 1px solid #333;
 }
 .floating-panel .buttons {
   display: flex;
@@ -177,29 +221,6 @@ a:hover {
   background: url("/img/link.svg") no-repeat center/contain;
 }
 
-table {
-  width: 100%;
-}
-table tr td {
-  padding: 0.25em;
-  font-size: 0.8em;
-  vertical-align: top;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-bottom: 1px dotted;
-}
-table tr td br {
-  display: inline-block;
-}
-table tr td.label {
-  vertical-align: top;
-  font-weight: bold;
-}
-table tr:last-child {
-  border-bottom: 1px solid #333;
-}
-
 @media (min-width: 768px) {
   .desktop {
     display: inherit;
@@ -212,6 +233,15 @@ table tr:last-child {
   }
   table.info-table {
     max-width: fit-content;
+  }
+  table.info-table:hover .route-label {
+    opacity: 0.3;
+    transition: opacity 0.15s;
+  }
+  table.info-table .route-label:hover,
+  table.info-table .route-label:focus {
+    opacity: 1;
+    z-index: 1;
   }
   table.info-table tr td {
     padding: 0.25em;
