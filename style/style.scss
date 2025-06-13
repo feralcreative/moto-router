@@ -283,6 +283,33 @@ a {
     }
     max-width: fit-content;
 
+    // Route label cell
+    td.label,
+    td.route-label {
+      text-align: left;
+      font-weight: 800;
+      font-size: 1em;
+      background: $white;
+      color: $text;
+      border-radius: 10px;
+    }
+
+    // Mileage cell
+    td.route-mileage-cell {
+      font-size: 0.8em;
+      font-weight: 300;
+      color: $text;
+      text-align: center;
+    }
+
+    // Download buttons cell
+    td.value {
+      text-align: right;
+      padding: 0 0.5em;
+      background: none;
+      border: none;
+    }
+
     tr {
       td {
         padding: 0.25em;

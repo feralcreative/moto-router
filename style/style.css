@@ -243,6 +243,27 @@ a:hover {
     opacity: 1;
     z-index: 1;
   }
+  table.info-table td.label,
+  table.info-table td.route-label {
+    text-align: left;
+    font-weight: 800;
+    font-size: 1em;
+    background: #fff;
+    color: #333;
+    border-radius: 10px;
+  }
+  table.info-table td.route-mileage-cell {
+    font-size: 0.8em;
+    font-weight: 300;
+    color: #333;
+    text-align: center;
+  }
+  table.info-table td.value {
+    text-align: right;
+    padding: 0 0.5em;
+    background: none;
+    border: none;
+  }
   table.info-table tr td {
     padding: 0.25em;
   }

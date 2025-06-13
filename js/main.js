@@ -19,6 +19,7 @@ window.initMap = async function () {
 
   // --- Load Both Routes ---
   function loadKmlRoute(kmlUrl, polylineColor, fitBounds = false, routeIndex) {
+  return new Promise((resolve, reject) => {
     // Keep track of current route index
     const currentRouteIndex = routeIndex;
 
@@ -65,6 +66,7 @@ window.initMap = async function () {
         console.log(`[${kmlUrl}] Parsed path:`, path);
         if (!path.length) {
           console.error(`[${kmlUrl}] No valid path points parsed!`);
+          reject(new Error('No valid path points'));
           return;
         }
         // Draw polyline for this route
@@ -76,11 +78,24 @@ window.initMap = async function () {
           map,
           zIndex: 2,
         });
+        // --- Calculate total mileage for this route ---
+        let totalMeters = 0;
+        for (let i = 1; i < path.length; i++) {
+          const prev = path[i - 1];
+          const curr = path[i];
+          totalMeters += google.maps.geometry.spherical.computeDistanceBetween(
+            new google.maps.LatLng(prev.lat, prev.lng),
+            new google.maps.LatLng(curr.lat, curr.lng)
+          );
+        }
+        const totalMiles = totalMeters / 1609.344;
+        routePolyline.__mileageMiles = totalMiles;
         // Store polylines and markers in global arrays for table interaction
         if (!window.routePolylines) window.routePolylines = [];
         if (!window.routeMarkers) window.routeMarkers = [];
-if (!window.routeMarkers[currentRouteIndex]) window.routeMarkers[currentRouteIndex] = [];
+        if (!window.routeMarkers[currentRouteIndex]) window.routeMarkers[currentRouteIndex] = [];
         window.routePolylines[currentRouteIndex] = routePolyline;
+        resolve(totalMiles);
         // window.routeMarkers[currentRouteIndex] is initialized above if needed
         if (fitBounds) {
           const bounds = new google.maps.LatLngBounds();
@@ -208,10 +223,13 @@ async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
           marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
         });
       })
-      .catch((err) => console.error(`[${kmlUrl}] Failed to load KML:`, err));
+      .catch((err) => {
+        console.error(`Error loading KML route ${kmlUrl}:`, err);
+        reject(err);
+      });
+    });
   }
 
-  // Load up to 99 routes
   // 20 visually distinct, contrasting colors spaced around the color wheel
   const colors = [
     "#FF0000", // Red
@@ -285,11 +303,23 @@ async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
     // updateRouteLegend(routeMap, colors); // Removed so no extra legend is rendered above the table.
     // Now render the table rows for each route
     Object.entries(routeMap).forEach(([num, route], i) => {
+    if (!route.kml) return;
+    // Get mileage for this route (if available)
+    const mileage = (window.routePolylines && window.routePolylines[i]) ? window.routePolylines[i].__mileageMiles : null;
       if (!route.kml) return;
       const kmlPath = `data/${route.kml}`;
       const gpxPath = route.gpx ? `data/${route.gpx}` : null;
       const tr = document.createElement("tr");
       tr.className = "route-download-row";
+    // --- Mileage TD ---
+    const mileageTd = document.createElement("td");
+    mileageTd.className = "route-mileage-cell";
+    mileageTd.style.textAlign = "center";
+    mileageTd.style.fontWeight = "bold";
+    mileageTd.style.minWidth = "60px";
+    mileageTd.style.maxWidth = "80px";
+    mileageTd.textContent = mileage !== null ? mileage.toFixed(1) + ' mi' : '--';
+
       // Label TD
       const labelTd = document.createElement("td");
       labelTd.className = "label route-label";
@@ -343,6 +373,7 @@ async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
       }
       labelTd.style.setProperty("--route-color-bg", hexToRgba(colors[i % colors.length], 0.1));
       tr.appendChild(labelTd);
+    tr.appendChild(mileageTd);
       // --- Centralized highlight/dim logic ---
       function setRouteHighlight(activeIndex) {
   console.log('setRouteHighlight called with activeIndex:', activeIndex);
@@ -440,16 +471,18 @@ async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
     const resp = await fetch("data/routes.json");
     const kmlFiles = (await resp.json()).filter((f) => f.endsWith(".kml")).sort();
     let fitBoundsDone = false;
-    kmlFiles.forEach((file, i) => {
+    const promises = kmlFiles.map((file, i) => {
       const color = colors[i % colors.length];
       const kmlPath = `data/${file}`;
-      loadKmlRoute(kmlPath, color, !fitBoundsDone, i);
+      const p = loadKmlRoute(kmlPath, color, !fitBoundsDone, i);
       if (!fitBoundsDone) fitBoundsDone = true;
+      return p;
     });
+    await Promise.all(promises);
   }
 
-  await addRouteDownloadButtons();
   await loadAllKmlRoutes();
+  await addRouteDownloadButtons();
 };
 
 document.addEventListener("DOMContentLoaded", function () {
