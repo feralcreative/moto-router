@@ -106,7 +106,56 @@ window.initMap = async function () {
         const placemarks = kmlDoc.getElementsByTagNameNS(ns, "Placemark");
         const allPMs = Array.from(placemarks);
         const pointPMs = allPMs.filter((pm) => pm.getElementsByTagNameNS(ns, "Point").length > 0);
-        pointPMs.forEach((pm, i) => {
+        // Precompute cumulative miles for each waypoint
+let waypointCumulativeMiles = [];
+let waypointMilesSinceLastGas = [];
+let lastGasIdx = 0;
+let lastGasMiles = 0;
+let cumulativeMeters = 0;
+for (let i = 0; i < pointPMs.length; i++) {
+  // Find the index of this waypoint in the path array
+  const pointEl = pointPMs[i].getElementsByTagNameNS(ns, "Point")[0];
+  if (!pointEl) { waypointCumulativeMiles.push(null); waypointMilesSinceLastGas.push(null); continue; }
+  const coordsEl = pointEl.getElementsByTagNameNS(ns, "coordinates")[0];
+  if (!coordsEl) { waypointCumulativeMiles.push(null); waypointMilesSinceLastGas.push(null); continue; }
+  const [lng, lat] = coordsEl.textContent.trim().split(",").map(Number);
+  // Find the closest point in the path
+  let minIdx = 0, minDist = Infinity;
+  for (let j = 0; j < path.length; j++) {
+    const d = Math.abs(path[j].lat - lat) + Math.abs(path[j].lng - lng);
+    if (d < minDist) { minDist = d; minIdx = j; }
+  }
+  // Sum meters up to this point
+  let meters = 0;
+  for (let j = 1; j <= minIdx; j++) {
+    meters += google.maps.geometry.spherical.computeDistanceBetween(
+      new google.maps.LatLng(path[j-1].lat, path[j-1].lng),
+      new google.maps.LatLng(path[j].lat, path[j].lng)
+    );
+  }
+  const miles = meters / 1609.344;
+  waypointCumulativeMiles.push(miles);
+  // Detect if this is a GAS stop (or treat first as GAS)
+  let nameEl = pointPMs[i].getElementsByTagNameNS(ns, "name")[0];
+  let name = nameEl ? nameEl.textContent : "";
+  let isGas = false;
+  if (i === 0) { isGas = true; }
+  else {
+    const prefixMatch = name.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW)\s+-\s+(.*)$/i);
+    if (prefixMatch && prefixMatch[1].toUpperCase() === "GAS") {
+      isGas = true;
+    }
+  }
+  if (isGas) {
+    lastGasIdx = i;
+    lastGasMiles = miles;
+    waypointMilesSinceLastGas.push(0);
+  } else {
+    waypointMilesSinceLastGas.push(miles - lastGasMiles);
+  }
+}
+
+pointPMs.forEach((pm, i) => {
           const pointEl = pm.getElementsByTagNameNS(ns, "Point")[0];
           if (!pointEl) return;
           const coordsEl = pointEl.getElementsByTagNameNS(ns, "coordinates")[0];
@@ -130,7 +179,24 @@ window.initMap = async function () {
             VIEW: "/img/icons/icon-view.svg",
           };
 
-          // --- SVG Icon Cache ---
+          // --- Waypoint Title Mapping ---
+function getWaypointTitle(role) {
+  switch ((role || '').toUpperCase()) {
+    case 'MEET': return 'Meeting Point';
+    case 'GAS': return 'Gas Stop';
+    case 'CAMP': return 'Campground';
+    case 'HOTEL': return 'Lodging';
+    case 'CHARGE': return 'EV Charging Stop';
+    case 'FOOD': return 'Meal Stop';
+    case 'POI': return 'Point of Interest';
+    case 'VIEW': return 'Scenic Point';
+    case 'COFFEE': return 'Coffee Shop';
+    case 'DRINKS': return 'Drinks';
+    default: return 'Waypoint';
+  }
+}
+
+// --- SVG Icon Cache ---
 window.svgIconCache = window.svgIconCache || {};
 async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
             const resp = await fetch(iconPath);
@@ -190,7 +256,7 @@ async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
                   window.routeMarkers[currentRouteIndex].push(marker);
                 }
                 const infowindow = new google.maps.InfoWindow({
-                  content: `<strong>${displayName}</strong><br/>${desc}`,
+                  content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(role)}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + ' mi' : '-'}</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + ' mi' : '-'}</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ''}`,
                   disableAutoPan: false,
                   shouldFocus: false,
                 });
@@ -214,13 +280,20 @@ async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
           // Store marker for highlight logic
           window.routeMarkers[currentRouteIndex].push(marker);
           const infowindow = new google.maps.InfoWindow({
-            content: `<strong>${displayName}</strong><br/>${desc}`,
+            content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(role)}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + ' mi' : '-'}</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + ' mi' : '-'}</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ''}`,
             disableAutoPan: false,
             shouldFocus: false,
           });
-          marker.addListener("mouseover", () => infowindow.open({ map, anchor: marker }));
-          marker.addListener("mouseout", () => infowindow.close());
-          marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
+          marker.addListener("mouseover", () => {
+            infowindow.open({ map, anchor: marker });
+          });
+          marker.addListener("mouseout", () => {
+            infowindow.close();
+          });
+          // Remove click-to-open for desktop, but keep for touch devices
+          if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
+          }
         });
       })
       .catch((err) => {
