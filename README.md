@@ -99,6 +99,26 @@ This file provides all the interactive logic for the ride route map pages. It is
 - It requires the Google Maps JavaScript API (with Geometry library) and expects the map container to have the ID `map`.
 - The route data files (`.kml`, `.gpx`, `routes.json`) must be present in the `data/` directory.
 
+### Dependencies and Environment
+
+This project uses the Google Maps JavaScript API with the Geometry library. You must provide your own API key. No new external dependencies were added during recent updates.
+
+The project also uses a shell script (`generate-routes-json.sh`) and `jq` for processing route files.
+
+#### Setting the Google Maps API Key
+
+For security and flexibility, the Google Maps API key is now loaded from an environment variable using a `.env` file. The template at `template/index.html` expects the key to be injected as `GOOGLE_MAPS_API_KEY`.
+
+Create a file named `.env` in the project root with the following contents:
+
+```env
+GOOGLE_MAPS_API_KEY=your-google-maps-api-key-here
+```
+
+Replace `your-google-maps-api-key-here` with your actual API key.
+
+If you share this project, share instructions for setting up the `.env` file but do **not** share your actual API key.
+
 ### Customization
 
 - To add new routes, update `routes.json` and add the corresponding `.kml`/`.gpx` files.
