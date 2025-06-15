@@ -101,9 +101,10 @@ This file provides all the interactive logic for the ride route map pages. It is
 
 ### Dependencies and Environment
 
-This project uses the Google Maps JavaScript API with the Geometry library. You must provide your own API key. No new external dependencies were added during recent updates.
+This project uses the Google Maps JavaScript API with the Geometry library. You must provide your own API key.
 
-The project also uses a shell script (`generate-routes-json.sh`) and `jq` for processing route files.
+**Additional dependencies:**
+- The project uses a shell script (`generate-routes-json.sh`) and [`jq`](https://stedolan.github.io/jq/) for processing route files. `jq` must be installed on your system to run the script.
 
 #### Setting the Google Maps API Key
 
