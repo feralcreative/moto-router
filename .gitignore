@@ -1,42 +1,13 @@
-# Ignore WordPress backup files
-**/*.wpress
-# Ignore macOS system files
 **/.DS_Store
-# Ignore temporary files
 **/_*
-# Ignore design files
 **/*.psd
 **/*.ai
-# Ignore Adobe Premiere project files
 **/*.prproj
 **/*.aep
-# Ignore video files
 **/*.mp4
 **/*.mov
 **/*.mkv
-# Ignore WordPress core folders
-wp-includes/
-wp-admin/
-wp-content/cache/
-wp-content/languages/
-wp-content/plugins/
-# Ignore Node.js modules
 node_modules/
-# Ignore environment variable files
 **/*.env
-# Ignore WordPress PHP files starting with wp-
-**/wp-*.php
-# Ignore the Twenty Twenty theme and its variations
-**/wp-content/themes/twenty*/
-# Ignore specific backup files
-wp-content/ai1wm-backups/*
-# Ignore XML-RPC file
-xmlrpc.php
-# Ignore readme and license files
-readme.html
-license.txt
-# Ignore the main index.php file
-/index.php
-# Ignore well-known directory
 .well-known/
-_archive
+logs

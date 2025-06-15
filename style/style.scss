@@ -33,7 +33,7 @@ $panel-shadow: rgba(0, 0, 0, 0.18);
   flex: 0 0 100px;
   font-size: 1em;
   font-weight: 600;
-  color: #888;
+  color: #666;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,22 +60,6 @@ $panel-shadow: rgba(0, 0, 0, 0.18);
   margin-top: 0;
   line-height: 1.1;
 }
-
-//   flex: 0 0 100px;
-//   font-size: 1em;
-//   font-weight: 600;
-//   color: #888;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: flex-start;
-//   min-width: fit-content;
-//   padding-left: 0;
-//   border: none;
-//   white-space: nowrap;
-//   margin-right: 4px;
-//   text-align: center;
-// }
 
 .waypoint-tooltip-title {
   font-size: 1.5em;
