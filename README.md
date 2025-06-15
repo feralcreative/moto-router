@@ -113,6 +113,21 @@ This file provides all the interactive logic for the ride route map pages. It is
 
 Each waypoint on the map can be assigned a type, which determines the icon used to represent it. The mapping is defined in the script as follows:
 
+---
+
+> **IMPORTANT: How to Trigger Waypoint Icons**
+>
+> To display the correct icon for a waypoint, **name the waypoint in your mapping software with a prefix in this format:**
+>
+> ```
+> TYPE - Waypoint Name
+> ```
+>
+> Where `TYPE` is one of the supported types above (e.g., `GAS - Chevron Station`).
+> This ensures the correct icon is displayed for each waypoint on the map.
+
+---
+
 | Type   | Icon                                                                         | File Location              |
 | ------ | ---------------------------------------------------------------------------- | -------------------------- |
 | MEET   | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />     | /img/icons/icon-meet.svg   |
@@ -126,15 +141,6 @@ Each waypoint on the map can be assigned a type, which determines the icon used 
 | POI    | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />       | /img/icons/icon-poi.svg    |
 | VIEW   | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />     | /img/icons/icon-view.svg   |
 
-_Note: Icons are shown at 25×25 pixels, matching their size on the map. This HTML format ensures correct rendering on GitHub._
-
-To trigger a specific waypoint type, name the waypoint in MyRouteApp with a prefix in the format:
-
-```
-TYPE - Waypoint Name
-```
-
-Where `TYPE` is one of the supported types above (e.g., `GAS - Chevron Station`). This ensures the correct icon is displayed for each waypoint.
 
 ### Route Colors
 
