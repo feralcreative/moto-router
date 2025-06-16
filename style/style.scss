@@ -111,16 +111,6 @@ a {
   padding: 1.5em 2em;
 }
 
-// Redwood Road Closure checkbox - make red
-#toggle-redwood-road {
-  accent-color: #d32f2f; // modern browsers
-}
-
-// Optional: fallback for older browsers
-#toggle-redwood-road:checked {
-  /* fallback for old browsers could use a custom solution if needed */
-}
-
 .floating-panel {
   position: fixed;
   bottom: 24px;
@@ -277,38 +267,14 @@ a {
           background: url("/img/dl.svg") no-repeat center/contain;
         }
       }
-      &.gpx-berfj-btn {
-        border-color: #7a3e9d;
-        background: #b266ff;
-        color: $white;
-        &:hover {
-          border-color: #5a2c70;
-          background: #a259e6;
-        }
-        &::before {
-          background: url("/img/dl.svg") no-repeat center/contain;
-        }
-      }
-      &.kml-berfj-btn {
-        border-color: #1e5c5c;
-        background: #26c6da;
-        color: $white;
-        &:hover {
-          border-color: #174141;
-          background: #00acc1;
-        }
-        &::before {
-          background: url("/img/dl.svg") no-repeat center/contain;
-        }
-      }
       &.mra-btn {
-        border-color: darken($mra, 25%);
+        border-color: darken($mra, 20%);
         background: url("../../img/dl.svg") no-repeat center/contain;
-        background: lighten($mra, 15%);
+        background: $mra;
         color: $white;
         &:hover {
-          border-color: darken($mra, 25%);
-          background: $mra;
+          border-color: darken($mra, 20%);
+          background: darken($mra, 10%);
         }
         &::before {
           background: url("/img/link.svg") no-repeat center/contain;
@@ -344,14 +310,13 @@ a {
   }
 
   table.info-table {
-    // Dim all route labels except the hovered one
-    &:hover .route-label {
+    // Dim all route labels except the hovered one (only when a label is hovered)
+    table.info-table:has(.route-label:hover) .route-label {
       opacity: 0.3;
       transition: opacity 0.15s;
     }
-    .route-label:hover,
-    .route-label:focus {
-      opacity: 1;
+    table.info-table .route-label:hover {
+      opacity: 1 !important;
       z-index: 1;
     }
     max-width: fit-content;

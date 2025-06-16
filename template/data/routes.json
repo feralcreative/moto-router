@@ -1,5 +1,5 @@
 [
-  "01-Oakland-to-Mt-Madonna.kml",
-  "02-Campsite-to-Meeting-Point.kml",
-  "03-Boardwalk-to-Campsite.kml"
+  { "kml": "01-Oakland-to-Mt-Madonna.kml", "mra": "https://google.com" },
+  { "kml": "02-Campsite-to-Meeting-Point.kml", "mra": "https://google.com" },
+  { "kml": "03-Boardwalk-to-Campsite.kml", "mra": "https://google.com" }
 ]
