@@ -3,7 +3,7 @@
 ## General
 
 - Be skeptical of your own fixes and code suggestions. Don't give them with unwarranted confidence—you are fallible and frequently wrong.
-- Do not add any new files without my explicit permission. If a given script or function is needed, it may already exist and you just can't see it.
+- Do not add any new files without explicit permission. If a given script or function is needed, it may already exist and you just can't see it.
 - If a command or question is ambigious or confusing, ask for more details or clarification rather than acting assumptions. Make no assumptions, ever.
 - When you give code snippets/fixes, be sure to explictly state which file it should be applied to
 
