@@ -379,14 +379,18 @@ window.initMap = async function () {
   ];
 
   // Populate the route legend with colored borders
-  function updateRouteLegend(routeMap, colors) {
+  function updateRouteLegend(routes, colors) {
     const legendDiv = document.getElementById("route-legend");
     if (!legendDiv) return;
     legendDiv.innerHTML = "";
-    Object.entries(routeMap).forEach(([routeNum, data], i) => {
+    routes.forEach((route, i) => {
+      if (!route.kml) return;
+      // Human-friendly name from filename
+      const match = route.kml.match(/^\d{2}-(.+)\.kml$/);
+      const routeName = match ? match[1].replace(/-/g, " ") : route.kml;
       const color = colors[i % colors.length];
       const span = document.createElement("span");
-      span.textContent = data.name;
+      span.textContent = routeName;
       span.style.display = "inline-block";
       span.style.padding = "2px 10px";
       span.style.margin = "0 6px 6px 0";
@@ -410,39 +414,16 @@ window.initMap = async function () {
     // Dynamically fetch available KML and GPX files from the data directory
     // This is a static list for now; in production, you would fetch this from the server or generate it server-side
     const resp = await fetch("data/routes.json");
-    const kmlFiles = (await resp.json()).filter((f) => f.endsWith(".kml")).sort();
-    const gpxFiles = kmlFiles.map((f) => f.replace(/\.kml$/, ".gpx"));
-
-    // Build a map of routeNum => { kml, gpx, name }
-    const routeMap = {};
-    kmlFiles.forEach((file) => {
-      const match = file.match(/^(\d{2})-(.+)\.kml$/);
-      if (match) {
-        const routeNum = match[1];
-        const routeName = match[2].replace(/-/g, " ");
-        if (!routeMap[routeNum]) routeMap[routeNum] = { name: routeName };
-        routeMap[routeNum]["kml"] = file;
-      }
-    });
-    gpxFiles.forEach((file) => {
-      const match = file.match(/^(\d{2})-(.+)\.gpx$/);
-      if (match) {
-        const routeNum = match[1];
-        if (!routeMap[routeNum]) routeMap[routeNum] = {};
-        routeMap[routeNum]["gpx"] = file;
-      }
-    });
-    // Update the legend after building the route map
-    // updateRouteLegend(routeMap, colors); // Removed so no extra legend is rendered above the table.
+    const routes = await resp.json();
     // Now render the table rows for each route
-    Object.entries(routeMap).forEach(([num, route], i) => {
+    routes.forEach((route, i) => {
       if (!route.kml) return;
       // Get mileage for this route (if available)
       const mileage =
         window.routePolylines && window.routePolylines[i] ? window.routePolylines[i].__mileageMiles : null;
-      if (!route.kml) return;
       const kmlPath = `data/${route.kml}`;
-      const gpxPath = route.gpx ? `data/${route.gpx}` : null;
+      const gpxPath = route.kml ? `data/${route.kml.replace(/\.kml$/, '.gpx')}` : null;
+      const mraUrl = route.mra || "";
       const tr = document.createElement("tr");
       tr.className = "route-download-row";
       // --- Mileage TD ---
@@ -458,7 +439,11 @@ window.initMap = async function () {
       const labelTd = document.createElement("td");
       labelTd.className = "label route-label";
       // Show human-friendly route name (e.g., 'Oakland to Mt Madonna')
-      const friendlyName = route.name.replace(/-/g, " ");
+      let friendlyName = route.name;
+      if (!friendlyName && route.kml) {
+        const match = route.kml.match(/^\d{2}-(.+)\.kml$/);
+        friendlyName = match ? match[1].replace(/-/g, " ") : route.kml;
+      }
       // Detect role prefix (e.g., MEET, CAMP, etc.)
       const roleMatch = friendlyName.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|COFFEE|POI|VIEW)\b/i);
       let iconHtml = "";
@@ -592,6 +577,16 @@ window.initMap = async function () {
       kmlBtn.textContent = "KML";
       btnGroup.appendChild(kmlBtn);
 
+      // MRA
+      if (mraUrl && typeof mraUrl === "string" && mraUrl.trim() !== "") {
+        const mraBtn = document.createElement("a");
+        mraBtn.className = "btn btn-sm btn-primary mra-btn";
+        mraBtn.href = mraUrl;
+        mraBtn.target = "_blank";
+        mraBtn.textContent = "MRA";
+        btnGroup.appendChild(mraBtn);
+      }
+
       btnTd.appendChild(btnGroup);
       tr.appendChild(btnTd);
       table.appendChild(tr);
@@ -601,13 +596,14 @@ window.initMap = async function () {
   // --- End of addRouteDownloadButtons ---
 
   async function loadAllKmlRoutes() {
-    // This is a static list for now; in production, fetch from server or manifest
+    // Now expects array of objects: [{ kml, mra }]
     const resp = await fetch("data/routes.json");
-    const kmlFiles = (await resp.json()).filter((f) => f.endsWith(".kml")).sort();
+    const routes = await resp.json();
     let fitBoundsDone = false;
-    const promises = kmlFiles.map((file, i) => {
+    const promises = routes.map((route, i) => {
+      if (!route.kml) return Promise.resolve();
       const color = colors[i % colors.length];
-      const kmlPath = `data/${file}`;
+      const kmlPath = `data/${route.kml}`;
       const p = loadKmlRoute(kmlPath, color, !fitBoundsDone, i);
       if (!fitBoundsDone) fitBoundsDone = true;
       return p;
@@ -617,6 +613,11 @@ window.initMap = async function () {
 
   await loadAllKmlRoutes();
   await addRouteDownloadButtons();
+
+  // Fetch routes again to update the legend (reuse same fetch logic)
+  const resp = await fetch("data/routes.json");
+  const routes = await resp.json();
+  updateRouteLegend(routes, colors);
 };
 
 document.addEventListener("DOMContentLoaded", function () {

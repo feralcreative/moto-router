@@ -24,7 +24,7 @@
   flex: 0 0 100px;
   font-size: 1em;
   font-weight: 600;
-  color: #888;
+  color: #666;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -106,14 +106,6 @@ a:hover {
 
 #info-panel {
   padding: 1.5em 2em;
-}
-
-#toggle-redwood-road {
-  accent-color: #d32f2f;
-}
-
-#toggle-redwood-road:checked {
-  /* fallback for old browsers could use a custom solution if needed */
 }
 
 .floating-panel {
@@ -261,39 +253,15 @@ a:hover {
 .floating-panel .buttons a.kml-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
-.floating-panel .buttons a.gpx-berfj-btn {
-  border-color: #7a3e9d;
-  background: #b266ff;
-  color: #fff;
-}
-.floating-panel .buttons a.gpx-berfj-btn:hover {
-  border-color: #5a2c70;
-  background: #a259e6;
-}
-.floating-panel .buttons a.gpx-berfj-btn::before {
-  background: url("/img/dl.svg") no-repeat center/contain;
-}
-.floating-panel .buttons a.kml-berfj-btn {
-  border-color: #1e5c5c;
-  background: #26c6da;
-  color: #fff;
-}
-.floating-panel .buttons a.kml-berfj-btn:hover {
-  border-color: #174141;
-  background: #00acc1;
-}
-.floating-panel .buttons a.kml-berfj-btn::before {
-  background: url("/img/dl.svg") no-repeat center/contain;
-}
 .floating-panel .buttons a.mra-btn {
-  border-color: #08294d;
+  border-color: #0b3564;
   background: url("../../img/dl.svg") no-repeat center/contain;
-  background: #388be9;
+  background: #1565c0;
   color: #fff;
 }
 .floating-panel .buttons a.mra-btn:hover {
-  border-color: #08294d;
-  background: #1565c0;
+  border-color: #0b3564;
+  background: #104d92;
 }
 .floating-panel .buttons a.mra-btn::before {
   background: url("/img/link.svg") no-repeat center/contain;
@@ -312,13 +280,12 @@ a:hover {
   table.info-table {
     max-width: fit-content;
   }
-  table.info-table:hover .route-label {
+  table.info-table table.info-table:has(.route-label:hover) .route-label {
     opacity: 0.3;
     transition: opacity 0.15s;
   }
-  table.info-table .route-label:hover,
-  table.info-table .route-label:focus {
-    opacity: 1;
+  table.info-table table.info-table .route-label:hover {
+    opacity: 1 !important;
     z-index: 1;
   }
   table.info-table td.label,

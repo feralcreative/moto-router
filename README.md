@@ -99,6 +99,21 @@ This file provides all the interactive logic for the ride route map pages. It is
 - It requires the Google Maps JavaScript API (with Geometry library) and expects the map container to have the ID `map`.
 - The route data files (`.kml`, `.gpx`, `routes.json`) must be present in the `data/` directory.
 
+### Adding MyRoute-app (MRA) Links
+
+To display a blue **MRA** button for each route (linking directly to MyRoute-app), edit `template/data/routes.json` and add the MRA URL for each route in the `mra` field. Example:
+
+```json
+[
+  { "kml": "01-Oakland-to-Mt-Madonna.kml", "mra": "https://www.myrouteapp.com/route/123456" },
+  { "kml": "02-Campsite-to-Meeting-Point.kml", "mra": "" },
+  { "kml": "03-Boardwalk-to-Campsite.kml", "mra": "https://www.myrouteapp.com/route/789012" }
+]
+```
+
+- If the `mra` field is filled with a valid URL, an **MRA** button will appear next to the KML and GPX buttons for that route.
+- Leave it as an empty string if you do not want an MRA button for that route.
+
 ### Dependencies and Environment
 
 This project uses the Google Maps JavaScript API with the Geometry library. You must provide your own API key.
