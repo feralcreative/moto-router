@@ -1,5 +1,14 @@
 [
-  { "kml": "01-Oakland-to-Mt-Madonna.kml", "mra": "https://google.com" },
-  { "kml": "02-Campsite-to-Meeting-Point.kml", "mra": "https://google.com" },
-  { "kml": "03-Boardwalk-to-Campsite.kml", "mra": "https://google.com" }
+  {
+    "kml": "01-Sample-Route-One.kml",
+    "mra": "https://www.myrouteapp.com/en/social/route/11456647?mode=share"
+  },
+  {
+    "kml": "02-Sample-Route-Two.kml",
+    "mra": "https://www.myrouteapp.com/en/social/route/11456717?mode=share"
+  },
+  {
+    "kml": "03-Sample-Route-Three.kml",
+    "mra": "https://www.myrouteapp.com/en/social/route/11456844?mode=share"
+  }
 ]
