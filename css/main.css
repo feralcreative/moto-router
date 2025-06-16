@@ -1,4 +1,9 @@
 @import url("https://feralcreative.dev/utils.min.css");
+html,
+body {
+  font: 400 16px/1.1em Lato;
+}
+
 .waypoint-tooltip-toprow {
   display: flex;
   flex-direction: row;
@@ -127,15 +132,21 @@ a:hover {
   bottom: 2vw;
   left: 2vw;
 }
-.floating-panel .panel-title {
+.floating-panel div.details {
+  max-width: 450px;
+}
+.floating-panel div.details .title {
   margin-bottom: 8px;
   color: #333;
   font-weight: bold;
   font-size: 1.5em;
   letter-spacing: 0.02em;
 }
+.floating-panel div.details p.description {
+  color: #333;
+}
 .floating-panel table {
-  width: 100%;
+  max-width: 40vw;
 }
 .floating-panel table tr {
   border-bottom: 1px dotted;
@@ -146,7 +157,6 @@ a:hover {
   overflow: hidden;
   font-size: 0.8em;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .floating-panel table tr td br {
   display: inline-block;
@@ -214,11 +224,11 @@ a:hover {
   width: 30%;
   font-size: 0.95em;
 }
-.floating-panel .buttons a.gpx-btn, .floating-panel .buttons a.kml-btn, .floating-panel .buttons a.mra-btn {
+.floating-panel .buttons a.gpx-btn, .floating-panel .buttons a.kml-btn, .floating-panel .buttons a.url-btn {
   width: fit-content;
   white-space: nowrap;
 }
-.floating-panel .buttons a.gpx-btn::before, .floating-panel .buttons a.kml-btn::before, .floating-panel .buttons a.mra-btn::before {
+.floating-panel .buttons a.gpx-btn::before, .floating-panel .buttons a.kml-btn::before, .floating-panel .buttons a.url-btn::before {
   display: inline-block;
   position: relative;
   transform: translate(-25%, 25%);
@@ -253,17 +263,17 @@ a:hover {
 .floating-panel .buttons a.kml-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
-.floating-panel .buttons a.mra-btn {
+.floating-panel .buttons a.url-btn {
   border-color: #0b3564;
   background: url("../../img/dl.svg") no-repeat center/contain;
   background: #1565c0;
   color: #fff;
 }
-.floating-panel .buttons a.mra-btn:hover {
+.floating-panel .buttons a.url-btn:hover {
   border-color: #0b3564;
   background: #104d92;
 }
-.floating-panel .buttons a.mra-btn::before {
+.floating-panel .buttons a.url-btn::before {
   background: url("/img/link.svg") no-repeat center/contain;
 }
 
@@ -277,19 +287,19 @@ a:hover {
   .floating-panel {
     width: fit-content;
   }
-  table.info-table {
+  table.route-table {
     max-width: fit-content;
   }
-  table.info-table table.info-table:has(.route-label:hover) .route-label {
+  table.route-table table.route-table:has(.route-label:hover) .route-label {
     opacity: 0.3;
     transition: opacity 0.15s;
   }
-  table.info-table table.info-table .route-label:hover {
+  table.route-table table.route-table .route-label:hover {
     opacity: 1 !important;
     z-index: 1;
   }
-  table.info-table td.label,
-  table.info-table td.route-label {
+  table.route-table td.label,
+  table.route-table td.route-label {
     text-align: left;
     font-weight: 800;
     font-size: 1em;
@@ -297,25 +307,25 @@ a:hover {
     color: #333;
     border-radius: 10px;
   }
-  table.info-table td.route-mileage-cell {
+  table.route-table td.route-mileage-cell {
     font-size: 0.8em;
     font-weight: 300;
     color: #333;
     text-align: center;
   }
-  table.info-table td.value {
+  table.route-table td.value {
     text-align: right;
     padding: 0 0.5em;
     background: none;
     border: none;
   }
-  table.info-table tr td {
+  table.route-table tr td {
     padding: 0.25em;
   }
-  table.info-table tr td br {
+  table.route-table tr td br {
     display: inline-block;
   }
-  table.info-table tr td.value {
+  table.route-table tr td.value {
     width: fit-content;
   }
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=main.css.map */

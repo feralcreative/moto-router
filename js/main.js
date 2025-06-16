@@ -18,6 +18,7 @@
 console.log("Inline JS: head tag parsed");
 
 window.initMap = async function () {
+  console.log('[initMap] ENTER');
   // Inject CSS to hide the close (X) button on Google Maps InfoWindows
   const style = document.createElement("style");
   style.innerHTML = ".gm-ui-hover-effect { display: none !important; }";
@@ -36,6 +37,7 @@ window.initMap = async function () {
 
   // --- Load Both Routes ---
   function loadKmlRoute(kmlUrl, polylineColor, fitBounds = false, routeIndex) {
+  console.log('[loadKmlRoute] ENTER', kmlUrl, polylineColor, fitBounds, routeIndex);
     return new Promise((resolve, reject) => {
       // Keep track of current route index
       const currentRouteIndex = routeIndex;
@@ -396,24 +398,28 @@ window.initMap = async function () {
     table.style.borderCollapse = "collapse";
 
     routes.forEach((route, i) => {
-      if (!route.kml) return;
-      const match = route.kml.match(/^\d{2}-(.+)\.kml$/);
-      const routeName = match ? match[1].replace(/-/g, " ") : route.kml;
+      // Use base name for legend
+      const base = route.base || '';
+      // Remove numeric prefix and dashes for display
+      let routeName = base.replace(/^\d{2}-/, '').replace(/-/g, ' ');
+      if (!routeName) routeName = base;
       const color = colors[i % colors.length];
 
       const tr = document.createElement("tr");
-      tr.style.verticalAlign = "middle";
-
-      // Legend/sample line and route name cell
       const tdLegend = document.createElement("td");
-      tdLegend.style.padding = "4px 0";
-      // Sample line
+      tdLegend.style.borderLeft = `8px solid ${color}`;
+      tdLegend.style.padding = "4px 8px";
+      tdLegend.style.fontSize = "1em";
+      tdLegend.style.fontWeight = "bold";
+      tdLegend.style.background = "#fff";
+      tdLegend.style.color = color;
+
+      // Color swatch
       const lineSample = document.createElement("span");
       lineSample.style.display = "inline-block";
-      lineSample.style.width = "32px";
-      lineSample.style.height = "6px";
+      lineSample.style.width = "18px";
+      lineSample.style.height = "4px";
       lineSample.style.background = color;
-      lineSample.style.borderRadius = "4px";
       lineSample.style.marginRight = "8px";
       tdLegend.appendChild(lineSample);
       // Route name
@@ -427,12 +433,13 @@ window.initMap = async function () {
 
       // Ensure polylines and markers are visible by default
       if (window.routePolylines && window.routePolylines[i]) {
-        window.routePolylines[i].setMap(window.mapInstance);
+        window.routePolylines[i].setMap(window.mapInstance || map);
       }
       if (window.routeMarkers && window.routeMarkers[i]) {
-        window.routeMarkers[i].forEach((marker) => marker.setMap(window.mapInstance));
+        window.routeMarkers[i].forEach((marker) => marker.setMap(window.mapInstance || map));
       }
     });
+    legendDiv.appendChild(table);
   }
 
   // Ensure map instance is globally accessible for toggling
@@ -441,26 +448,24 @@ window.initMap = async function () {
   }
 
   // Dynamically build download buttons for each route
-  async function addRouteDownloadButtons() {
-    const table = document.querySelector(".info-table");
+  async function addRouteDownloadButtons(routes) {
+    const table = document.querySelector(".route-table");
     if (!table) return;
 
     // Remove old route rows if re-running
     Array.from(table.querySelectorAll(".route-download-row")).forEach((row) => row.remove());
-
-    // Dynamically fetch available KML and GPX files from the data directory
-    // This is a static list for now; in production, you would fetch this from the server or generate it server-side
-    const resp = await fetch("data/routes.json");
-    const routes = await resp.json();
-    // Now render the table rows for each route
-    routes.forEach((route, i) => {
-      if (!route.kml) return;
+    console.log("[addRouteDownloadButtons] Loaded routes:", routes);
+    for (let i = 0; i < routes.length; i++) {
+      const route = routes[i];
+      if (!route.base) continue;
+      const base = route.base;
       // Get mileage for this route (if available)
       const mileage =
         window.routePolylines && window.routePolylines[i] ? window.routePolylines[i].__mileageMiles : null;
-      const kmlPath = `data/${route.kml}`;
-      const gpxPath = route.kml ? `data/${route.kml.replace(/\.kml$/, ".gpx")}` : null;
-      const mraUrl = route.mra || "";
+      const kmlPath = `data/${base}.kml`;
+      const gpxPath = `data/${base}.gpx`;
+      // URL will be fetched dynamically below
+
       const tr = document.createElement("tr");
       tr.className = "route-download-row";
       // --- Checkbox TD ---
@@ -502,9 +507,9 @@ window.initMap = async function () {
       labelTd.className = "label route-label";
       // Show human-friendly route name (e.g., 'Oakland to Mt Madonna')
       let friendlyName = route.name;
-      if (!friendlyName && route.kml) {
-        const match = route.kml.match(/^\d{2}-(.+)\.kml$/);
-        friendlyName = match ? match[1].replace(/-/g, " ") : route.kml;
+      if (!friendlyName && base) {
+        const match = base.match(/^[0-9]{2}-(.+)$/);
+        friendlyName = match ? match[1].replace(/-/g, " ") : base;
       }
       // Detect role prefix (e.g., MEET, CAMP, etc.)
       const roleMatch = friendlyName.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|COFFEE|POI|VIEW|GROCERY)\b/i);
@@ -616,71 +621,152 @@ window.initMap = async function () {
       // --- Map highlight on hover ---
       labelTd.addEventListener("mouseenter", () => setRouteHighlight(i));
       labelTd.addEventListener("mouseleave", () => setRouteHighlight(null));
-      // Buttons TD
       const btnTd = document.createElement("td");
       btnTd.className = "value";
       const btnGroup = document.createElement("div");
-      btnGroup.className = "buttons";
+      btnGroup.className = "btn-group btn-group-sm";
 
       // GPX
-      if (gpxPath) {
-        const gpxBtn = document.createElement("a");
-        gpxBtn.className = "btn btn-sm btn-outline-primary gpx-btn";
-        gpxBtn.href = gpxPath;
-        gpxBtn.target = "_blank";
-        gpxBtn.textContent = "GPX";
-        btnGroup.appendChild(gpxBtn);
-      }
+      let gpxExists = false;
+      try {
+        const gpxResp = await fetch(`data/${base}.gpx`, { method: "HEAD" });
+        gpxExists = gpxResp.ok;
+        if (gpxExists) {
+          const gpxBtn = document.createElement("a");
+          gpxBtn.className = "btn btn-sm btn-success gpx-btn";
+          gpxBtn.href = `data/${base}.gpx`;
+          gpxBtn.download = `${base}.gpx`;
+          gpxBtn.textContent = "GPX";
+          btnGroup.appendChild(gpxBtn);
+        }
+      } catch {}
 
       // KML
-      const kmlBtn = document.createElement("a");
-      kmlBtn.className = "btn btn-sm btn-outline-success kml-btn";
-      kmlBtn.href = kmlPath;
-      kmlBtn.target = "_blank";
-      kmlBtn.textContent = "KML";
-      btnGroup.appendChild(kmlBtn);
+      let kmlExists = false;
+      try {
+        const kmlResp = await fetch(`data/${base}.kml`, { method: "HEAD" });
+        kmlExists = kmlResp.ok;
+        if (kmlExists) {
+          const kmlBtn = document.createElement("a");
+          kmlBtn.className = "btn btn-sm btn-danger kml-btn";
+          kmlBtn.href = `data/${base}.kml`;
+          kmlBtn.download = `${base}.kml`;
+          kmlBtn.textContent = "KML";
+          btnGroup.appendChild(kmlBtn);
+        }
+      } catch {}
 
-      // MRA
-      if (mraUrl && typeof mraUrl === "string" && mraUrl.trim() !== "") {
-        const mraBtn = document.createElement("a");
-        mraBtn.className = "btn btn-sm btn-primary mra-btn";
-        mraBtn.href = mraUrl;
-        mraBtn.target = "_blank";
-        mraBtn.textContent = "MRA";
-        btnGroup.appendChild(mraBtn);
-      }
+      // URL
+      try {
+        const urlResp = await fetch(`data/${base}.url`);
+        if (urlResp.ok) {
+          const urlText = await urlResp.text();
+          const urlUrl = urlText.trim();
+          if (urlUrl) {
+            const urlBtn = document.createElement("a");
+            urlBtn.className = "btn btn-sm btn-primary url-btn";
+            urlBtn.href = urlUrl;
+            urlBtn.target = "_blank";
+            urlBtn.textContent = "URL";
+            btnGroup.appendChild(urlBtn);
+          }
+        }
+      } catch {}
 
       btnTd.appendChild(btnGroup);
       tr.appendChild(btnTd);
       table.appendChild(tr);
-    });
-  }
 
-  // --- End of addRouteDownloadButtons ---
+      // --- End of addRouteDownloadButtons ---
+    }
 
-  async function loadAllKmlRoutes() {
-    // Now expects array of objects: [{ kml, mra }]
+    async function loadAllKmlRoutes(routes) {
+  console.log('[loadAllKmlRoutes] ENTER', routes);
+  let allPoints = [];
+      console.log("[loadAllKmlRoutes] Called with routes:", routes);
+      // Now expects array of objects: [{ base }]
+      let fitBoundsDone = false;
+      const promises = routes.map((route, i) => {
+        console.log("[loadAllKmlRoutes] Processing route:", route);
+        if (!route.base) return Promise.resolve();
+        const color = colors[i % colors.length];
+        const kmlPath = `data/${route.base}.kml`;
+        console.log(`[loadAllKmlRoutes] [${i}] Attempting fetch for KML:`, kmlPath);
+        // Wrap loadKmlRoute to collect points
+        return fetch(kmlPath)
+          .then((res) => {
+            console.log(`[loadAllKmlRoutes] [${i}] fetch response for ${kmlPath}:`, res.status, res.ok);
+            return res.text();
+          })
+          .then((kmlText) => {
+            console.log(`[loadAllKmlRoutes] [${i}] fetch response text for ${kmlPath}:`, kmlText);
+            const xmlIdx = kmlText.indexOf("<?xml");
+            const cleanText = xmlIdx >= 0 ? kmlText.slice(xmlIdx) : kmlText;
+            const parser = new DOMParser();
+            const kmlDoc = parser.parseFromString(cleanText, "application/xml");
+            const ns = kmlDoc.documentElement.namespaceURI;
+            let coordsEls = kmlDoc.getElementsByTagNameNS(ns, "coordinates");
+            if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagNameNS("*", "coordinates");
+            if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagName("coordinates");
+            let maxCount = 0;
+            let coordEl = coordsEls[0];
+            Array.from(coordsEls).forEach((el) => {
+              const count = el.textContent.trim().split(/\s+/).length;
+              if (count > maxCount) {
+                maxCount = count;
+                coordEl = el;
+              }
+            });
+            const coordText = coordEl.textContent.trim();
+            const path = coordText
+              .split(/\s+/)
+              .map((pair) => {
+                const [lng, lat] = pair.split(",").map(Number);
+                return { lat, lng };
+              })
+              .filter((pt) => !isNaN(pt.lat) && !isNaN(pt.lng));
+            allPoints = allPoints.concat(path);
+            return loadKmlRoute(kmlPath, color, false, i);
+          });
+      });
+      await Promise.all(promises);
+      // Fit map to all collected points
+      if (allPoints.length) {
+        const bounds = new google.maps.LatLngBounds();
+        allPoints.forEach((pt) => bounds.extend(pt));
+        map.fitBounds(bounds);
+      }
+    }
+
+    // End of helper function definitions
+
+    // --- ACTUALLY RUN THE ROUTE LOADING AND BUTTON BUILDING HERE ---
+    console.log('[initMap] Fetching routes.json...');
     const resp = await fetch("data/routes.json");
     const routes = await resp.json();
-    let fitBoundsDone = false;
-    const promises = routes.map((route, i) => {
-      if (!route.kml) return Promise.resolve();
-      const color = colors[i % colors.length];
-      const kmlPath = `data/${route.kml}`;
-      const p = loadKmlRoute(kmlPath, color, !fitBoundsDone, i);
-      if (!fitBoundsDone) fitBoundsDone = true;
-      return p;
-    });
-    await Promise.all(promises);
+    console.log('[initMap] routes loaded:', routes);
+    try {
+      console.log('[initMap] Calling loadAllKmlRoutes...');
+      await loadAllKmlRoutes(routes);
+      console.log('[initMap] loadAllKmlRoutes DONE');
+    } catch (e) {
+      console.error('[initMap] loadAllKmlRoutes ERROR', e);
+    }
+    try {
+      console.log('[initMap] Calling addRouteDownloadButtons...');
+      await addRouteDownloadButtons(routes);
+      console.log('[initMap] addRouteDownloadButtons DONE');
+    } catch (e) {
+      console.error('[initMap] addRouteDownloadButtons ERROR', e);
+    }
+    try {
+      console.log('[initMap] Calling updateRouteLegend...');
+      updateRouteLegend(routes, colors);
+      console.log('[initMap] updateRouteLegend DONE');
+    } catch (e) {
+      console.error('[initMap] updateRouteLegend ERROR', e);
+    }
   }
-
-  await loadAllKmlRoutes();
-  await addRouteDownloadButtons();
-
-  // Fetch routes again to update the legend (reuse same fetch logic)
-  const resp = await fetch("data/routes.json");
-  const routes = await resp.json();
-  updateRouteLegend(routes, colors);
 };
 
 document.addEventListener("DOMContentLoaded", function () {
