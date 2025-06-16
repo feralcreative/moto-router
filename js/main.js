@@ -207,6 +207,7 @@ window.initMap = async function () {
               COFFEE: "/img/icons/icon-coffee.svg",
               POI: "/img/icons/icon-poi.svg",
               VIEW: "/img/icons/icon-view.svg",
+              GROCERY: "/img/icons/icon-grocery.svg",
             };
 
             // --- Waypoint Title Mapping ---
@@ -232,6 +233,8 @@ window.initMap = async function () {
                   return "Coffee Shop";
                 case "DRINKS":
                   return "Drinks";
+                case "GROCERY":
+                  return "Grocery Store";
                 default:
                   return "Waypoint";
               }
@@ -266,7 +269,9 @@ window.initMap = async function () {
             // Detect role prefix in name (e.g., MEET, CAMP, etc.)
             let role = null;
             let displayName = name;
-            const prefixMatch = name.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW)\s+-\s+(.*)$/i);
+            const prefixMatch = name.match(
+              /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY)\s+-\s+(.*)$/i
+            );
             let markerIcon = iconOpts; // default
             if (prefixMatch) {
               role = prefixMatch[1].toUpperCase();
@@ -383,24 +388,56 @@ window.initMap = async function () {
     const legendDiv = document.getElementById("route-legend");
     if (!legendDiv) return;
     legendDiv.innerHTML = "";
+
+    // Create table
+    const table = document.createElement("table");
+    table.className = "legend-table";
+    table.style.width = "100%";
+    table.style.borderCollapse = "collapse";
+
     routes.forEach((route, i) => {
       if (!route.kml) return;
-      // Human-friendly name from filename
       const match = route.kml.match(/^\d{2}-(.+)\.kml$/);
       const routeName = match ? match[1].replace(/-/g, " ") : route.kml;
       const color = colors[i % colors.length];
+
+      const tr = document.createElement("tr");
+      tr.style.verticalAlign = "middle";
+
+      // Legend/sample line and route name cell
+      const tdLegend = document.createElement("td");
+      tdLegend.style.padding = "4px 0";
+      // Sample line
+      const lineSample = document.createElement("span");
+      lineSample.style.display = "inline-block";
+      lineSample.style.width = "32px";
+      lineSample.style.height = "6px";
+      lineSample.style.background = color;
+      lineSample.style.borderRadius = "4px";
+      lineSample.style.marginRight = "8px";
+      tdLegend.appendChild(lineSample);
+      // Route name
       const span = document.createElement("span");
       span.textContent = routeName;
-      span.style.display = "inline-block";
-      span.style.padding = "2px 10px";
-      span.style.margin = "0 6px 6px 0";
-      span.style.border = `3px solid ${color}`;
-      span.style.borderRadius = "8px";
       span.style.fontWeight = "bold";
-      span.style.background = "#fff";
-      span.style.color = "#222";
-      legendDiv.appendChild(span);
+      tdLegend.appendChild(span);
+      tr.appendChild(tdLegend);
+
+      table.appendChild(tr);
+
+      // Ensure polylines and markers are visible by default
+      if (window.routePolylines && window.routePolylines[i]) {
+        window.routePolylines[i].setMap(window.mapInstance);
+      }
+      if (window.routeMarkers && window.routeMarkers[i]) {
+        window.routeMarkers[i].forEach((marker) => marker.setMap(window.mapInstance));
+      }
     });
+  }
+
+  // Ensure map instance is globally accessible for toggling
+  if (!window.mapInstance && typeof map !== "undefined") {
+    window.mapInstance = map;
   }
 
   // Dynamically build download buttons for each route
@@ -422,10 +459,35 @@ window.initMap = async function () {
       const mileage =
         window.routePolylines && window.routePolylines[i] ? window.routePolylines[i].__mileageMiles : null;
       const kmlPath = `data/${route.kml}`;
-      const gpxPath = route.kml ? `data/${route.kml.replace(/\.kml$/, '.gpx')}` : null;
+      const gpxPath = route.kml ? `data/${route.kml.replace(/\.kml$/, ".gpx")}` : null;
       const mraUrl = route.mra || "";
       const tr = document.createElement("tr");
       tr.className = "route-download-row";
+      // --- Checkbox TD ---
+      const tdCheckbox = document.createElement("td");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = true;
+      checkbox.style.marginRight = "8px";
+      // Set accent color to match route line color
+      if ("accentColor" in checkbox.style) {
+        checkbox.style.accentColor = colors[i % colors.length];
+      } else {
+        // Fallback for browsers that do not support accentColor
+        checkbox.style.outline = `2px solid ${colors[i % colors.length]}`;
+      }
+      checkbox.addEventListener("change", function () {
+        // Toggle polyline
+        if (window.routePolylines && window.routePolylines[i]) {
+          window.routePolylines[i].setMap(this.checked ? window.mapInstance : null);
+        }
+        // Toggle markers
+        if (window.routeMarkers && window.routeMarkers[i]) {
+          window.routeMarkers[i].forEach((marker) => marker.setMap(this.checked ? window.mapInstance : null));
+        }
+      });
+      tdCheckbox.appendChild(checkbox);
+      tr.appendChild(tdCheckbox);
       // --- Mileage TD ---
       const mileageTd = document.createElement("td");
       mileageTd.className = "route-mileage-cell";
@@ -445,7 +507,7 @@ window.initMap = async function () {
         friendlyName = match ? match[1].replace(/-/g, " ") : route.kml;
       }
       // Detect role prefix (e.g., MEET, CAMP, etc.)
-      const roleMatch = friendlyName.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|COFFEE|POI|VIEW)\b/i);
+      const roleMatch = friendlyName.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|COFFEE|POI|VIEW|GROCERY)\b/i);
       let iconHtml = "";
       if (roleMatch) {
         const role = roleMatch[1].toUpperCase();
@@ -454,6 +516,7 @@ window.initMap = async function () {
           CAMP: "icon-camp.svg",
           GAS: "icon-gas.svg",
           CHARGE: "icon-charge.svg",
+          GROCERY: "icon-grocery.svg",
           FOOD: "icon-food.svg",
           HOTEL: "icon-hotel.svg",
           DRINKS: "icon-drinks.svg",
