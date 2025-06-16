@@ -1,14 +1,1 @@
-[
-  {
-    "kml": "01-Sample-Route-One.kml",
-    "mra": "https://www.myrouteapp.com/en/social/route/11456647?mode=share"
-  },
-  {
-    "kml": "02-Sample-Route-Two.kml",
-    "mra": "https://www.myrouteapp.com/en/social/route/11456717?mode=share"
-  },
-  {
-    "kml": "03-Sample-Route-Three.kml",
-    "mra": "https://www.myrouteapp.com/en/social/route/11456844?mode=share"
-  }
-]
+[{ "base": "01-Sample-Route-One" }, { "base": "02-Sample-Route-Two" }, { "base": "03-Sample-Route-Three" }]

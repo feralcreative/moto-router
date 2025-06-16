@@ -1,6 +1,7 @@
 @import url("https://feralcreative.dev/utils.min.css");
+
 // Color Variables
-$mra: #1565c0;
+$url: #1565c0;
 $gpx: #43a047;
 $kml: #d32f2f;
 $white: #fff;
@@ -8,6 +9,11 @@ $grey: #ddd;
 $text: #333;
 $panel-bg: rgba(255, 255, 255, 0.97);
 $panel-shadow: rgba(0, 0, 0, 0.18);
+
+html,
+body {
+  font: 400 16px/1.1em Lato;
+}
 
 // Waypoint Tooltip Styles
 .waypoint-tooltip-toprow {
@@ -129,16 +135,22 @@ a {
     bottom: 2vw;
     left: 2vw;
   }
-  .panel-title {
-    margin-bottom: 8px;
-    color: $text;
-    font-weight: bold;
-    font-size: 1.5em;
-    letter-spacing: 0.02em;
+  div.details {
+    max-width: 450px;
+    .title {
+      margin-bottom: 8px;
+      color: $text;
+      font-weight: bold;
+      font-size: 1.5em;
+      letter-spacing: 0.02em;
+    }
+    p.description {
+      color: $text;
+    }
   }
-
   table {
-    width: 100%;
+    max-width: 40vw;
+
     tr {
       border-bottom: 1px dotted;
 
@@ -148,7 +160,7 @@ a {
         overflow: hidden;
         font-size: 0.8em;
         text-overflow: ellipsis;
-        white-space: nowrap;
+        // white-space: nowrap;
         br {
           display: inline-block;
         }
@@ -162,7 +174,7 @@ a {
           margin: 0.2em 2em 0.2em 0;
           outline: none;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-          // border: 3px solid $mra;
+          // border: 3px solid $url;
           border-radius: 10px;
           background: $white;
           padding: 0;
@@ -182,7 +194,7 @@ a {
             vertical-align: middle;
             margin-right: 0.5em;
             border-radius: 50%;
-            background: $mra; // fallback, will be overridden inline
+            background: $url; // fallback, will be overridden inline
             width: 1.8em;
             height: 1.8em;
           }
@@ -193,13 +205,13 @@ a {
           }
           // For dynamic color support:
           &[data-color] {
-            border-color: attr(data-color color, $mra);
+            border-color: attr(data-color color, $url);
           }
           &:hover,
           &:focus {
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            border-color: darken($mra, 15%);
-            background: var(--route-color-bg, lighten($mra, 43%));
+            border-color: darken($url, 15%);
+            background: var(--route-color-bg, lighten($url, 43%));
           }
         }
         &.value {
@@ -228,7 +240,7 @@ a {
       font-size: 0.95em;
       &.gpx-btn,
       &.kml-btn,
-      &.mra-btn {
+      &.url-btn {
         width: fit-content;
         white-space: nowrap;
         &::before {
@@ -267,14 +279,14 @@ a {
           background: url("/img/dl.svg") no-repeat center/contain;
         }
       }
-      &.mra-btn {
-        border-color: darken($mra, 20%);
+      &.url-btn {
+        border-color: darken($url, 20%);
         background: url("../../img/dl.svg") no-repeat center/contain;
-        background: $mra;
+        background: $url;
         color: $white;
         &:hover {
-          border-color: darken($mra, 20%);
-          background: darken($mra, 10%);
+          border-color: darken($url, 20%);
+          background: darken($url, 10%);
         }
         &::before {
           background: url("/img/link.svg") no-repeat center/contain;
@@ -309,13 +321,13 @@ a {
     width: fit-content;
   }
 
-  table.info-table {
+  table.route-table {
     // Dim all route labels except the hovered one (only when a label is hovered)
-    table.info-table:has(.route-label:hover) .route-label {
+    table.route-table:has(.route-label:hover) .route-label {
       opacity: 0.3;
       transition: opacity 0.15s;
     }
-    table.info-table .route-label:hover {
+    table.route-table .route-label:hover {
       opacity: 1 !important;
       z-index: 1;
     }
