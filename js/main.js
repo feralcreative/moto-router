@@ -17,8 +17,18 @@
  */
 console.log("Inline JS: head tag parsed");
 
+// Track if map has been initialized to prevent multiple initializations
+window.mapInitialized = window.mapInitialized || false;
+
 window.initMap = async function () {
-  console.log('[initMap] ENTER');
+  console.log("[initMap] ENTER");
+  
+  // Guard against multiple initializations
+  if (window.mapInitialized) {
+    console.log("[initMap] Map already initialized, skipping");
+    return;
+  }
+  window.mapInitialized = true;
   // Inject CSS to hide the close (X) button on Google Maps InfoWindows
   const style = document.createElement("style");
   style.innerHTML = ".gm-ui-hover-effect { display: none !important; }";
@@ -34,19 +44,160 @@ window.initMap = async function () {
     mapId: "a14091e53ca43382",
   });
   console.log("Map instance created");
+  console.log("DEBUG: Before routes section");
+  
+  // Declare variables before any references to them
+  let routes = [];
+  const colors = ["#FF5252", "#448AFF", "#66BB6A", "#FFA000", "#9C27B0", "#00BCD4"];
+  window.routePolylines = [];
+  
+  // Check if window.routes already exists
+  console.log("DEBUG: window.routes exists?", !!window.routes, typeof window.routes);
+  console.log("DEBUG: routes exists?", typeof routes !== 'undefined', typeof routes);
 
-  // --- Load Both Routes ---
+  // --- FETCH ROUTES FIRST ---
+  console.log("DEBUG: About to fetch routes.json");
+  // Use absolute path for routes.json to match Express static routes
+  console.log("[initMap] Fetching routes.json from /data/routes.json");
+  try {
+    const resp = await fetch("/data/routes.json");
+    console.log("[initMap] routes.json fetch response:", resp.status, resp.ok, resp.headers.get("Content-Type"));
+    if (!resp.ok) {
+      throw new Error("[initMap] Failed to fetch routes.json: " + resp.statusText);
+    }
+    routes = await resp.json();
+    console.log("[initMap] routes loaded:", routes);
+    if (!Array.isArray(routes)) {
+      console.error("[initMap] routes is not an array:", routes);
+    } else if (routes.length === 0) {
+      console.warn("[initMap] routes array is empty!");
+    }
+    
+    // Process the routes after successful fetch
+    try {
+      console.log("[initMap] Calling loadAllKmlRoutes...");
+      await loadAllKmlRoutes(routes);
+      console.log("[initMap] loadAllKmlRoutes DONE");
+    } catch (e) {
+      console.error("[initMap] loadAllKmlRoutes ERROR", e);
+    }
+    try {
+      console.log("[initMap] Calling addRouteDownloadButtons...");
+      await addRouteDownloadButtons(routes);
+      console.log("[initMap] addRouteDownloadButtons DONE");
+    } catch (e) {
+      console.error("[initMap] addRouteDownloadButtons ERROR", e);
+    }
+    try {
+      console.log("[initMap] Calling updateRouteLegend...");
+      updateRouteLegend(routes, colors);
+      console.log("[initMap] updateRouteLegend DONE");
+    } catch (e) {
+      console.error("[initMap] updateRouteLegend ERROR", e);
+    }
+  } catch (err) {
+    console.error("[initMap] Error fetching or parsing routes.json:", err);
+    return;
+  }
+
+  // Define all helper functions first
+  console.log("DEBUG: Defining helper functions");
+  
+  // --- Define loadAllKmlRoutes function ---
+  async function loadAllKmlRoutes(routes) {
+    console.log("[loadAllKmlRoutes] ENTER with routes:", routes);
+    if (!routes || !Array.isArray(routes)) {
+      console.error("[loadAllKmlRoutes] No valid routes array provided");
+      return;
+    }
+    
+    const promises = [];
+    let allPoints = [];
+    
+    routes.forEach((route, i) => {
+      if (!route.base) {
+        console.warn(`[loadAllKmlRoutes] Route at index ${i} has no base property`);
+        return;
+      }
+      
+      const color = colors[i % colors.length];
+      const kmlPath = `/data/${route.base}.kml`;
+      console.log(`[loadAllKmlRoutes] Loading KML for route ${i}: ${kmlPath}`);
+      
+      promises.push(
+        fetch(kmlPath)
+          .then(res => {
+            if (!res.ok) {
+              console.error(`[loadAllKmlRoutes] Failed to fetch KML file (${kmlPath}):`, res.statusText);
+              throw new Error(`KML fetch error ${res.status}`);
+            }
+            return res.text();
+          })
+          .then(kmlText => {
+            console.log(`[loadAllKmlRoutes] [${i}] fetch response text for ${kmlPath}:`, kmlText);
+            const xmlIdx = kmlText.indexOf("<?xml");
+            const cleanText = xmlIdx >= 0 ? kmlText.slice(xmlIdx) : kmlText;
+            const parser = new DOMParser();
+            const kmlDoc = parser.parseFromString(cleanText, "application/xml");
+            const ns = kmlDoc.documentElement.namespaceURI;
+            let coordsEls = kmlDoc.getElementsByTagNameNS(ns, "coordinates");
+            if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagNameNS("*", "coordinates");
+            if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagName("coordinates");
+            let maxCount = 0;
+            let coordEl = coordsEls[0];
+            Array.from(coordsEls).forEach((el) => {
+              const count = el.textContent.trim().split(/\s+/).length;
+              if (count > maxCount) {
+                maxCount = count;
+                coordEl = el;
+              }
+            });
+            const coordText = coordEl.textContent.trim();
+            const path = coordText
+              .split(/\s+/)
+              .map((pair) => {
+                const [lng, lat] = pair.split(",").map(Number);
+                return { lat, lng };
+              })
+              .filter((pt) => !isNaN(pt.lat) && !isNaN(pt.lng));
+            allPoints = allPoints.concat(path);
+            return loadKmlRoute(kmlPath, color, false, i);
+          })
+      );
+    });
+    
+    await Promise.all(promises);
+    // Fit map to all collected points
+    if (allPoints.length) {
+      const bounds = new google.maps.LatLngBounds();
+      allPoints.forEach((pt) => bounds.extend(pt));
+      map.fitBounds(bounds);
+    }
+  }
+  
+  // --- Define loadKmlRoute function ---
+  console.log("DEBUG: Defining loadKmlRoute function");
   function loadKmlRoute(kmlUrl, polylineColor, fitBounds = false, routeIndex) {
-  console.log('[loadKmlRoute] ENTER', kmlUrl, polylineColor, fitBounds, routeIndex);
+    console.log("[loadKmlRoute] ENTER", kmlUrl, polylineColor, fitBounds, routeIndex);
+    if (!kmlUrl) {
+      console.error("[loadKmlRoute] No kmlUrl provided!", kmlUrl);
+      return;
+    }
     return new Promise((resolve, reject) => {
       // Keep track of current route index
       const currentRouteIndex = routeIndex;
 
+      console.log(`[loadKmlRoute] Fetching KML:`, kmlUrl);
       fetch(kmlUrl)
         .then((res) => {
-          console.log(`KML fetch status for ${kmlUrl}:`, res.status, "Content-Type:", res.headers.get("Content-Type"));
+          console.log(
+            `[loadKmlRoute] KML fetch response for ${kmlUrl}:`,
+            res.status,
+            res.ok,
+            res.headers.get("Content-Type")
+          );
           if (!res.ok) {
-            console.error(`Failed to fetch KML file (${kmlUrl}):`, res.statusText);
+            console.error(`[loadKmlRoute] Failed to fetch KML file (${kmlUrl}):`, res.statusText);
             throw new Error(`KML fetch error ${res.status}`);
           }
           return res.text();
@@ -55,26 +206,30 @@ window.initMap = async function () {
           console.log(`[${kmlUrl}] Raw KML length:`, kmlText.length);
           const xmlIdx = kmlText.indexOf("<?xml");
           const cleanText = xmlIdx >= 0 ? kmlText.slice(xmlIdx) : kmlText;
+          console.log(`[loadKmlRoute] KML cleanText length:`, cleanText.length);
           const parser = new DOMParser();
           const kmlDoc = parser.parseFromString(cleanText, "application/xml");
           const ns = kmlDoc.documentElement.namespaceURI;
           let coordsEls = kmlDoc.getElementsByTagNameNS(ns, "coordinates");
           if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagNameNS("*", "coordinates");
           if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagName("coordinates");
+          console.log(`[loadKmlRoute] coordsEls:`, coordsEls, coordsEls ? coordsEls.length : "null");
           if (!coordsEls || coordsEls.length === 0) {
             console.error(`[${kmlUrl}] No <coordinates> elements found in KML`, kmlDoc);
             return;
           }
           let maxCount = 0;
           let coordEl = coordsEls[0];
-          Array.from(coordsEls).forEach((el) => {
+          Array.from(coordsEls).forEach((el, idx) => {
             const count = el.textContent.trim().split(/\s+/).length;
+            console.log(`[loadKmlRoute] coordsEl[${idx}] count:`, count);
             if (count > maxCount) {
               maxCount = count;
               coordEl = el;
             }
           });
           const coordText = coordEl.textContent.trim();
+          console.log(`[loadKmlRoute] coordText:`, coordText.slice(0, 200), "...");
           const path = coordText
             .split(/\s+/)
             .map((pair) => {
@@ -84,7 +239,7 @@ window.initMap = async function () {
             .filter((pt) => !isNaN(pt.lat) && !isNaN(pt.lng));
           console.log(`[${kmlUrl}] Parsed path:`, path);
           if (!path.length) {
-            console.error(`[${kmlUrl}] No valid path points parsed!`);
+            console.error(`[${kmlUrl}] No valid path points parsed!`, coordText);
             reject(new Error("No valid path points"));
             return;
           }
@@ -109,17 +264,29 @@ window.initMap = async function () {
           }
           const totalMiles = totalMeters / 1609.344;
           routePolyline.__mileageMiles = totalMiles;
+          console.log(`[loadKmlRoute] totalMiles calculated:`, totalMiles);
           // Store polylines and markers in global arrays for table interaction
           if (!window.routePolylines) window.routePolylines = [];
+          console.log(`[loadKmlRoute] window.routePolylines initialized`, window.routePolylines);
           if (!window.routeMarkers) window.routeMarkers = [];
+          console.log(`[loadKmlRoute] window.routeMarkers initialized`, window.routeMarkers);
           if (!window.routeMarkers[currentRouteIndex]) window.routeMarkers[currentRouteIndex] = [];
+          console.log(
+            `[loadKmlRoute] window.routeMarkers[${currentRouteIndex}] initialized`,
+            window.routeMarkers[currentRouteIndex]
+          );
           window.routePolylines[currentRouteIndex] = routePolyline;
+          console.log(
+            `[loadKmlRoute] routePolyline added to window.routePolylines[${currentRouteIndex}]`,
+            routePolyline
+          );
           resolve(totalMiles);
           // window.routeMarkers[currentRouteIndex] is initialized above if needed
           if (fitBounds) {
             const bounds = new google.maps.LatLngBounds();
             path.forEach((point) => bounds.extend(point));
             map.fitBounds(bounds);
+            console.log(`[loadKmlRoute] map.fitBounds called`, bounds);
           }
           // Add KML waypoints as markers
           const placemarks = kmlDoc.getElementsByTagNameNS(ns, "Placemark");
@@ -367,28 +534,20 @@ window.initMap = async function () {
     });
   }
 
+  // Colors are already defined at the top of the initMap function
+  // Keeping the comments for documentation
   // 12 visually distinct, contrasting colors spaced around the color wheel
   // Dark, high-contrast, visually distinct route colors
-  const colors = [
-    "#cc0000", // Red
-    "#0000cc", // Blue
-    "#DD00DD", // Magenta
-    "#4A148C", // Purple
-    "#00aaaa", // Cyan
-    "#FF6F00", // Orange
-    "#4E342E", // Brown
-    "#006064", // Teal
-    "#0D1335", // Dark Blue
-    "#A0740B", // Mustard
-    "#003300", // Dark Green
-    "#550000", // Burgundy
-    "#8800DD", // Violet
-  ];
 
   // Populate the route legend with colored borders
   function updateRouteLegend(routes, colors) {
+    console.log("[updateRouteLegend] ENTER");
+    
     const legendDiv = document.getElementById("route-legend");
-    if (!legendDiv) return;
+    if (!legendDiv) {
+      console.warn("[updateRouteLegend] No #route-legend found in DOM");
+      return;
+    }
     legendDiv.innerHTML = "";
 
     // Create table
@@ -399,9 +558,9 @@ window.initMap = async function () {
 
     routes.forEach((route, i) => {
       // Use base name for legend
-      const base = route.base || '';
+      const base = route.base || "";
       // Remove numeric prefix and dashes for display
-      let routeName = base.replace(/^\d{2}-/, '').replace(/-/g, ' ');
+      let routeName = base.replace(/^\d{2}-/, "").replace(/-/g, " ");
       if (!routeName) routeName = base;
       const color = colors[i % colors.length];
 
@@ -447,10 +606,68 @@ window.initMap = async function () {
     window.mapInstance = map;
   }
 
+  // We need to allow buttons to be built each time initMap runs
+  // This ensures buttons are properly created with all styles and icons
+
   // Dynamically build download buttons for each route
+  // --- Centralized highlight/dim logic ---
+  function setRouteHighlight(activeIndex) {
+    // Polylines
+    if (window.routePolylines) {
+      window.routePolylines.forEach((polyline, idx) => {
+        if (polyline) {
+          polyline.setOptions({
+            strokeOpacity: activeIndex == null ? 0.6 : idx === activeIndex ? 1.0 : 0.3,
+            zIndex: activeIndex == null ? 1 : idx === activeIndex ? 2 : 1,
+          });
+        }
+      });
+    }
+    // Markers
+    if (window.routeMarkers) {
+      window.routeMarkers.forEach((markers, idx) => {
+        if (!markers) return;
+        const isActive = activeIndex == null ? null : idx === activeIndex;
+        markers.forEach((marker) => {
+          if (!marker) return;
+          // SVG
+          if (marker._svgIconPaths) {
+            const { iconPath, polylineColor } = marker._svgIconPaths;
+            const cache = window.svgIconCache[iconPath] && window.svgIconCache[iconPath][polylineColor];
+            if (cache) {
+              marker.setIcon({
+                url: isActive === null ? cache.full : isActive ? cache.full : cache.dim,
+                scaledSize: new google.maps.Size(25, 25),
+                anchor: new google.maps.Point(12.5, 12.5),
+              });
+            }
+          } else if (marker._isCircle) {
+            // Circle
+            const icon = marker.getIcon();
+            const newIcon = { ...icon };
+            if (isActive === null) {
+              newIcon.strokeOpacity = 1.0;
+              newIcon.fillOpacity = 1.0;
+            } else {
+              newIcon.strokeOpacity = isActive ? 1.0 : 0.3;
+              newIcon.fillOpacity = isActive ? 1.0 : 0.3;
+            }
+            marker.setIcon(newIcon);
+          }
+          marker.setZIndex(isActive === null ? 1 : isActive ? 2 : 1);
+        });
+      });
+    }
+  }
+
   async function addRouteDownloadButtons(routes) {
+    console.log("[addRouteDownloadButtons] ENTER");
+    
     const table = document.querySelector(".route-table");
-    if (!table) return;
+    if (!table) {
+      console.error("[addRouteDownloadButtons] No .route-table found in DOM");
+      return;
+    }
 
     // Remove old route rows if re-running
     Array.from(table.querySelectorAll(".route-download-row")).forEach((row) => row.remove());
@@ -561,63 +778,7 @@ window.initMap = async function () {
       labelTd.style.setProperty("--route-color-bg", hexToRgba(colors[i % colors.length], 0.1));
       tr.appendChild(labelTd);
       tr.appendChild(mileageTd);
-      // --- Centralized highlight/dim logic ---
-      function setRouteHighlight(activeIndex) {
-        console.log("setRouteHighlight called with activeIndex:", activeIndex);
-        console.log("window.routePolylines:", window.routePolylines);
-        console.log("window.routeMarkers:", window.routeMarkers);
-        // Polylines
-        window.routePolylines.forEach((polyline, idx) => {
-          console.log(`Polyline idx=${idx}, activeIndex=${activeIndex}, polyline=`, polyline);
-          polyline.setOptions({
-            strokeOpacity: activeIndex == null ? 0.6 : idx === activeIndex ? 1.0 : 0.3,
-            zIndex: activeIndex == null ? 1 : idx === activeIndex ? 2 : 1,
-          });
-        });
-        // Markers
-        window.routeMarkers.forEach((markers, idx) => {
-          console.log(`Markers for route idx=${idx}, activeIndex=${activeIndex}:`, markers);
-          if (!markers) return;
-          if (!markers) return;
-          const isActive = activeIndex == null ? null : idx === activeIndex;
-          markers.forEach((marker, markerIdx) => {
-            if (!marker) return;
-            if (marker._svgIconPaths) {
-              console.log(`  [SVG] Marker markerIdx=${markerIdx}, routeIdx=${idx}, iconPath=`, marker._svgIconPaths);
-            } else if (marker._isCircle) {
-              console.log(`  [CIRCLE] Marker markerIdx=${markerIdx}, routeIdx=${idx}`);
-            } else {
-              console.log(`  [UNKNOWN] Marker markerIdx=${markerIdx}, routeIdx=${idx}`);
-            }
-            if (!marker) return;
-            // SVG
-            if (marker._svgIconPaths) {
-              const { iconPath, polylineColor } = marker._svgIconPaths;
-              const cache = window.svgIconCache[iconPath] && window.svgIconCache[iconPath][polylineColor];
-              if (cache) {
-                marker.setIcon({
-                  url: isActive === null ? cache.full : isActive ? cache.full : cache.dim,
-                  scaledSize: new google.maps.Size(25, 25),
-                  anchor: new google.maps.Point(12.5, 12.5),
-                });
-              }
-            } else if (marker._isCircle) {
-              // Circle
-              const icon = marker.getIcon();
-              const newIcon = { ...icon };
-              if (isActive === null) {
-                newIcon.strokeOpacity = 1.0;
-                newIcon.fillOpacity = 1.0;
-              } else {
-                newIcon.strokeOpacity = isActive ? 1.0 : 0.3;
-                newIcon.fillOpacity = isActive ? 1.0 : 0.3;
-              }
-              marker.setIcon(newIcon);
-            }
-            marker.setZIndex(isActive === null ? 1 : isActive ? 2 : 1);
-          });
-        });
-      }
+      // Use the centralized highlight/dim function defined outside the loop
       // --- Map highlight on hover ---
       labelTd.addEventListener("mouseenter", () => setRouteHighlight(i));
       labelTd.addEventListener("mouseleave", () => setRouteHighlight(null));
@@ -680,94 +841,20 @@ window.initMap = async function () {
       // --- End of addRouteDownloadButtons ---
     }
 
-    async function loadAllKmlRoutes(routes) {
-  console.log('[loadAllKmlRoutes] ENTER', routes);
-  let allPoints = [];
-      console.log("[loadAllKmlRoutes] Called with routes:", routes);
-      // Now expects array of objects: [{ base }]
-      let fitBoundsDone = false;
-      const promises = routes.map((route, i) => {
-        console.log("[loadAllKmlRoutes] Processing route:", route);
-        if (!route.base) return Promise.resolve();
-        const color = colors[i % colors.length];
-        const kmlPath = `data/${route.base}.kml`;
-        console.log(`[loadAllKmlRoutes] [${i}] Attempting fetch for KML:`, kmlPath);
-        // Wrap loadKmlRoute to collect points
-        return fetch(kmlPath)
-          .then((res) => {
-            console.log(`[loadAllKmlRoutes] [${i}] fetch response for ${kmlPath}:`, res.status, res.ok);
-            return res.text();
-          })
-          .then((kmlText) => {
-            console.log(`[loadAllKmlRoutes] [${i}] fetch response text for ${kmlPath}:`, kmlText);
-            const xmlIdx = kmlText.indexOf("<?xml");
-            const cleanText = xmlIdx >= 0 ? kmlText.slice(xmlIdx) : kmlText;
-            const parser = new DOMParser();
-            const kmlDoc = parser.parseFromString(cleanText, "application/xml");
-            const ns = kmlDoc.documentElement.namespaceURI;
-            let coordsEls = kmlDoc.getElementsByTagNameNS(ns, "coordinates");
-            if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagNameNS("*", "coordinates");
-            if (!coordsEls || coordsEls.length === 0) coordsEls = kmlDoc.getElementsByTagName("coordinates");
-            let maxCount = 0;
-            let coordEl = coordsEls[0];
-            Array.from(coordsEls).forEach((el) => {
-              const count = el.textContent.trim().split(/\s+/).length;
-              if (count > maxCount) {
-                maxCount = count;
-                coordEl = el;
-              }
-            });
-            const coordText = coordEl.textContent.trim();
-            const path = coordText
-              .split(/\s+/)
-              .map((pair) => {
-                const [lng, lat] = pair.split(",").map(Number);
-                return { lat, lng };
-              })
-              .filter((pt) => !isNaN(pt.lat) && !isNaN(pt.lng));
-            allPoints = allPoints.concat(path);
-            return loadKmlRoute(kmlPath, color, false, i);
-          });
-      });
-      await Promise.all(promises);
-      // Fit map to all collected points
-      if (allPoints.length) {
-        const bounds = new google.maps.LatLngBounds();
-        allPoints.forEach((pt) => bounds.extend(pt));
-        map.fitBounds(bounds);
-      }
-    }
+    // Helper functions are already defined above
 
     // End of helper function definitions
-
-    // --- ACTUALLY RUN THE ROUTE LOADING AND BUTTON BUILDING HERE ---
-    console.log('[initMap] Fetching routes.json...');
-    const resp = await fetch("data/routes.json");
-    const routes = await resp.json();
-    console.log('[initMap] routes loaded:', routes);
-    try {
-      console.log('[initMap] Calling loadAllKmlRoutes...');
-      await loadAllKmlRoutes(routes);
-      console.log('[initMap] loadAllKmlRoutes DONE');
-    } catch (e) {
-      console.error('[initMap] loadAllKmlRoutes ERROR', e);
-    }
-    try {
-      console.log('[initMap] Calling addRouteDownloadButtons...');
-      await addRouteDownloadButtons(routes);
-      console.log('[initMap] addRouteDownloadButtons DONE');
-    } catch (e) {
-      console.error('[initMap] addRouteDownloadButtons ERROR', e);
-    }
-    try {
-      console.log('[initMap] Calling updateRouteLegend...');
-      updateRouteLegend(routes, colors);
-      console.log('[initMap] updateRouteLegend DONE');
-    } catch (e) {
-      console.error('[initMap] updateRouteLegend ERROR', e);
-    }
+    console.log("DEBUG: All helper functions defined");
+    // Removed duplicate calls to addRouteDownloadButtons and updateRouteLegend
+    // These are already called in the main initMap function after routes.json is fetched
   }
+  console.log("DEBUG: End of initMap function reached");
 };
+
+// Add a global error handler to catch any uncaught errors
+window.addEventListener("error", function (event) {
+  console.error("GLOBAL ERROR CAUGHT:", event.error);
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Inline JS: body tag parsed, running under", location.href);

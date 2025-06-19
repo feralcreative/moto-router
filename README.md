@@ -170,6 +170,35 @@ Handles all interactive map logic for ride route pages.
 
 ---
 
+## 🗺️ Route Loading Logic
+
+The map template loads and displays routes through the following process:
+
+1. **Configuration**:
+   - Routes are configured in `data/routes.json` as an array of objects: `[{ "base": "route-name" }, ...]`
+   - Each route's `base` property defines the filename prefix for its KML/GPX files
+   - Example: `{ "base": "01-Sample-Route-One" }` will load `data/01-Sample-Route-One.kml`
+
+2. **Loading Process**:
+   - The map initializes when Google Maps API loads and calls `window.initMap()`
+   - `initMap()` fetches route configuration from `/data/routes.json`
+   - For each route, it fetches and parses the corresponding KML file
+   - Coordinates are extracted from KML and converted to Google Maps polylines
+   - Each route is assigned a color from a predefined palette
+   - Polylines are added to the map and stored in `window.routePolylines`
+
+3. **UI Elements**:
+   - Download buttons are generated for each route's GPX/KML files
+   - A color-coded legend is created matching routes to their display colors
+   - Interactive elements allow highlighting routes on hover
+
+4. **Important Notes**:
+   - All data files must be accessible at `/data/` relative to the server root
+   - KML files must contain valid coordinate data in standard KML format
+   - The map container must have ID `map`
+
+---
+
 ## 📚 Further Customization
 
 - See comments in `index.html` and `/js/main.js` for advanced customizations or to contribute new features.
