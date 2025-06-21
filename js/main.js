@@ -22,7 +22,7 @@ window.mapInitialized = window.mapInitialized || false;
 
 window.initMap = async function () {
   console.log("[initMap] ENTER");
-  
+
   // Guard against multiple initializations
   if (window.mapInitialized) {
     console.log("[initMap] Map already initialized, skipping");
@@ -45,15 +45,31 @@ window.initMap = async function () {
   });
   console.log("Map instance created");
   console.log("DEBUG: Before routes section");
-  
+
   // Declare variables before any references to them
   let routes = [];
-  const colors = ["#FF5252", "#448AFF", "#66BB6A", "#FFA000", "#9C27B0", "#00BCD4"];
+  // 12 visually distinct, contrasting colors spaced around the color wheel
+  // Dark, high-contrast, visually distinct route colors
+  const colors = [
+    "#cc0000", // Red
+    "#0000cc", // Blue
+    "#DD00DD", // Magenta
+    "#4A148C", // Purple
+    "#00aaaa", // Cyan
+    "#FF6F00", // Orange
+    "#4E342E", // Brown
+    "#006064", // Teal
+    "#0D1335", // Dark Blue
+    "#A0740B", // Mustard
+    "#003300", // Dark Green
+    "#550000", // Burgundy
+    "#8800DD", // Violet
+  ];
   window.routePolylines = [];
-  
+
   // Check if window.routes already exists
   console.log("DEBUG: window.routes exists?", !!window.routes, typeof window.routes);
-  console.log("DEBUG: routes exists?", typeof routes !== 'undefined', typeof routes);
+  console.log("DEBUG: routes exists?", typeof routes !== "undefined", typeof routes);
 
   // --- FETCH ROUTES FIRST ---
   console.log("DEBUG: About to fetch routes.json");
@@ -72,7 +88,7 @@ window.initMap = async function () {
     } else if (routes.length === 0) {
       console.warn("[initMap] routes array is empty!");
     }
-    
+
     // Process the routes after successful fetch
     try {
       console.log("[initMap] Calling loadAllKmlRoutes...");
@@ -102,7 +118,7 @@ window.initMap = async function () {
 
   // Define all helper functions first
   console.log("DEBUG: Defining helper functions");
-  
+
   // --- Define loadAllKmlRoutes function ---
   async function loadAllKmlRoutes(routes) {
     console.log("[loadAllKmlRoutes] ENTER with routes:", routes);
@@ -110,30 +126,30 @@ window.initMap = async function () {
       console.error("[loadAllKmlRoutes] No valid routes array provided");
       return;
     }
-    
+
     const promises = [];
     let allPoints = [];
-    
+
     routes.forEach((route, i) => {
       if (!route.base) {
         console.warn(`[loadAllKmlRoutes] Route at index ${i} has no base property`);
         return;
       }
-      
+
       const color = colors[i % colors.length];
       const kmlPath = `/data/${route.base}.kml`;
       console.log(`[loadAllKmlRoutes] Loading KML for route ${i}: ${kmlPath}`);
-      
+
       promises.push(
         fetch(kmlPath)
-          .then(res => {
+          .then((res) => {
             if (!res.ok) {
               console.error(`[loadAllKmlRoutes] Failed to fetch KML file (${kmlPath}):`, res.statusText);
               throw new Error(`KML fetch error ${res.status}`);
             }
             return res.text();
           })
-          .then(kmlText => {
+          .then((kmlText) => {
             console.log(`[loadAllKmlRoutes] [${i}] fetch response text for ${kmlPath}:`, kmlText);
             const xmlIdx = kmlText.indexOf("<?xml");
             const cleanText = xmlIdx >= 0 ? kmlText.slice(xmlIdx) : kmlText;
@@ -165,7 +181,7 @@ window.initMap = async function () {
           })
       );
     });
-    
+
     await Promise.all(promises);
     // Fit map to all collected points
     if (allPoints.length) {
@@ -174,7 +190,7 @@ window.initMap = async function () {
       map.fitBounds(bounds);
     }
   }
-  
+
   // --- Define loadKmlRoute function ---
   console.log("DEBUG: Defining loadKmlRoute function");
   function loadKmlRoute(kmlUrl, polylineColor, fitBounds = false, routeIndex) {
@@ -542,7 +558,7 @@ window.initMap = async function () {
   // Populate the route legend with colored borders
   function updateRouteLegend(routes, colors) {
     console.log("[updateRouteLegend] ENTER");
-    
+
     const legendDiv = document.getElementById("route-legend");
     if (!legendDiv) {
       console.warn("[updateRouteLegend] No #route-legend found in DOM");
@@ -553,8 +569,7 @@ window.initMap = async function () {
     // Create table
     const table = document.createElement("table");
     table.className = "legend-table";
-    table.style.width = "100%";
-    table.style.borderCollapse = "collapse";
+    table.className = "route-legend-table";
 
     routes.forEach((route, i) => {
       // Use base name for legend
@@ -566,25 +581,17 @@ window.initMap = async function () {
 
       const tr = document.createElement("tr");
       const tdLegend = document.createElement("td");
-      tdLegend.style.borderLeft = `8px solid ${color}`;
-      tdLegend.style.padding = "4px 8px";
-      tdLegend.style.fontSize = "1em";
-      tdLegend.style.fontWeight = "bold";
-      tdLegend.style.background = "#fff";
-      tdLegend.style.color = color;
+      tdLegend.className = "legend-item";
+      tdLegend.style.setProperty('--legend-color', color);
 
       // Color swatch
       const lineSample = document.createElement("span");
-      lineSample.style.display = "inline-block";
-      lineSample.style.width = "18px";
-      lineSample.style.height = "4px";
-      lineSample.style.background = color;
-      lineSample.style.marginRight = "8px";
+      lineSample.className = "line-sample";
       tdLegend.appendChild(lineSample);
       // Route name
       const span = document.createElement("span");
       span.textContent = routeName;
-      span.style.fontWeight = "bold";
+
       tdLegend.appendChild(span);
       tr.appendChild(tdLegend);
 
@@ -662,7 +669,7 @@ window.initMap = async function () {
 
   async function addRouteDownloadButtons(routes) {
     console.log("[addRouteDownloadButtons] ENTER");
-    
+
     const table = document.querySelector(".route-table");
     if (!table) {
       console.error("[addRouteDownloadButtons] No .route-table found in DOM");
@@ -713,15 +720,12 @@ window.initMap = async function () {
       // --- Mileage TD ---
       const mileageTd = document.createElement("td");
       mileageTd.className = "route-mileage-cell";
-      mileageTd.style.textAlign = "center";
-      mileageTd.style.fontWeight = "bold";
-      mileageTd.style.minWidth = "60px";
-      mileageTd.style.maxWidth = "80px";
       mileageTd.textContent = mileage !== null ? mileage.toFixed(1) + " mi" : "--";
 
       // Label TD
       const labelTd = document.createElement("td");
-      labelTd.className = "label route-label";
+      labelTd.className = "route-label-cell";
+
       // Show human-friendly route name (e.g., 'Oakland to Mt Madonna')
       let friendlyName = route.name;
       if (!friendlyName && base) {
@@ -748,40 +752,32 @@ window.initMap = async function () {
         };
         const iconFile = iconMap[role];
         if (iconFile) {
-          iconHtml = `<span class="route-icon-bg" style="background:${
-            colors[i % colors.length]
-          }"><img src=\"/img/icons/${iconFile}\" alt=\"${role}\" class=\"route-icon\"></span>`;
+          iconHtml = `<span class="route-icon-bg" style="background:${colors[i % colors.length]}"><img src="/img/icons/${iconFile}" alt="${role}" class="route-icon"></span>`;
         }
       }
       // Add route line icon before the label
-      const routeLineIcon = `<svg class="route-table-line-icon" width="38" height="18" viewBox="0 0 38 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:0.5em;"><circle cx="7" cy="9" r="4" fill='none' stroke='${
-        colors[i % colors.length]
-      }' stroke-width="2"/><circle cx="31" cy="9" r="4" fill='none' stroke='${
-        colors[i % colors.length]
-      }' stroke-width="2"/><line x1="11" y1="9" x2="27" y2="9" stroke='${
-        colors[i % colors.length]
-      }' stroke-width="3" stroke-linecap="round"/></svg>`;
-      labelTd.innerHTML = routeLineIcon + iconHtml + friendlyName;
-      labelTd.style.borderColor = colors[i % colors.length];
+      const routeLineIcon = `<svg class="route-table-line-icon" width="38" height="18" viewBox="0 0 38 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:0.5em;"><circle cx="7" cy="9" r="4" fill='none' stroke='${colors[i % colors.length]}' stroke-width="2"/><circle cx="31" cy="9" r="4" fill='none' stroke='${colors[i % colors.length]}' stroke-width="2"/><line x1="11" y1="9" x2="27" y2="9" stroke='${colors[i % colors.length]}' stroke-width="3" stroke-linecap="round"/></svg>`;
+      // --- NEW STRUCTURE ---
+      const labelDiv = document.createElement("div");
+      labelDiv.className = "route-label";
+      labelDiv.innerHTML = routeLineIcon + iconHtml + friendlyName;
       // Set CSS variable for highlight background (10% opacity)
       function hexToRgba(hex, alpha) {
-        // Expand shorthand form (e.g. "#03F") to full form
         let c = hex.replace("#", "");
         if (c.length === 3)
-          c = c
-            .split("")
-            .map((x) => x + x)
-            .join("");
+          c = c.split("").map((x) => x + x).join("");
         const num = parseInt(c, 16);
         return `rgba(${(num >> 16) & 255},${(num >> 8) & 255},${num & 255},${alpha})`;
       }
-      labelTd.style.setProperty("--route-color-bg", hexToRgba(colors[i % colors.length], 0.1));
+      labelDiv.style.setProperty("--route-color-bg", hexToRgba(colors[i % colors.length], 0.1));
+      labelTd.appendChild(labelDiv);
       tr.appendChild(labelTd);
       tr.appendChild(mileageTd);
-      // Use the centralized highlight/dim function defined outside the loop
       // --- Map highlight on hover ---
-      labelTd.addEventListener("mouseenter", () => setRouteHighlight(i));
-      labelTd.addEventListener("mouseleave", () => setRouteHighlight(null));
+      labelDiv.addEventListener("mouseenter", () => setRouteHighlight(i));
+      labelDiv.addEventListener("mouseleave", () => setRouteHighlight(null));
+
+      // --- Download buttons TD ---
       const btnTd = document.createElement("td");
       btnTd.className = "value";
       const btnGroup = document.createElement("div");

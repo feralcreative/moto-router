@@ -1,5 +1,10 @@
 @import url("https://feralcreative.dev/utils.min.css");
 
+// Google Maps overrides
+.gm-ui-hover-effect {
+  display: none !important;
+}
+
 // Color Variables
 $url: #1565c0;
 $gpx: #43a047;
@@ -7,12 +12,13 @@ $kml: #d32f2f;
 $white: #fff;
 $grey: #ddd;
 $text: #333;
-$panel-bg: rgba(255, 255, 255, 0.97);
+$panel-bg: rgba(255, 255, 255, 0.9);
 $panel-shadow: rgba(0, 0, 0, 0.18);
+$font: lato;
 
 html,
 body {
-  font: 400 16px/1.1em Lato;
+  font: 400 14px/1.1em $font;
 }
 
 // Waypoint Tooltip Styles
@@ -89,9 +95,6 @@ body {
   line-height: 1.3;
 }
 
-:root {
-  font: 400 16px/1.5 Lato, sans-serif;
-}
 .desktop {
   display: none;
 }
@@ -121,6 +124,7 @@ a {
   position: fixed;
   bottom: 24px;
   left: 24px;
+  display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
@@ -129,31 +133,98 @@ a {
   border-radius: 12px;
   background: $panel-bg;
   padding: 18px 18px 14px 18px;
-  width: 85vw;
-  font-family: inherit;
+  max-width: 55vw;
   &.right-panel {
     bottom: 2vw;
     left: 2vw;
   }
   div.details {
-    max-width: 450px;
+    max-width: 100%;
+    table {
+      td {
+        // border: 3px solid green;
+      }
+    }
     .title {
       margin-bottom: 8px;
       color: $text;
       font-weight: bold;
-      font-size: 1.5em;
+      font-size: 1em;
       letter-spacing: 0.02em;
     }
     p.description {
+      font: 400 0.9rem/1.1em $font;
       color: $text;
     }
+    table.details-table {
+      width: 100%;
+    }
   }
-  table {
-    max-width: 40vw;
+
+  div.routes {
+    // border: 2px dotted blue;
+
+    // Route legend table styles
+    .route-legend-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      .legend-item {
+        border-left: 8px solid var(--legend-color, #000);
+        padding: 4px 8px;
+        font-size: 1em;
+        font-weight: bold;
+        background: #fff;
+        color: var(--legend-color, #000);
+
+        .line-sample {
+          display: inline-block;
+          width: 18px;
+          height: 4px;
+          background: var(--legend-color, #000);
+          margin-right: 8px;
+        }
+
+        .route-name,
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+    width: 100%;
+    border-collapse: collapse;
+
+    .legend-item {
+      border-left: 8px solid;
+      padding: 4px 8px;
+      font-size: 1em;
+      font-weight: bold;
+      background: #fff;
+      color: inherit; // Will be set dynamically via JS
+
+      .line-sample {
+        display: inline-block;
+        width: 18px;
+        height: 4px;
+        margin-right: 8px;
+        background: inherit; // Will be set dynamically via JS
+      }
+
+      .route-name {
+        font-weight: bold;
+      }
+    }
+  }
+  table.route-table {
+    min-width: 100%;
+    // border: 3px solid red;
 
     tr {
       border-bottom: 1px dotted;
-
+      height: 100%;
+      &:last-child {
+        border-bottom: 1px solid #333;
+      }
       td {
         vertical-align: middle;
         padding: 0.5em;
@@ -166,131 +237,119 @@ a {
         }
 
         &.label,
-        &.route-label {
-          display: inline-flex;
-          align-items: center;
-          transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
-          cursor: pointer;
-          margin: 0.2em 2em 0.2em 0;
-          outline: none;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-          // border: 3px solid $url;
-          border-radius: 10px;
-          background: $white;
-          padding: 0;
-          width: 100%;
-          min-height: fit-content;
-          color: $text;
-          font-weight: 800;
-          font-size: 0.8em;
-          line-height: 1em;
-          letter-spacing: 0.01em;
-          text-align: left;
-          // Icon styles
-          .route-icon-bg {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            vertical-align: middle;
-            margin-right: 0.5em;
-            border-radius: 50%;
-            background: $url; // fallback, will be overridden inline
-            width: 1.8em;
-            height: 1.8em;
-          }
-          .route-icon {
-            display: block;
-            width: 1.1em;
-            height: 1.1em;
-          }
-          // For dynamic color support:
-          &[data-color] {
-            border-color: attr(data-color color, $url);
-          }
-          &:hover,
-          &:focus {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            border-color: darken($url, 15%);
-            background: var(--route-color-bg, lighten($url, 43%));
-          }
+        &.route-label-cell {
+          padding: 0.25em 0.25em;
+          background: none;
+          border: none;
+          width: fit-content;
+          height: 1.1em;
         }
-        &.value {
+        // For dynamic color support:
+        &[data-color] {
+          border-color: attr(data-color color, $url);
         }
-      }
-
-      &:last-child {
-        border-bottom: 1px solid #333;
+        &:hover,
+        &:focus {
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
       }
     }
   }
+}
 
-  .btn-group {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    a {
-      display: block;
-      align-items: center;
-      transition: background 0.2s, border 0.2s;
-      cursor: pointer;
-      border: 1px solid $grey;
-      border-radius: 5px;
-      padding: 0 0.5em;
-      width: 30%;
-      font-size: 0.95em;
-      &.gpx-btn,
-      &.kml-btn,
-      &.url-btn {
-        width: fit-content;
-        white-space: nowrap;
-        &::before {
-          display: inline-block;
-          position: relative;
-          transform: translate(-25%, 25%);
-          filter: invert(1);
-          width: 1em;
-          height: 1em;
-          pointer-events: none;
-          content: "";
-        }
+// Ensure hover/focus effect always applies to div.route-label
+.route-label:hover,
+.route-label:focus {
+  background: var(--route-color-bg, lighten($url, 43%));
+}
+
+// Route table line icon
+.route-table-line-icon {
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+// Route icon background
+.route-icon-bg {
+  // Background will be set dynamically via JS
+}
+
+// Checkbox styling
+.route-checkbox {
+  margin-right: 8px;
+
+  &.custom-accent {
+    // Will use JS to set accent-color or outline
+  }
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  a {
+    display: block;
+    align-items: center;
+    transition: background 0.2s, border 0.2s;
+    cursor: pointer;
+    border: 1px solid $grey;
+    border-radius: 5px;
+    padding: 0 0.5em;
+    width: 30%;
+    font-size: 0.95em;
+    /* Increase specificity to override Bootstrap */
+    &.btn.gpx-btn,
+    &.btn.kml-btn,
+    &.btn.url-btn {
+      width: fit-content;
+      white-space: nowrap;
+      &::before {
+        display: inline-block;
+        position: relative;
+        transform: translate(-25%, 25%);
+        filter: invert(1);
+        width: 1em;
+        height: 1em;
+        pointer-events: none;
+        content: "";
       }
-      &.gpx-btn {
+    }
+    &.btn.gpx-btn {
+      border-color: darken($gpx, 20%);
+      background: $gpx;
+      color: $white;
+      &:hover {
         border-color: darken($gpx, 20%);
-        background: $gpx;
-        color: $white;
-        &:hover {
-          border-color: darken($gpx, 20%);
-          background: darken($gpx, 15%);
-        }
-        &::before {
-          background: url("/img/dl.svg") no-repeat center/contain;
-        }
+        background: darken($gpx, 15%);
       }
-      &.kml-btn {
+      &::before {
+        background: url("/img/dl.svg") no-repeat center/contain;
+      }
+    }
+    &.btn.kml-btn {
+      border-color: darken($kml, 20%);
+      background: url("../../img/dl.svg") no-repeat center/contain;
+      background: $kml;
+      color: $white;
+      &:hover {
         border-color: darken($kml, 20%);
-        background: url("../../img/dl.svg") no-repeat center/contain;
-        background: $kml;
-        color: $white;
-        &:hover {
-          border-color: darken($kml, 20%);
-          background: darken($kml, 10%);
-        }
-        &::before {
-          background: url("/img/dl.svg") no-repeat center/contain;
-        }
+        background: darken($kml, 10%);
       }
-      &.url-btn {
+      &::before {
+        background: url("/img/dl.svg") no-repeat center/contain;
+      }
+    }
+    &.btn.url-btn {
+      border-color: darken($url, 20%);
+      background: url("../../img/dl.svg") no-repeat center/contain;
+      background: $url;
+      color: $white;
+      &:hover {
         border-color: darken($url, 20%);
-        background: url("../../img/dl.svg") no-repeat center/contain;
-        background: $url;
-        color: $white;
-        &:hover {
-          border-color: darken($url, 20%);
-          background: darken($url, 10%);
-        }
-        &::before {
-          background: url("/img/link.svg") no-repeat center/contain;
-        }
+        background: darken($url, 10%);
+      }
+      &::before {
+        background: url("/img/link.svg") no-repeat center/contain;
       }
     }
   }
@@ -346,10 +405,12 @@ a {
 
     // Mileage cell
     td.route-mileage-cell {
-      font-size: 0.8em;
-      font-weight: 300;
-      color: $text;
       text-align: center;
+      font-weight: bold;
+      min-width: 60px;
+      max-width: 80px;
+      font-size: 0.8em;
+      color: $text;
     }
 
     // Download buttons cell

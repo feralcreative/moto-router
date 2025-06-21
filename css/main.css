@@ -1,7 +1,11 @@
 @import url("https://feralcreative.dev/utils.min.css");
+.gm-ui-hover-effect {
+  display: none !important;
+}
+
 html,
 body {
-  font: 400 16px/1.1em Lato;
+  font: 400 14px/1.1em lato;
 }
 
 .waypoint-tooltip-toprow {
@@ -82,10 +86,6 @@ body {
   line-height: 1.3;
 }
 
-:root {
-  font: 400 16px/1.5 Lato, sans-serif;
-}
-
 .desktop {
   display: none;
 }
@@ -117,103 +117,136 @@ a:hover {
   position: fixed;
   bottom: 24px;
   left: 24px;
+  display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
   z-index: 1000;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(255, 255, 255, 0.9);
   padding: 18px 18px 14px 18px;
-  width: 85vw;
-  font-family: inherit;
+  max-width: 55vw;
 }
 .floating-panel.right-panel {
   bottom: 2vw;
   left: 2vw;
 }
 .floating-panel div.details {
-  max-width: 450px;
+  max-width: 100%;
 }
 .floating-panel div.details .title {
   margin-bottom: 8px;
   color: #333;
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1em;
   letter-spacing: 0.02em;
 }
 .floating-panel div.details p.description {
+  font: 400 0.9rem/1.1em lato;
   color: #333;
 }
-.floating-panel table {
-  max-width: 40vw;
+.floating-panel div.details table.details-table {
+  width: 100%;
 }
-.floating-panel table tr {
+.floating-panel div.routes {
+  width: 100%;
+  border-collapse: collapse;
+}
+.floating-panel div.routes .route-legend-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.floating-panel div.routes .route-legend-table .legend-item {
+  border-left: 8px solid var(--legend-color, #000);
+  padding: 4px 8px;
+  font-size: 1em;
+  font-weight: bold;
+  background: #fff;
+  color: var(--legend-color, #000);
+}
+.floating-panel div.routes .route-legend-table .legend-item .line-sample {
+  display: inline-block;
+  width: 18px;
+  height: 4px;
+  background: var(--legend-color, #000);
+  margin-right: 8px;
+}
+.floating-panel div.routes .route-legend-table .legend-item .route-name,
+.floating-panel div.routes .route-legend-table .legend-item span {
+  font-weight: bold;
+}
+.floating-panel div.routes .legend-item {
+  border-left: 8px solid;
+  padding: 4px 8px;
+  font-size: 1em;
+  font-weight: bold;
+  background: #fff;
+  color: inherit;
+}
+.floating-panel div.routes .legend-item .line-sample {
+  display: inline-block;
+  width: 18px;
+  height: 4px;
+  margin-right: 8px;
+  background: inherit;
+}
+.floating-panel div.routes .legend-item .route-name {
+  font-weight: bold;
+}
+.floating-panel table.route-table {
+  min-width: 100%;
+}
+.floating-panel table.route-table tr {
   border-bottom: 1px dotted;
+  height: 100%;
 }
-.floating-panel table tr td {
+.floating-panel table.route-table tr:last-child {
+  border-bottom: 1px solid #333;
+}
+.floating-panel table.route-table tr td {
   vertical-align: middle;
   padding: 0.5em;
   overflow: hidden;
   font-size: 0.8em;
   text-overflow: ellipsis;
 }
-.floating-panel table tr td br {
+.floating-panel table.route-table tr td br {
   display: inline-block;
 }
-.floating-panel table tr td.label, .floating-panel table tr td.route-label {
-  display: inline-flex;
-  align-items: center;
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
-  cursor: pointer;
-  margin: 0.2em 2em 0.2em 0;
-  outline: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  border-radius: 10px;
-  background: #fff;
-  padding: 0;
-  width: 100%;
-  min-height: fit-content;
-  color: #333;
-  font-weight: 800;
-  font-size: 0.8em;
-  line-height: 1em;
-  letter-spacing: 0.01em;
-  text-align: left;
-}
-.floating-panel table tr td.label .route-icon-bg, .floating-panel table tr td.route-label .route-icon-bg {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  vertical-align: middle;
-  margin-right: 0.5em;
-  border-radius: 50%;
-  background: #1565c0;
-  width: 1.8em;
-  height: 1.8em;
-}
-.floating-panel table tr td.label .route-icon, .floating-panel table tr td.route-label .route-icon {
-  display: block;
-  width: 1.1em;
+.floating-panel table.route-table tr td.label, .floating-panel table.route-table tr td.route-label-cell {
+  padding: 0.25em 0.25em;
+  background: none;
+  border: none;
+  width: fit-content;
   height: 1.1em;
 }
-.floating-panel table tr td.label[data-color], .floating-panel table tr td.route-label[data-color] {
+.floating-panel table.route-table tr td[data-color] {
   border-color: attr(data-color color, #1565c0);
 }
-.floating-panel table tr td.label:hover, .floating-panel table tr td.label:focus, .floating-panel table tr td.route-label:hover, .floating-panel table tr td.route-label:focus {
+.floating-panel table.route-table tr td:hover, .floating-panel table.route-table tr td:focus {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  border-color: #0d417b;
+}
+
+.route-label:hover,
+.route-label:focus {
   background: var(--route-color-bg, #b9d6f7);
 }
-.floating-panel table tr:last-child {
-  border-bottom: 1px solid #333;
+
+.route-table-line-icon {
+  vertical-align: middle;
+  margin-right: 0.5em;
 }
-.floating-panel .buttons {
+
+.route-checkbox {
+  margin-right: 8px;
+}
+.btn-group {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
-.floating-panel .buttons a {
+.btn-group a {
   display: block;
   align-items: center;
   transition: background 0.2s, border 0.2s;
@@ -223,12 +256,13 @@ a:hover {
   padding: 0 0.5em;
   width: 30%;
   font-size: 0.95em;
+  /* Increase specificity to override Bootstrap */
 }
-.floating-panel .buttons a.gpx-btn, .floating-panel .buttons a.kml-btn, .floating-panel .buttons a.url-btn {
+.btn-group a.btn.gpx-btn, .btn-group a.btn.kml-btn, .btn-group a.btn.url-btn {
   width: fit-content;
   white-space: nowrap;
 }
-.floating-panel .buttons a.gpx-btn::before, .floating-panel .buttons a.kml-btn::before, .floating-panel .buttons a.url-btn::before {
+.btn-group a.btn.gpx-btn::before, .btn-group a.btn.kml-btn::before, .btn-group a.btn.url-btn::before {
   display: inline-block;
   position: relative;
   transform: translate(-25%, 25%);
@@ -238,42 +272,42 @@ a:hover {
   pointer-events: none;
   content: "";
 }
-.floating-panel .buttons a.gpx-btn {
+.btn-group a.btn.gpx-btn {
   border-color: #255827;
   background: #43a047;
   color: #fff;
 }
-.floating-panel .buttons a.gpx-btn:hover {
+.btn-group a.btn.gpx-btn:hover {
   border-color: #255827;
   background: #2c6a2f;
 }
-.floating-panel .buttons a.gpx-btn::before {
+.btn-group a.btn.gpx-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
-.floating-panel .buttons a.kml-btn {
+.btn-group a.btn.kml-btn {
   border-color: #811b1b;
   background: url("../../img/dl.svg") no-repeat center/contain;
   background: #d32f2f;
   color: #fff;
 }
-.floating-panel .buttons a.kml-btn:hover {
+.btn-group a.btn.kml-btn:hover {
   border-color: #811b1b;
   background: #ab2424;
 }
-.floating-panel .buttons a.kml-btn::before {
+.btn-group a.btn.kml-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
-.floating-panel .buttons a.url-btn {
+.btn-group a.btn.url-btn {
   border-color: #0b3564;
   background: url("../../img/dl.svg") no-repeat center/contain;
   background: #1565c0;
   color: #fff;
 }
-.floating-panel .buttons a.url-btn:hover {
+.btn-group a.btn.url-btn:hover {
   border-color: #0b3564;
   background: #104d92;
 }
-.floating-panel .buttons a.url-btn::before {
+.btn-group a.btn.url-btn::before {
   background: url("/img/link.svg") no-repeat center/contain;
 }
 
@@ -308,10 +342,12 @@ a:hover {
     border-radius: 10px;
   }
   table.route-table td.route-mileage-cell {
-    font-size: 0.8em;
-    font-weight: 300;
-    color: #333;
     text-align: center;
+    font-weight: bold;
+    min-width: 60px;
+    max-width: 80px;
+    font-size: 0.8em;
+    color: #333;
   }
   table.route-table td.value {
     text-align: right;
