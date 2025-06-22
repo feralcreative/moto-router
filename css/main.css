@@ -149,51 +149,6 @@ a:hover {
 .floating-panel div.details table.details-table {
   width: 100%;
 }
-.floating-panel div.routes {
-  width: 100%;
-  border-collapse: collapse;
-}
-.floating-panel div.routes .route-legend-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.floating-panel div.routes .route-legend-table .legend-item {
-  border-left: 8px solid var(--legend-color, #000);
-  padding: 4px 8px;
-  font-size: 1em;
-  font-weight: bold;
-  background: #fff;
-  color: var(--legend-color, #000);
-}
-.floating-panel div.routes .route-legend-table .legend-item .line-sample {
-  display: inline-block;
-  width: 18px;
-  height: 4px;
-  background: var(--legend-color, #000);
-  margin-right: 8px;
-}
-.floating-panel div.routes .route-legend-table .legend-item .route-name,
-.floating-panel div.routes .route-legend-table .legend-item span {
-  font-weight: bold;
-}
-.floating-panel div.routes .legend-item {
-  border-left: 8px solid;
-  padding: 4px 8px;
-  font-size: 1em;
-  font-weight: bold;
-  background: #fff;
-  color: inherit;
-}
-.floating-panel div.routes .legend-item .line-sample {
-  display: inline-block;
-  width: 18px;
-  height: 4px;
-  margin-right: 8px;
-  background: inherit;
-}
-.floating-panel div.routes .legend-item .route-name {
-  font-weight: bold;
-}
 .floating-panel table.route-table {
   min-width: 100%;
 }
@@ -311,12 +266,196 @@ a:hover {
   background: url("/img/link.svg") no-repeat center/contain;
 }
 
+.floating-panel {
+  box-sizing: border-box;
+  max-width: 55vw;
+  max-height: 90vh;
+  min-width: 0;
+  min-height: 42px;
+  padding: 18px 18px 14px 18px;
+  transition: max-width 0.5s cubic-bezier(0.77, 0, 0.175, 1), max-height 0.5s cubic-bezier(0.77, 0, 0.175, 1), padding 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.floating-panel.collapsed {
+  box-sizing: border-box;
+  display: inline-flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+  align-self: flex-start !important;
+  left: unset !important;
+  right: unset !important;
+  padding: 1em 3em 1em 1em !important;
+  overflow: visible !important;
+  border: none !important;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.floating-panel.collapsed .panel-title,
+.floating-panel.collapsed .collapse-toggle {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+}
+
+.floating-panel.collapsed .panel-contents-wrapper {
+  display: none !important;
+}
+
+.floating-panel.collapsed .panel-title,
+.floating-panel.collapsed .collapse-toggle {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+}
+
+.floating-panel.collapsed .panel-contents-wrapper {
+  display: none !important;
+}
+
+.floating-panel .panel-contents-wrapper {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.floating-panel.collapsed .panel-contents-wrapper {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Remove .floating-panel.collapsed .panel-title force rules, as .panel-title will be outside panel-contents-wrapper */
+.panel-content {
+  opacity: 1;
+  max-height: 2000px;
+  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), max-height 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: opacity, max-height;
+}
+
+.panel-title {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 2px;
+  transition: font-size 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.floating-panel.collapsed .panel-title {
+  font-weight: 800;
+  font-size: 1rem;
+  z-index: 2;
+  position: relative;
+}
+
+.floating-panel.collapsed .panel-content > :not(.panel-title) {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-panel.collapsed .panel-title {
+  opacity: 1 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+}
+
+.floating-panel .collapse-toggle {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 10;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.floating-panel .collapse-toggle .collapse-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  margin: auto;
+  background: none;
+  border: none;
+  pointer-events: none;
+}
+
+.floating-panel .collapse-toggle:hover {
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.floating-panel.collapsed {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto !important;
+  max-width: fit-content !important;
+  min-width: 0 !important;
+  min-height: 0;
+  padding: 0.2em 0.5em;
+  overflow: hidden;
+  border: none;
+}
+
+.floating-panel.collapsed .panel-title {
+  display: inline-block;
+  margin: 0 0.5em 0 0;
+  border: none;
+}
+
+.floating-panel.collapsed .collapse-toggle {
+  display: inline-flex !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  margin: 0;
+}
+
 @media (min-width: 768px) {
   .desktop {
     display: inherit;
   }
   .mobile {
     display: none;
+  }
+  #info-panel.floating-panel.collapsed {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    flex: 0 0 auto !important;
+    align-self: flex-start !important;
+    left: unset !important;
+    right: unset !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.2em 0.5em;
+    overflow: hidden;
+    border: none;
   }
   .floating-panel {
     width: fit-content;
