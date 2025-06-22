@@ -16,7 +16,7 @@
  * - Supports route highlighting and marker customization
  */
 console.log("Inline JS: head tag parsed");
-
+console.log("main.js loaded");
 // Track if map has been initialized to prevent multiple initializations
 window.mapInitialized = window.mapInitialized || false;
 
@@ -104,13 +104,7 @@ window.initMap = async function () {
     } catch (e) {
       console.error("[initMap] addRouteDownloadButtons ERROR", e);
     }
-    try {
-      console.log("[initMap] Calling updateRouteLegend...");
-      updateRouteLegend(routes, colors);
-      console.log("[initMap] updateRouteLegend DONE");
-    } catch (e) {
-      console.error("[initMap] updateRouteLegend ERROR", e);
-    }
+
   } catch (err) {
     console.error("[initMap] Error fetching or parsing routes.json:", err);
     return;
@@ -555,58 +549,7 @@ window.initMap = async function () {
   // 12 visually distinct, contrasting colors spaced around the color wheel
   // Dark, high-contrast, visually distinct route colors
 
-  // Populate the route legend with colored borders
-  function updateRouteLegend(routes, colors) {
-    console.log("[updateRouteLegend] ENTER");
 
-    const legendDiv = document.getElementById("route-legend");
-    if (!legendDiv) {
-      console.warn("[updateRouteLegend] No #route-legend found in DOM");
-      return;
-    }
-    legendDiv.innerHTML = "";
-
-    // Create table
-    const table = document.createElement("table");
-    table.className = "legend-table";
-    table.className = "route-legend-table";
-
-    routes.forEach((route, i) => {
-      // Use base name for legend
-      const base = route.base || "";
-      // Remove numeric prefix and dashes for display
-      let routeName = base.replace(/^\d{2}-/, "").replace(/-/g, " ");
-      if (!routeName) routeName = base;
-      const color = colors[i % colors.length];
-
-      const tr = document.createElement("tr");
-      const tdLegend = document.createElement("td");
-      tdLegend.className = "legend-item";
-      tdLegend.style.setProperty('--legend-color', color);
-
-      // Color swatch
-      const lineSample = document.createElement("span");
-      lineSample.className = "line-sample";
-      tdLegend.appendChild(lineSample);
-      // Route name
-      const span = document.createElement("span");
-      span.textContent = routeName;
-
-      tdLegend.appendChild(span);
-      tr.appendChild(tdLegend);
-
-      table.appendChild(tr);
-
-      // Ensure polylines and markers are visible by default
-      if (window.routePolylines && window.routePolylines[i]) {
-        window.routePolylines[i].setMap(window.mapInstance || map);
-      }
-      if (window.routeMarkers && window.routeMarkers[i]) {
-        window.routeMarkers[i].forEach((marker) => marker.setMap(window.mapInstance || map));
-      }
-    });
-    legendDiv.appendChild(table);
-  }
 
   // Ensure map instance is globally accessible for toggling
   if (!window.mapInstance && typeof map !== "undefined") {
@@ -752,11 +695,19 @@ window.initMap = async function () {
         };
         const iconFile = iconMap[role];
         if (iconFile) {
-          iconHtml = `<span class="route-icon-bg" style="background:${colors[i % colors.length]}"><img src="/img/icons/${iconFile}" alt="${role}" class="route-icon"></span>`;
+          iconHtml = `<span class="route-icon-bg" style="background:${
+            colors[i % colors.length]
+          }"><img src="/img/icons/${iconFile}" alt="${role}" class="route-icon"></span>`;
         }
       }
       // Add route line icon before the label
-      const routeLineIcon = `<svg class="route-table-line-icon" width="38" height="18" viewBox="0 0 38 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:0.5em;"><circle cx="7" cy="9" r="4" fill='none' stroke='${colors[i % colors.length]}' stroke-width="2"/><circle cx="31" cy="9" r="4" fill='none' stroke='${colors[i % colors.length]}' stroke-width="2"/><line x1="11" y1="9" x2="27" y2="9" stroke='${colors[i % colors.length]}' stroke-width="3" stroke-linecap="round"/></svg>`;
+      const routeLineIcon = `<svg class="route-table-line-icon" width="38" height="18" viewBox="0 0 38 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:0.5em;"><circle cx="7" cy="9" r="4" fill='none' stroke='${
+        colors[i % colors.length]
+      }' stroke-width="2"/><circle cx="31" cy="9" r="4" fill='none' stroke='${
+        colors[i % colors.length]
+      }' stroke-width="2"/><line x1="11" y1="9" x2="27" y2="9" stroke='${
+        colors[i % colors.length]
+      }' stroke-width="3" stroke-linecap="round"/></svg>`;
       // --- NEW STRUCTURE ---
       const labelDiv = document.createElement("div");
       labelDiv.className = "route-label";
@@ -765,7 +716,10 @@ window.initMap = async function () {
       function hexToRgba(hex, alpha) {
         let c = hex.replace("#", "");
         if (c.length === 3)
-          c = c.split("").map((x) => x + x).join("");
+          c = c
+            .split("")
+            .map((x) => x + x)
+            .join("");
         const num = parseInt(c, 16);
         return `rgba(${(num >> 16) & 255},${(num >> 8) & 255},${num & 255},${alpha})`;
       }
@@ -842,7 +796,41 @@ window.initMap = async function () {
     // End of helper function definitions
     console.log("DEBUG: All helper functions defined");
     // Removed duplicate calls to addRouteDownloadButtons and updateRouteLegend
-    // These are already called in the main initMap function after routes.json is fetched
+
+  // --- Panel collapse/expand logic ---
+// (Moved out of initMap)
+window.addEventListener("load", function () {
+  const panel = document.getElementById("info-panel");
+  if (!panel) {
+    console.warn("[collapse] #info-panel not found");
+    return;
+  }
+  const toggle = panel.querySelector(".collapse-toggle");
+  const content = panel.querySelector(".panel-content");
+  if (!toggle) {
+    console.warn("[collapse] .collapse-toggle not found");
+    return;
+  }
+  function setCollapsed(collapsed) {
+    console.log("[collapse] setCollapsed called with", collapsed);
+    panel.classList.toggle("collapsed", collapsed);
+    console.log("[collapse] panel.classList:", panel.classList.toString());
+    if (collapsed) {
+      const icon = toggle.querySelector('.collapse-icon');
+      if (icon) icon.src = 'img/icons/icon-expand.svg';
+      toggle.setAttribute("aria-label", "Expand panel");
+    } else {
+      const icon = toggle.querySelector('.collapse-icon');
+      if (icon) icon.src = 'img/icons/icon-collapse.svg';
+      toggle.setAttribute("aria-label", "Collapse panel");
+    }
+  }
+  toggle.addEventListener("click", function (e) {
+    console.log("[collapse] collapse-toggle clicked");
+    setCollapsed(!panel.classList.contains("collapsed"));
+  });
+});
+
   }
   console.log("DEBUG: End of initMap function reached");
 };
