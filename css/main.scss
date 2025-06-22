@@ -22,85 +22,79 @@ body {
 }
 
 // Waypoint Tooltip Styles
-.waypoint-tooltip-toprow {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 0.25em;
-  margin-bottom: 0.5em;
-}
-.waypoint-tooltip-title {
-  flex: 1 1 50%;
-  font-size: 1.5em;
-  font-weight: 600;
-  color: $text;
-  margin-bottom: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  align-items: end;
-}
-.waypoint-tooltip-num {
-  flex: 0 0 100px;
-  font-size: 1em;
-  font-weight: 600;
-  color: #666;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-width: fit-content;
-  padding-left: 0;
-  border: none;
-  white-space: nowrap;
-  margin-right: 4px;
-  text-align: center;
+.waypoint-tooltip {
+  &-toprow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 0.25em;
+    margin-bottom: 0.5em;
+  }
+  &-title {
+    align-items: end;
+    flex: 1 1 50%;
+    overflow: hidden;
+    margin-bottom: 0;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: $text;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    & {
+      margin-bottom: 2px;
+      font-size: 1.5em;
+      font-weight: 800;
+      color: $text;
+    }
+  }
+  &-num {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 0 0 100px;
+    min-width: fit-content;
+    margin-right: 4px;
+    padding-left: 0;
+    border: none;
+    font-size: 1em;
+    font-weight: 600;
+    color: #666;
+    text-align: center;
+    white-space: nowrap;
+  }
+  &-label {
+    display: block;
+    margin-bottom: 0.05em;
+    font-size: 0.95em;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  &-value {
+    display: block;
+    margin-top: 0;
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+  &-name {
+    margin-bottom: 2px;
+    font-size: 1em;
+    font-weight: 400;
+    color: $text;
+  }
+  &-desc {
+    max-width: 240px;
+    margin-top: 3px;
+    font-size: 0.92em;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #666;
+    white-space: normal;
+  }
 }
 
-.waypoint-tooltip-label {
-  display: block;
-  font-size: 0.95em;
-  font-weight: 500;
-  margin-bottom: 0.05em;
-  line-height: 1.1;
-}
-.waypoint-tooltip-value {
-  display: block;
-  font-size: 1em;
-  font-weight: 600;
-  margin-top: 0;
-  line-height: 1.1;
-}
-
-.waypoint-tooltip-title {
-  font-size: 1.5em;
-  font-weight: 800;
-  color: $text;
-  margin-bottom: 2px;
-}
-.waypoint-tooltip-name {
-  font-size: 1em;
-  font-weight: 400;
-  color: $text;
-  margin-bottom: 2px;
-}
-.waypoint-tooltip-desc {
-  font-size: 0.92em;
-  font-weight: 400;
-  color: #666;
-  margin-top: 3px;
-  max-width: 240px;
-  white-space: normal;
-  line-height: 1.3;
-}
-
-.desktop {
-  display: none;
-}
-.mobile {
-  display: inherit;
-}
 a {
   &:link {
     font-weight: 600;
@@ -110,46 +104,51 @@ a {
     text-decoration: underline;
   }
 }
+
 #map {
   display: block;
   position: fixed;
   width: 100vw;
   height: 100vh;
 }
-#info-panel {
-  padding: 1.5em 2em;
-}
 
-.floating-panel {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
+#info-panel {
+  box-shadow: 0 2px 12px $panel-shadow;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
+  flex: 0 0 auto !important;
+  align-self: flex-start !important;
+  position: fixed;
   z-index: 1000;
-  box-shadow: 0 2px 12px $panel-shadow;
-  border-radius: 12px;
-  background: $panel-bg;
+  bottom: 2vw;
+  left: 2vw;
+  box-sizing: border-box;
+  width: auto !important;
+  min-width: 0;
+  max-width: calc(95vw - 50px);
+  min-height: 42px;
+  max-height: 90vh;
   padding: 18px 18px 14px 18px;
-  max-width: 55vw;
-  &.right-panel {
-    bottom: 2vw;
-    left: 2vw;
-  }
+  transition: max-width 0.5s cubic-bezier(0.77, 0, 0.175, 1), max-height 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  background: $panel-bg;
+  border-radius: 12px;
   div.details {
     max-width: 100%;
+    padding-bottom: 1em;
     table {
-      td {
-        // border: 3px solid green;
+      tr {
+        border-bottom: 1px dotted #000;
+        td {
+        }
       }
     }
     .title {
       margin-bottom: 8px;
-      color: $text;
-      font-weight: bold;
       font-size: 1em;
+      font-weight: bold;
+      color: $text;
       letter-spacing: 0.02em;
     }
     p.description {
@@ -160,192 +159,158 @@ a {
       width: 100%;
     }
   }
+}
 
-  div.routes {
-    // border: 2px dotted blue;
-
-    // Route legend table styles
-  }
-  table.route-table {
-    min-width: 100%;
-    // border: 3px solid red;
-
-    tr {
-      border-bottom: 1px dotted;
-      height: 100%;
-      &:last-child {
-        border-bottom: 1px solid #333;
-      }
-      td {
-        vertical-align: middle;
-        padding: 0.5em;
-        overflow: hidden;
-        font-size: 0.8em;
-        text-overflow: ellipsis;
-        // white-space: nowrap;
-        br {
-          display: inline-block;
-        }
-
-        &.label,
-        &.route-label-cell {
-          padding: 0.25em 0.25em;
-          background: none;
-          border: none;
-          width: fit-content;
-          height: 1.1em;
-        }
-        // For dynamic color support:
-        &[data-color] {
-          border-color: attr(data-color color, $url);
-        }
-        &:hover,
-        &:focus {
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-      }
+table.route-table {
+  // border: 3px solid red;
+  min-width: 100%;
+  tr {
+    height: 100%;
+    border-bottom: 1px dotted;
+    &:last-child {
+      border-bottom: 1px solid #333;
     }
-  }
-}
-
-// Ensure hover/focus effect always applies to div.route-label
-.route-label:hover,
-.route-label:focus {
-  background: var(--route-color-bg, lighten($url, 43%));
-}
-
-// Route table line icon
-.route-table-line-icon {
-  vertical-align: middle;
-  margin-right: 0.5em;
-}
-
-// Route icon background
-.route-icon-bg {
-  // Background will be set dynamically via JS
-}
-
-// Checkbox styling
-.route-checkbox {
-  margin-right: 8px;
-
-  &.custom-accent {
-    // Will use JS to set accent-color or outline
-  }
-}
-
-.btn-group {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  a {
-    display: block;
-    align-items: center;
-    transition: background 0.2s, border 0.2s;
-    cursor: pointer;
-    border: 1px solid $grey;
-    border-radius: 5px;
-    padding: 0 0.5em;
-    width: 30%;
-    font-size: 0.95em;
-    /* Increase specificity to override Bootstrap */
-    &.btn.gpx-btn,
-    &.btn.kml-btn,
-    &.btn.url-btn {
-      width: fit-content;
-      white-space: nowrap;
-      &::before {
+    td {
+      // white-space: nowrap;
+      overflow: hidden;
+      padding: 0.5em;
+      font-size: 0.8em;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      br {
         display: inline-block;
-        position: relative;
-        transform: translate(-25%, 25%);
-        filter: invert(1);
-        width: 1em;
-        height: 1em;
-        pointer-events: none;
-        content: "";
       }
-    }
-    &.btn.gpx-btn {
-      border-color: darken($gpx, 20%);
-      background: $gpx;
-      color: $white;
-      &:hover {
-        border-color: darken($gpx, 20%);
-        background: darken($gpx, 15%);
+      &.label,
+      &.route-label-cell {
+        width: fit-content;
+        height: 1.1em;
+        padding: 0.25em 0.25em;
+        background: none;
+        border: none;
       }
-      &::before {
-        background: url("/img/dl.svg") no-repeat center/contain;
+      // For dynamic color support:
+      &[data-color] {
+        border-color: attr(data-color color, $url);
       }
-    }
-    &.btn.kml-btn {
-      border-color: darken($kml, 20%);
-      background: url("../../img/dl.svg") no-repeat center/contain;
-      background: $kml;
-      color: $white;
-      &:hover {
-        border-color: darken($kml, 20%);
-        background: darken($kml, 10%);
-      }
-      &::before {
-        background: url("/img/dl.svg") no-repeat center/contain;
-      }
-    }
-    &.btn.url-btn {
-      border-color: darken($url, 20%);
-      background: url("../../img/dl.svg") no-repeat center/contain;
-      background: $url;
-      color: $white;
-      &:hover {
-        border-color: darken($url, 20%);
-        background: darken($url, 10%);
-      }
-      &::before {
-        background: url("/img/link.svg") no-repeat center/contain;
+      &:hover,
+      &:focus {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       }
     }
   }
-}
 
-//@ XXL >1400px
-@media (min-width: 1400px) {
-}
+  // Ensure hover/focus effect always applies to div.route-label
+  .route-label:hover,
+  .route-label:focus {
+    background: var(--route-color-bg, lighten($url, 43%));
+  }
 
-//@ XL >1200px
-@media (min-width: 1200px) {
-}
+  // Route table line icon
+  .route-table-line-icon {
+    display: none;
+    margin-right: 0;
+    vertical-align: middle;
+  }
 
-//@ LG >992px
-@media (min-width: 992px) {
+  // Route icon background
+  .route-icon-bg {
+  }
+
+  // Checkbox styling
+  .route-checkbox {
+    margin-right: 8px;
+    &.custom-accent {
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    a {
+      display: block;
+      align-items: center;
+      width: 30%;
+      padding: 0 0.5em;
+      transition: background 0.2s, border 0.2s;
+      cursor: pointer;
+      border: 1px solid $grey;
+      border-radius: 5px;
+      font-size: 0.95em;
+      &.btn.url-btn {
+        width: fit-content;
+        white-space: nowrap;
+        &::before {
+          filter: invert(1);
+          pointer-events: none;
+          content: "";
+          display: inline-block;
+          position: relative;
+          transform: translate(-25%, 25%);
+          width: 1em;
+          height: 1em;
+        }
+      }
+      &.btn.gpx-btn {
+        background: $gpx;
+        border-color: darken($gpx, 20%);
+        color: $white;
+        &:hover {
+          background: darken($gpx, 15%);
+          border-color: darken($gpx, 20%);
+        }
+        &::before {
+          background: url("/img/dl.svg") no-repeat center/contain;
+        }
+      }
+      &.btn.kml-btn {
+        background: url("../../img/dl.svg") no-repeat center/contain;
+        border-color: darken($kml, 20%);
+        color: $white;
+        &:hover {
+          background: darken($kml, 10%);
+          border-color: darken($kml, 20%);
+        }
+        &::before {
+          background: url("/img/dl.svg") no-repeat center/contain;
+        }
+      }
+      &.btn.url-btn {
+        background: url("../../img/dl.svg") no-repeat center/contain;
+        border-color: darken($url, 20%);
+        color: $white;
+        &:hover {
+          background: darken($url, 10%);
+          border-color: darken($url, 20%);
+        }
+        &::before {
+          background: url("/img/link.svg") no-repeat center/contain;
+        }
+      }
+    }
+  }
 }
 
 .floating-panel {
-  box-sizing: border-box;
-  max-width: 55vw;
-  max-height: 90vh;
-  min-width: 0;
-  min-height: 42px;
-  padding: 18px 18px 14px 18px;
-  transition: max-width 0.5s cubic-bezier(0.77, 0, 0.175, 1), max-height 0.5s cubic-bezier(0.77, 0, 0.175, 1),
-    padding 0.4s cubic-bezier(0.77, 0, 0.175, 1);
 }
 .floating-panel.collapsed {
-  box-sizing: border-box;
   display: inline-flex !important;
   flex-direction: row;
-  align-items: center;
   justify-content: flex-start;
-  width: auto !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
+  align-items: center;
   flex: 0 0 auto !important;
   align-self: flex-start !important;
   left: unset !important;
   right: unset !important;
-  padding: 1em 3em 1em 1em !important;
   overflow: visible !important;
-  border: none !important;
+  box-sizing: border-box;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  padding: 1em 3em 1em 1em !important;
   background: $panel-bg;
+  border: none !important;
 }
 
 .floating-panel.collapsed .panel-title,
@@ -354,8 +319,8 @@ a {
   flex: 0 0 auto !important;
   min-width: 0 !important;
   max-width: none !important;
-  padding: 0 !important;
   margin: 0 !important;
+  padding: 0 !important;
   background: none !important;
 }
 
@@ -369,8 +334,8 @@ a {
   flex: 0 0 auto !important;
   min-width: 0 !important;
   max-width: none !important;
-  padding: 0 !important;
   margin: 0 !important;
+  padding: 0 !important;
   background: none !important;
 }
 
@@ -379,175 +344,155 @@ a {
 }
 
 .floating-panel .panel-contents-wrapper {
-  opacity: 1;
-  visibility: visible;
   pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
   transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.4s cubic-bezier(0.77, 0, 0.175, 1);
 }
 .floating-panel.collapsed .panel-contents-wrapper {
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
 }
 /* Remove .floating-panel.collapsed .panel-title force rules, as .panel-title will be outside panel-contents-wrapper */
 .panel-content {
+  will-change: opacity, max-height;
   opacity: 1;
   max-height: 2000px;
   transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), max-height 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-  will-change: opacity, max-height;
 }
 .panel-title {
+  margin-bottom: 2px;
+  transition: font-size 0.4s cubic-bezier(0.77, 0, 0.175, 1);
   font-size: 3rem;
   font-weight: 500;
   color: $text;
-  margin-bottom: 2px;
-  transition: font-size 0.4s cubic-bezier(0.77, 0, 0.175, 1);
 }
 .floating-panel.collapsed .panel-title {
-  font-weight: 800;
-  font-size: 1rem;
-  z-index: 2;
   position: relative;
-}
-.floating-panel.collapsed .panel-content > :not(.panel-title) {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.floating-panel.collapsed .panel-title {
-  opacity: 1 !important;
-  max-height: none !important;
-  overflow: visible !important;
-  pointer-events: auto !important;
-}
-.floating-panel .collapse-toggle {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  z-index: 10;
-  width: 30px;
-  height: 30px;
-  border: none;
-  background: rgba(0, 0, 0, 0.06);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  padding: 0;
+  z-index: 2;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
-.floating-panel .collapse-toggle .collapse-icon {
-  width: 18px;
-  height: 18px;
-  display: block;
-  margin: auto;
-  background: none;
-  border: none;
-  pointer-events: none;
-}
-
-.floating-panel .collapse-toggle:hover {
-  background: rgba(0, 0, 0, 0.14);
-}
-
-.floating-panel.collapsed {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: auto !important;
-  max-width: fit-content !important;
-  min-width: 0 !important;
-  min-height: 0;
-  padding: 0.2em 0.5em;
-  overflow: hidden;
-  border: none;
-}
-
-.floating-panel.collapsed .panel-title {
-  display: inline-block;
-  margin: 0 0.5em 0 0;
-  border: none;
-}
-
-.floating-panel.collapsed .collapse-toggle {
-  display: inline-flex !important;
-  width: auto !important;
-  flex: 0 0 auto !important;
-  margin: 0;
-}
-
-@media (min-width: 768px) {
-  .desktop {
-    display: inherit;
+.floating-panel {
+  &.collapsed {
+    .panel-title {
+      pointer-events: auto !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+      max-height: none !important;
+    }
+    .panel-content > :not(.panel-title) {
+      pointer-events: none;
+      opacity: 0;
+      overflow: hidden;
+      max-height: 0;
+    }
   }
-  .mobile {
-    display: none;
+}
+.floating-panel {
+  .collapse-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 10;
+    top: 6px;
+    right: 6px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    transition: background 0.2s;
+    background: rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    .collapse-icon {
+      pointer-events: none;
+      display: block;
+      width: 18px;
+      height: 18px;
+      margin: auto;
+      background: none;
+      border: none;
+    }
+    &:hover {
+      background: rgba(0, 0, 0, 0.14);
+    }
   }
-  #info-panel.floating-panel.collapsed {
-    width: auto !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    flex: 0 0 auto !important;
-    align-self: flex-start !important;
-    left: unset !important;
-    right: unset !important;
+
+  &.collapsed {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0.2em 0.5em;
     overflow: hidden;
+    box-sizing: border-box;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: fit-content !important;
+    min-height: 0;
+    padding: 0.2em 0.5em;
     border: none;
   }
-
-  .floating-panel {
-    // border: 5px solid green;
-    width: fit-content;
+  .panel-title {
+    display: inline-block;
+    margin: 0 0.5em 0 0;
+    border: none;
   }
-  // Removed duplicate .floating-panel.collapsed and related rules from inside this block
+  .collapse-toggle {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    margin: 0;
+  }
+}
 
+@media (min-width: 768px) {
   table.route-table {
-    // Dim all route labels except the hovered one (only when a label is hovered)
     table.route-table:has(.route-label:hover) .route-label {
       opacity: 0.3;
       transition: opacity 0.15s;
     }
     table.route-table .route-label:hover {
-      opacity: 1 !important;
       z-index: 1;
+      opacity: 1 !important;
     }
     max-width: fit-content;
 
     // Route label cell
     td.label,
-    td.route-label {
-      text-align: left;
-      font-weight: 800;
-      font-size: 1em;
+    td.route-label-cell {
       background: $white;
-      color: $text;
       border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: $text;
+      text-align: left;
+      div.route-label {
+        // border: 4px solid black !important;
+        padding: 0 1em;
+        border-radius: 100px;
+        white-space: nowrap;
+      }
     }
 
     // Mileage cell
     td.route-mileage-cell {
-      text-align: center;
-      font-weight: bold;
       min-width: 60px;
       max-width: 80px;
       font-size: 0.8em;
+      font-weight: bold;
       color: $text;
+      text-align: center;
     }
 
     // Download buttons cell
     td.value {
-      text-align: right;
       padding: 0 0.5em;
       background: none;
       border: none;
+      text-align: right;
     }
 
     tr {
@@ -563,10 +508,35 @@ a {
     }
   }
 }
+
+//@ XXL >1400px
+@media (min-width: 1400px) {
+}
+
+//@ XL >1200px
+@media (min-width: 1200px) {
+}
+
+//@ LG >992px
+@media (min-width: 992px) {
+  .route-table-line-icon {
+    display: inline-block;
+    margin-right: 0.5em;
+  }
+}
+
 //@ SM >576px
 @media (min-width: 576px) {
 }
 
 //@ XS <576px
 @media (max-width: 575px) {
+}
+
+// Responsive helpers
+.desktop {
+  display: none;
+}
+.mobile {
+  display: inherit;
 }

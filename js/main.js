@@ -646,6 +646,7 @@ window.initMap = async function () {
       tr.className = "route-download-row";
       // --- Checkbox TD ---
       const tdCheckbox = document.createElement("td");
+tdCheckbox.className = "route-checkbox-cell";
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = true;
