@@ -365,20 +365,20 @@ This makes it easy to control the visual identity of your maps and ensure each r
 
 **Current Color Palette (as defined in the script):**
 
-| Order | Hex Code  | Label      |
-| ----- | --------- | ---------- |
-| 1     | `#cc0000` | Red        |
-| 2     | `#0000cc` | Blue       |
-| 3     | `#DD00DD` | Magenta    |
-| 4     | `#4A148C` | Purple     |
-| 5     | `#00aaaa` | Cyan       |
-| 6     | `#FF6F00` | Orange     |
-| 7     | `#4E342E` | Brown      |
-| 8     | `#006064` | Teal       |
-| 9     | `#0D1335` | Dark Blue  |
-| 10    | `#A0740B` | Mustard    |
-| 11    | `#003300` | Dark Green |
-| 12    | `#550000` | Burgundy   |
-| 13    | `#8800DD` | Violet     |
+| Order | Hex Code  | Label      | Swatch |
+| ----- | --------- | ---------- | ------ |
+| 1     | `#cc0000` | Red        | ![Red](img/colors/swatch-red.png) |
+| 2     | `#0000cc` | Blue       | ![Blue](img/colors/swatch-blue.png) |
+| 3     | `#DD00DD` | Magenta    | ![Magenta](img/colors/swatch-magenta.png) |
+| 4     | `#4A148C` | Purple     | ![Purple](img/colors/swatch-purple.png) |
+| 5     | `#00aaaa` | Cyan       | ![Cyan](img/colors/swatch-cyan.png) |
+| 6     | `#FF6F00` | Orange     | ![Orange](img/colors/swatch-orange.png) |
+| 7     | `#4E342E` | Brown      | ![Brown](img/colors/swatch-brown.png) |
+| 8     | `#006064` | Teal       | ![Teal](img/colors/swatch-teal.png) |
+| 9     | `#0D1335` | Dark Blue  | ![Dark Blue](img/colors/swatch-darkblue.png) |
+| 10    | `#A0740B` | Mustard    | ![Mustard](img/colors/swatch-mustard.png) |
+| 11    | `#003300` | Dark Green | ![Dark Green](img/colors/swatch-darkgreen.png) |
+| 12    | `#550000` | Burgundy   | ![Burgundy](img/colors/swatch-burgundy.png) |
+| 13    | `#8800DD` | Violet     | ![Violet](img/colors/swatch-violet.png) |
 
 This is the actual palette used for route polylines. You can update or expand it as needed for your project.
