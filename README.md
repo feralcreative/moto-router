@@ -344,20 +344,20 @@ Each waypoint on the map can be assigned a type, which determines the icon used 
 
 | Type    | Icon                                                                           | File Location               |
 | ------- | ------------------------------------------------------------------------------ | --------------------------- |
-| MEET    | <img src="/img/icons/icon-meet.svg" width="15" height="15" alt="Meet" />       | /img/icons/icon-meet.svg    |
-| CAMP    | <img src="/img/icons/icon-camp.svg" width="15" height="15" alt="Camp" />       | /img/icons/icon-camp.svg    |
-| GAS     | <img src="/img/icons/icon-gas.svg" width="15" height="15" alt="Gas" />         | /img/icons/icon-gas.svg     |
-| CHARGE  | <img src="/img/icons/icon-charge.svg" width="15" height="15" alt="Charge" />   | /img/icons/icon-charge.svg  |
-| FOOD    | <img src="/img/icons/icon-food.svg" width="15" height="15" alt="Food" />       | /img/icons/icon-food.svg    |
-| HOTEL   | <img src="/img/icons/icon-hotel.svg" width="15" height="15" alt="Hotel" />     | /img/icons/icon-hotel.svg   |
-| DRINKS  | <img src="/img/icons/icon-drinks.svg" width="15" height="15" alt="Drinks" />   | /img/icons/icon-drinks.svg  |
-| COFFEE  | <img src="/img/icons/icon-coffee.svg" width="15" height="15" alt="Coffee" />   | /img/icons/icon-coffee.svg  |
-| GROCERY | <img src="/img/icons/icon-grocery.svg" width="15" height="15" alt="Grocery" /> | /img/icons/icon-grocery.svg |
-| POI     | <img src="/img/icons/icon-poi.svg" width="15" height="15" alt="POI" />         | /img/icons/icon-poi.svg     |
-| VIEW    | <img src="/img/icons/icon-view.svg" width="15" height="15" alt="View" />       | /img/icons/icon-view.svg    |
-| START   | <img src="/img/icons/icon-start.svg" width="15" height="15" alt="Start" />     | /img/icons/icon-start.svg   |
-| FINISH  | <img src="/img/icons/icon-finish.svg" width="15" height="15" alt="Finish" />   | /img/icons/icon-finish.svg  |
-| HOME    | <img src="/img/icons/icon-home.svg" width="15" height="15" alt="Home" />       | /img/icons/icon-home.svg    |
+| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    |
+| CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />       | /img/icons/icon-camp.svg    |
+| GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />         | /img/icons/icon-gas.svg     |
+| CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" />   | /img/icons/icon-charge.svg  |
+| FOOD    | <img src="/img/icons/icon-food.svg" width="25" height="25" alt="Food" />       | /img/icons/icon-food.svg    |
+| HOTEL   | <img src="/img/icons/icon-hotel.svg" width="25" height="25" alt="Hotel" />     | /img/icons/icon-hotel.svg   |
+| DRINKS  | <img src="/img/icons/icon-drinks.svg" width="25" height="25" alt="Drinks" />   | /img/icons/icon-drinks.svg  |
+| COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" />   | /img/icons/icon-coffee.svg  |
+| GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg |
+| POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     |
+| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    |
+| START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   |
+| FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  |
+| HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    |
 
 ### Route Colors
 
