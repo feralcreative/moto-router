@@ -1,4 +1,4 @@
-# Motorcycle Ride Planning Project
+# Motorcycle Ride Planner
 
 A platform for sharing and visualizing motorcycle ride routes, featuring interactive maps and downloadable GPS tracks. Designed for easy extension with new ride route pages using a reusable template system.
 
