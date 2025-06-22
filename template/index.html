@@ -27,57 +27,63 @@
 
 </head>
 <body>
-
+  <section class="viewport-widget top container-fluid">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="viewport-size">Viewport:
+        </div>
+      </div>
+    </div>
+  </section>
   <div id="map"></div>
-  <div id="info-panel" class="floating-panel right-panel">
+  <div id="info-panel" class="floating-panel">
     <button class="collapse-toggle" aria-label="Collapse panel"><img src="img/icons/icon-collapse.svg" alt="Collapse" class="collapse-icon"></button>
     <h1 class="panel-title">Event Title</h1>
     <div class="panel-contents-wrapper">
       <div class="panel-content">
-      <div class="details">
-        <p class="description">Occaecat, enim nostrud amet dolore enim amet commodo. Amet dolore enim amet commodo. Enim amet commodo ut, voluptate. Ut voluptate magna irure, do sint. Irure do sint et.</p>
-        <table class="details-table">
-          <tr>
-            <td class="label">Meet:</td>
-            <td class="value">Someday, Month 01, 2025 at 11:00</td>
-          </tr>
-          <tr>
-            <td class="label">Location:</td>
-            <td class="value">Coffee Shop, 123 Main Street, Santa Clause, CA
-            </td>
-          </tr>
-          <tr>
-            <td class="label">KSU</td>
-            <td class="value">12:00 pm</td>
-          </tr>
-          <tr>
-            <td class="label"></td>
-            <td class="value"></td>
-          </tr>
-          <tr>
-            <td class="label"></td>
-            <td class="value"></td>
-          </tr>
-          <tr>
-            <td class="label"></td>
-            <td class="value"></td>
-          </tr>
-        </table>
+        <div class="details">
+          <p class="description">Occaecat, enim nostrud amet dolore enim amet commodo. Amet dolore enim amet commodo. Enim amet commodo ut, voluptate. Ut voluptate magna irure, do sint. Irure do sint et.</p>
+          <table class="details-table">
+            <tr>
+              <th class="label">Meet:</th>
+              <td class="value">Someday, Month 01, 2025 at 11:00</td>
+            </tr>
+            <tr>
+              <th class="label">Location:</th>
+              <td class="value">Coffee Shop, 123 Main Street, Santa Clause, CA
+              </td>
+            </tr>
+            <tr>
+              <th class="label">KSU</th>
+              <td class="value">12:00 pm</td>
+            </tr>
 
+            <!-- ADDITIONAL ROWS
+
+              <tr>
+              <th class="label">Lorem</th>
+              <td class="value">Ipsum</td>
+            </tr>
+
+             ADDITIONAL ROWS -->
+
+          </table>
+
+        </div>
+
+        <div class="routes">
+          <table class="route-table">
+            <tr>
+              <td class="value">
+                <div id="route-downloads" class="buttons"></div>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
 
-      <div class="routes">
-        <table class="route-table">
-          <tr>
-            <td class="value">
-              <div id="route-downloads" class="buttons"></div>
-            </td>
-          </tr>
-        </table>
-      </div>
     </div>
 
-    </div>
     <!-- <script type='text/javascript'>//<![CDATA[
     document.write("<script async src='//HOST:3001/browser-sync-client.1.3.7.js'><\/script>".replace(/HOST/g, location.hostname));
     //]]></script> -->
