@@ -387,6 +387,9 @@ window.initMap = async function () {
               POI: "/img/icons/icon-poi.svg",
               VIEW: "/img/icons/icon-view.svg",
               GROCERY: "/img/icons/icon-grocery.svg",
+              START: "/img/icons/icon-start.svg",
+              FINISH: "/img/icons/icon-finish.svg",
+              HOME: "/img/icons/icon-home.svg",
             };
 
             // --- Waypoint Title Mapping ---
@@ -414,6 +417,12 @@ window.initMap = async function () {
                   return "Drinks";
                 case "GROCERY":
                   return "Grocery Store";
+                case "START":
+                  return "Start Point";
+                case "FINISH":
+                  return "Finish Point";
+                case "HOME":
+                  return "Home";
                 default:
                   return "Waypoint";
               }
@@ -449,7 +458,7 @@ window.initMap = async function () {
             let role = null;
             let displayName = name;
             const prefixMatch = name.match(
-              /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY)\s+-\s+(.*)$/i
+              /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME)\s+-\s+(.*)$/i
             );
             let markerIcon = iconOpts; // default
             if (prefixMatch) {
@@ -690,8 +699,11 @@ window.initMap = async function () {
           HOTEL: "icon-hotel.svg",
           DRINKS: "icon-drinks.svg",
           COFFEE: "icon-coffee.svg",
-          POI: "icon-hotel.svg",
-          VIEW: "icon-hotel.svg",
+          POI: "icon-poi.svg",
+          VIEW: "icon-view.svg",
+          START: "icon-start.svg",
+          FINISH: "icon-finish.svg",
+          HOME: "icon-home.svg",
         };
         const iconFile = iconMap[role];
         if (iconFile) {
