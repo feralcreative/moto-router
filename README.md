@@ -39,6 +39,7 @@ This directory contains the base files and structure for creating new ride route
 
    **Add route URL Links:**  
    For each route, create a `.kml`, `.gpx`, and (optionally) `.url` file with the same base name (e.g., `01-Sample-Route-One`).
+
    - The `.url` file should contain the route URL on the first line (if you want a URL button).
    - When you run `build.sh`, the script will add an entry for each route base name in `routes.json`.
    - The site will automatically show download buttons for each format that exists.
@@ -76,6 +77,7 @@ Visiting `/coastal-adventure-2025/` will show your new ride page with interactiv
 
 - **Route File Integration:**  
   For each route, just create files with the same base name and the `.kml`, `.gpx`, and (optionally) `.url` extensions (e.g., `02-Sample-Route-Two.kml`, `02-Sample-Route-Two.gpx`, `02-Sample-Route-Two.url`).
+
   - The `.url` file should contain the route URL on the first line. If no `.url` file is present, there will be no URL button for that route.
   - You do NOT need to list each file in `routes.json`; just the base name is required.
 
@@ -175,11 +177,13 @@ Handles all interactive map logic for ride route pages.
 The map template loads and displays routes through the following process:
 
 1. **Configuration**:
+
    - Routes are configured in `data/routes.json` as an array of objects: `[{ "base": "route-name" }, ...]`
    - Each route's `base` property defines the filename prefix for its KML/GPX files
    - Example: `{ "base": "01-Sample-Route-One" }` will load `data/01-Sample-Route-One.kml`
 
 2. **Loading Process**:
+
    - The map initializes when Google Maps API loads and calls `window.initMap()`
    - `initMap()` fetches route configuration from `/data/routes.json`
    - For each route, it fetches and parses the corresponding KML file
@@ -188,6 +192,7 @@ The map template loads and displays routes through the following process:
    - Polylines are added to the map and stored in `window.routePolylines`
 
 3. **UI Elements**:
+
    - Download buttons are generated for each route's GPX/KML files
    - A color-coded legend is created matching routes to their display colors
    - Interactive elements allow highlighting routes on hover
@@ -337,19 +342,22 @@ Each waypoint on the map can be assigned a type, which determines the icon used 
 
 ---
 
-| Type    | Icon                                                                         | File Location               |
-| ------- | ---------------------------------------------------------------------------- | --------------------------- |
-| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />     | /img/icons/icon-meet.svg    |
-| CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />     | /img/icons/icon-camp.svg    |
-| GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />       | /img/icons/icon-gas.svg     |
-| CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" /> | /img/icons/icon-charge.svg  |
-| FOOD    | <img src="/img/icons/icon-food.svg" width="25" height="25" alt="Food" />     | /img/icons/icon-food.svg    |
-| HOTEL   | <img src="/img/icons/icon-hotel.svg" width="25" height="25" alt="Hotel" />   | /img/icons/icon-hotel.svg   |
-| DRINKS  | <img src="/img/icons/icon-drinks.svg" width="25" height="25" alt="Drinks" /> | /img/icons/icon-drinks.svg  |
-| COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" /> | /img/icons/icon-coffee.svg  |
-| GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="View" />  | /img/icons/icon-grocery.svg |
-| POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />       | /img/icons/icon-poi.svg     |
-| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />     | /img/icons/icon-view.svg    |
+| Type    | Icon                                                                           | File Location               |
+| ------- | ------------------------------------------------------------------------------ | --------------------------- |
+| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    |
+| CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />       | /img/icons/icon-camp.svg    |
+| GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />         | /img/icons/icon-gas.svg     |
+| CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" />   | /img/icons/icon-charge.svg  |
+| FOOD    | <img src="/img/icons/icon-food.svg" width="25" height="25" alt="Food" />       | /img/icons/icon-food.svg    |
+| HOTEL   | <img src="/img/icons/icon-hotel.svg" width="25" height="25" alt="Hotel" />     | /img/icons/icon-hotel.svg   |
+| DRINKS  | <img src="/img/icons/icon-drinks.svg" width="25" height="25" alt="Drinks" />   | /img/icons/icon-drinks.svg  |
+| COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" />   | /img/icons/icon-coffee.svg  |
+| GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg |
+| POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     |
+| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    |
+| START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   |
+| FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  |
+| HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    |
 
 ### Route Colors
 
@@ -365,20 +373,20 @@ This makes it easy to control the visual identity of your maps and ensure each r
 
 **Current Color Palette (as defined in the script):**
 
-| Order | Hex Code  | Label      | Swatch |
-| ----- | --------- | ---------- | ------ |
-| 1     | `#cc0000` | Red        | ![Red](img/colors/swatch-red.png) |
-| 2     | `#0000cc` | Blue       | ![Blue](img/colors/swatch-blue.png) |
-| 3     | `#DD00DD` | Magenta    | ![Magenta](img/colors/swatch-magenta.png) |
-| 4     | `#4A148C` | Purple     | ![Purple](img/colors/swatch-purple.png) |
-| 5     | `#00aaaa` | Cyan       | ![Cyan](img/colors/swatch-cyan.png) |
-| 6     | `#FF6F00` | Orange     | ![Orange](img/colors/swatch-orange.png) |
-| 7     | `#4E342E` | Brown      | ![Brown](img/colors/swatch-brown.png) |
-| 8     | `#006064` | Teal       | ![Teal](img/colors/swatch-teal.png) |
-| 9     | `#0D1335` | Dark Blue  | ![Dark Blue](img/colors/swatch-darkblue.png) |
-| 10    | `#A0740B` | Mustard    | ![Mustard](img/colors/swatch-mustard.png) |
+| Order | Hex Code  | Label      | Swatch                                         |
+| ----- | --------- | ---------- | ---------------------------------------------- |
+| 1     | `#cc0000` | Red        | ![Red](img/colors/swatch-red.png)              |
+| 2     | `#0000cc` | Blue       | ![Blue](img/colors/swatch-blue.png)            |
+| 3     | `#DD00DD` | Magenta    | ![Magenta](img/colors/swatch-magenta.png)      |
+| 4     | `#4A148C` | Purple     | ![Purple](img/colors/swatch-purple.png)        |
+| 5     | `#00aaaa` | Cyan       | ![Cyan](img/colors/swatch-cyan.png)            |
+| 6     | `#FF6F00` | Orange     | ![Orange](img/colors/swatch-orange.png)        |
+| 7     | `#4E342E` | Brown      | ![Brown](img/colors/swatch-brown.png)          |
+| 8     | `#006064` | Teal       | ![Teal](img/colors/swatch-teal.png)            |
+| 9     | `#0D1335` | Dark Blue  | ![Dark Blue](img/colors/swatch-darkblue.png)   |
+| 10    | `#A0740B` | Mustard    | ![Mustard](img/colors/swatch-mustard.png)      |
 | 11    | `#003300` | Dark Green | ![Dark Green](img/colors/swatch-darkgreen.png) |
-| 12    | `#550000` | Burgundy   | ![Burgundy](img/colors/swatch-burgundy.png) |
-| 13    | `#8800DD` | Violet     | ![Violet](img/colors/swatch-violet.png) |
+| 12    | `#550000` | Burgundy   | ![Burgundy](img/colors/swatch-burgundy.png)    |
+| 13    | `#8800DD` | Violet     | ![Violet](img/colors/swatch-violet.png)        |
 
 This is the actual palette used for route polylines. You can update or expand it as needed for your project.
