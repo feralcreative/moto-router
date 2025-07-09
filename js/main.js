@@ -76,7 +76,7 @@ window.initMap = async function () {
   // Use absolute path for routes.json to match Express static routes
   console.log("[initMap] Fetching routes.json from /data/routes.json");
   try {
-    const resp = await fetch("/data/routes.json");
+    const resp = await fetch("data/routes.json");
     console.log("[initMap] routes.json fetch response:", resp.status, resp.ok, resp.headers.get("Content-Type"));
     if (!resp.ok) {
       throw new Error("[initMap] Failed to fetch routes.json: " + resp.statusText);
@@ -104,7 +104,6 @@ window.initMap = async function () {
     } catch (e) {
       console.error("[initMap] addRouteDownloadButtons ERROR", e);
     }
-
   } catch (err) {
     console.error("[initMap] Error fetching or parsing routes.json:", err);
     return;
@@ -131,7 +130,7 @@ window.initMap = async function () {
       }
 
       const color = colors[i % colors.length];
-      const kmlPath = `/data/${route.base}.kml`;
+      const kmlPath = `data/${route.base}.kml`;
       console.log(`[loadAllKmlRoutes] Loading KML for route ${i}: ${kmlPath}`);
 
       promises.push(
@@ -558,8 +557,6 @@ window.initMap = async function () {
   // 12 visually distinct, contrasting colors spaced around the color wheel
   // Dark, high-contrast, visually distinct route colors
 
-
-
   // Ensure map instance is globally accessible for toggling
   if (!window.mapInstance && typeof map !== "undefined") {
     window.mapInstance = map;
@@ -809,40 +806,39 @@ window.initMap = async function () {
     console.log("DEBUG: All helper functions defined");
     // Removed duplicate calls to addRouteDownloadButtons and updateRouteLegend
 
-  // --- Panel collapse/expand logic ---
-// (Moved out of initMap)
-window.addEventListener("load", function () {
-  const panel = document.getElementById("info-panel");
-  if (!panel) {
-    console.warn("[collapse] #info-panel not found");
-    return;
-  }
-  const toggle = panel.querySelector(".collapse-toggle");
-  const content = panel.querySelector(".panel-content");
-  if (!toggle) {
-    console.warn("[collapse] .collapse-toggle not found");
-    return;
-  }
-  function setCollapsed(collapsed) {
-    console.log("[collapse] setCollapsed called with", collapsed);
-    panel.classList.toggle("collapsed", collapsed);
-    console.log("[collapse] panel.classList:", panel.classList.toString());
-    if (collapsed) {
-      const icon = toggle.querySelector('.collapse-icon');
-      if (icon) icon.src = 'img/icons/icon-expand.svg';
-      toggle.setAttribute("aria-label", "Expand panel");
-    } else {
-      const icon = toggle.querySelector('.collapse-icon');
-      if (icon) icon.src = 'img/icons/icon-collapse.svg';
-      toggle.setAttribute("aria-label", "Collapse panel");
-    }
-  }
-  toggle.addEventListener("click", function (e) {
-    console.log("[collapse] collapse-toggle clicked");
-    setCollapsed(!panel.classList.contains("collapsed"));
-  });
-});
-
+    // --- Panel collapse/expand logic ---
+    // (Moved out of initMap)
+    window.addEventListener("load", function () {
+      const panel = document.getElementById("info-panel");
+      if (!panel) {
+        console.warn("[collapse] #info-panel not found");
+        return;
+      }
+      const toggle = panel.querySelector(".collapse-toggle");
+      const content = panel.querySelector(".panel-content");
+      if (!toggle) {
+        console.warn("[collapse] .collapse-toggle not found");
+        return;
+      }
+      function setCollapsed(collapsed) {
+        console.log("[collapse] setCollapsed called with", collapsed);
+        panel.classList.toggle("collapsed", collapsed);
+        console.log("[collapse] panel.classList:", panel.classList.toString());
+        if (collapsed) {
+          const icon = toggle.querySelector(".collapse-icon");
+          if (icon) icon.src = "/img/icons/icon-expand.svg";
+          toggle.setAttribute("aria-label", "Expand panel");
+        } else {
+          const icon = toggle.querySelector(".collapse-icon");
+          if (icon) icon.src = "/img/icons/icon-collapse.svg";
+          toggle.setAttribute("aria-label", "Collapse panel");
+        }
+      }
+      toggle.addEventListener("click", function (e) {
+        console.log("[collapse] collapse-toggle clicked");
+        setCollapsed(!panel.classList.contains("collapsed"));
+      });
+    });
   }
   console.log("DEBUG: End of initMap function reached");
 };
