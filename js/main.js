@@ -390,7 +390,6 @@ window.initMap = async function () {
               FINISH: "/img/icons/icon-finish.svg",
               HOME: "/img/icons/icon-home.svg",
             };
-
             // --- Waypoint Title Mapping ---
             function getWaypointTitle(role) {
               switch ((role || "").toUpperCase()) {
@@ -426,65 +425,78 @@ window.initMap = async function () {
                   return "Waypoint";
               }
             }
-
             // --- SVG Icon Cache ---
             window.svgIconCache = window.svgIconCache || {};
             async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
               const resp = await fetch(iconPath);
               let svg = await resp.text();
-              // Replace any fill="currentColor" or fill="#000" or fill="#fff" with the route color
               svg = svg.replace(/fill="(currentColor|#000|#fff)"/gi, `fill="${color}"`);
-              // Also replace any fill:none with fill:color if needed
               svg = svg.replace(/fill:none/gi, `fill:${color}`);
-              // Set global opacity on SVG root
               svg = svg.replace(/<svg /, `<svg opacity=\"${opacity}\" `);
               const encoded = encodeURIComponent(svg).replace(/'/g, "%27").replace(/"/g, "%22");
               return `data:image/svg+xml;charset=UTF-8,${encoded}`;
             }
-
-            // Make number-only markers smaller
-            let isNumberOnly = /^\d+$/.test(name.trim());
-            let iconOpts = {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillColor: "#fff", // Hollow center
-              fillOpacity: 1,
-              strokeColor: polylineColor, // Border matches line
-              strokeWeight: 4,
-              scale: isNumberOnly ? (i === 0 ? 3 : 2) : i === 0 ? 6 : 4,
-            };
-
-            // Detect role prefix in name (e.g., MEET, CAMP, etc.)
-            let role = null;
-            let displayName = name;
-            const prefixMatch = name.match(
-              /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME)\s+-\s+(.*)$/i
-            );
-            let markerIcon = iconOpts; // default
-            if (prefixMatch) {
-              role = prefixMatch[1].toUpperCase();
-              displayName = prefixMatch[2];
-              const iconPath = roleIconMap[role];
+            // Split marker types by '/' (up to 4)
+            let markerTypes = name
+              .split("/")
+              .map((s) => s.trim())
+              .filter(Boolean)
+              .slice(0, 4);
+            if (markerTypes.length === 0) markerTypes = [name];
+            // Layout offsets for up to 4 markers (px): [x, y] (increased for padding)
+            const gridOffsets = [
+              [[0, 0]], // 1 icon
+              [
+                [-13, 0],
+                [13, 0],
+              ], // 2 icons (approx 13px apart)
+              [
+                [-13, 13],
+                [13, 13],
+                [0, -13],
+              ], // 3 icons (triangle, ~13px apart)
+              [
+                [-13, -13],
+                [13, -13],
+                [-13, 13],
+                [13, 13],
+              ], // 4 icons (2x2, ~12px apart)
+            ];
+            const offsets = gridOffsets[markerTypes.length - 1] || [[0, 0]];
+            markerTypes.forEach((type, idx) => {
+              // Try to extract role prefix (as in original logic)
+              let role = null;
+              let displayName = type;
+              const prefixMatch = type.match(
+                /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME)\s*-\s*(.*)$/i
+              );
+              if (prefixMatch) {
+                role = prefixMatch[1].toUpperCase();
+                displayName = prefixMatch[2] || prefixMatch[1];
+              } else {
+                role = type.toUpperCase();
+                displayName = type;
+              }
+              const iconPath = roleIconMap[role] || null;
+              let markerIcon = null;
               if (iconPath) {
-                // Cache both full and dimmed SVG icons
                 if (!window.svgIconCache[iconPath]) window.svgIconCache[iconPath] = {};
-                Promise.all([
-                  getColoredSvgIcon(iconPath, polylineColor, 1.0),
-                  getColoredSvgIcon(iconPath, polylineColor, 0.3),
-                ]).then(([svgFull, svgDim]) => {
-                  window.svgIconCache[iconPath][polylineColor] = { full: svgFull, dim: svgDim };
+                // Use cached SVG if available, else fetch and cache
+                const cache = window.svgIconCache[iconPath][polylineColor];
+                const setMarker = (svgFull) => {
+                  markerIcon = {
+                    url: svgFull,
+                    scaledSize: new google.maps.Size(25, 25),
+                    anchor: new google.maps.Point(12.5 - offsets[idx][0], 12.5 - offsets[idx][1]),
+                  };
                   const marker = new google.maps.Marker({
                     position: { lat, lng },
                     map,
                     title: displayName,
-                    icon: {
-                      url: svgFull,
-                      scaledSize: new google.maps.Size(25, 25),
-                      anchor: new google.maps.Point(12.5, 12.5),
-                    },
+                    icon: markerIcon,
                     optimized: false,
                   });
-                  marker._svgIconPaths = { iconPath, polylineColor }; // for later lookup
-                  // Store marker for highlight logic
+                  marker._svgIconPaths = { iconPath, polylineColor };
                   if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
                     window.routeMarkers[currentRouteIndex].push(marker);
                   }
@@ -504,45 +516,56 @@ window.initMap = async function () {
                   marker.addListener("mouseover", () => infowindow.open({ map, anchor: marker }));
                   marker.addListener("mouseout", () => infowindow.close());
                   marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
+                };
+                if (cache && cache.full) {
+                  setMarker(cache.full);
+                } else {
+                  getColoredSvgIcon(iconPath, polylineColor, 1.0).then((svgFull) => {
+                    window.svgIconCache[iconPath][polylineColor] = { full: svgFull };
+                    setMarker(svgFull);
+                  });
+                }
+              } else {
+                // fallback: colored circle
+                let isNumberOnly = /^\d+$/.test(type.trim());
+                let iconOpts = {
+                  path: google.maps.SymbolPath.CIRCLE,
+                  fillColor: "#fff",
+                  fillOpacity: 1,
+                  strokeColor: polylineColor,
+                  strokeWeight: 4,
+                  scale: isNumberOnly ? (i === 0 ? 3 : 2) : i === 0 ? 6 : 4,
+                  anchor: new google.maps.Point(0 - offsets[idx][0], 0 - offsets[idx][1]),
+                };
+                const marker = new google.maps.Marker({
+                  position: { lat, lng },
+                  map,
+                  title: displayName,
+                  icon: iconOpts,
+                  optimized: false,
                 });
-                return; // skip normal marker creation below
+                marker._isCircle = true;
+                if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
+                  window.routeMarkers[currentRouteIndex].push(marker);
+                }
+                const infowindow = new google.maps.InfoWindow({
+                  content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
+                    role
+                  )}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${
+                    waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
+                  }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${
+                    waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
+                  }</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${
+                    desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""
+                  }`,
+                  disableAutoPan: false,
+                  shouldFocus: false,
+                });
+                marker.addListener("mouseover", () => infowindow.open({ map, anchor: marker }));
+                marker.addListener("mouseout", () => infowindow.close());
+                marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
               }
-            }
-
-            // Fallback: use default iconOpts
-            const marker = new google.maps.Marker({
-              position: { lat, lng },
-              map,
-              title: displayName,
-              icon: iconOpts,
-              optimized: false,
             });
-            marker._isCircle = true; // for highlight logic
-            // Store marker for highlight logic
-            window.routeMarkers[currentRouteIndex].push(marker);
-            const infowindow = new google.maps.InfoWindow({
-              content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
-                role
-              )}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${
-                waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
-              }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${
-                waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
-              }</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${
-                desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""
-              }`,
-              disableAutoPan: false,
-              shouldFocus: false,
-            });
-            marker.addListener("mouseover", () => {
-              infowindow.open({ map, anchor: marker });
-            });
-            marker.addListener("mouseout", () => {
-              infowindow.close();
-            });
-            // Remove click-to-open for desktop, but keep for touch devices
-            if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
-              marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
-            }
           });
         })
         .catch((err) => {
