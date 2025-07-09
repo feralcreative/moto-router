@@ -76,8 +76,7 @@ window.initMap = async function () {
   // Use absolute path for routes.json to match Express static routes
   console.log("[initMap] Fetching routes.json from /data/routes.json");
   try {
-    // Use relative path for portability
-    const resp = await fetch("./data/routes.json");
+    const resp = await fetch("/data/routes.json");
     console.log("[initMap] routes.json fetch response:", resp.status, resp.ok, resp.headers.get("Content-Type"));
     if (!resp.ok) {
       throw new Error("[initMap] Failed to fetch routes.json: " + resp.statusText);
@@ -132,8 +131,7 @@ window.initMap = async function () {
       }
 
       const color = colors[i % colors.length];
-      // Use relative path for portability
-      const kmlPath = `./data/${route.base}.kml`;
+      const kmlPath = `/data/${route.base}.kml`;
       console.log(`[loadAllKmlRoutes] Loading KML for route ${i}: ${kmlPath}`);
 
       promises.push(
@@ -366,246 +364,153 @@ window.initMap = async function () {
             }
           }
 
-          for (const pm of pointPMs) {
-            await new Promise((resolve) => {
-              const pointEl = pm.getElementsByTagNameNS(ns, "Point")[0];
-              if (!pointEl) return resolve();
-              const coordsEl = pointEl.getElementsByTagNameNS(ns, "coordinates")[0];
-              if (!coordsEl) return resolve();
-              const [lng, lat] = coordsEl.textContent.trim().split(",").map(Number);
-              const nameEl = pm.getElementsByTagNameNS(ns, "name")[0];
-              const name = nameEl ? nameEl.textContent : "";
-              const descEl = pm.getElementsByTagNameNS(ns, "description")[0];
-              const desc = descEl ? descEl.textContent : "";
-              // --- Custom SVG marker logic ---
-              const roleIconMap = {
-                MEET: "/img/icons/icon-meet.svg",
-                CAMP: "/img/icons/icon-camp.svg",
-                GAS: "/img/icons/icon-gas.svg",
-                CHARGE: "/img/icons/icon-charge.svg",
-                FOOD: "/img/icons/icon-food.svg",
-                HOTEL: "/img/icons/icon-hotel.svg",
-                DRINKS: "/img/icons/icon-drinks.svg",
-                COFFEE: "/img/icons/icon-coffee.svg",
-                POI: "/img/icons/icon-poi.svg",
-                VIEW: "/img/icons/icon-view.svg",
-                GROCERY: "/img/icons/icon-grocery.svg",
-                START: "/img/icons/icon-start.svg",
-                FINISH: "/img/icons/icon-finish.svg",
-                HOME: "/img/icons/icon-home.svg",
-              };
+          pointPMs.forEach((pm, i) => {
+            const pointEl = pm.getElementsByTagNameNS(ns, "Point")[0];
+            if (!pointEl) return;
+            const coordsEl = pointEl.getElementsByTagNameNS(ns, "coordinates")[0];
+            if (!coordsEl) return;
+            const [lng, lat] = coordsEl.textContent.trim().split(",").map(Number);
+            const nameEl = pm.getElementsByTagNameNS(ns, "name")[0];
+            const name = nameEl ? nameEl.textContent : "";
+            const descEl = pm.getElementsByTagNameNS(ns, "description")[0];
+            const desc = descEl ? descEl.textContent : "";
+            // --- Custom SVG marker logic ---
+            const roleIconMap = {
+              MEET: "/img/icons/icon-meet.svg",
+              CAMP: "/img/icons/icon-camp.svg",
+              GAS: "/img/icons/icon-gas.svg",
+              CHARGE: "/img/icons/icon-charge.svg",
+              FOOD: "/img/icons/icon-food.svg",
+              HOTEL: "/img/icons/icon-hotel.svg",
+              DRINKS: "/img/icons/icon-drinks.svg",
+              COFFEE: "/img/icons/icon-coffee.svg",
+              POI: "/img/icons/icon-poi.svg",
+              VIEW: "/img/icons/icon-view.svg",
+              GROCERY: "/img/icons/icon-grocery.svg",
+              START: "/img/icons/icon-start.svg",
+              FINISH: "/img/icons/icon-finish.svg",
+              HOME: "/img/icons/icon-home.svg",
+            };
 
-              // --- Waypoint Title Mapping ---
-              function getWaypointTitle(role) {
-                switch ((role || "").toUpperCase()) {
-                  case "MEET":
-                    return "Meeting Point";
-                  case "GAS":
-                    return "Gas Stop";
-                  case "CAMP":
-                    return "Campground";
-                  case "HOTEL":
-                    return "Lodging";
-                  case "CHARGE":
-                    return "EV Charging Stop";
-                  case "FOOD":
-                    return "Meal Stop";
-                  case "POI":
-                    return "Point of Interest";
-                  case "VIEW":
-                    return "Scenic Point";
-                  case "COFFEE":
-                    return "Coffee Shop";
-                  case "DRINKS":
-                    return "Drinks";
-                  case "GROCERY":
-                    return "Grocery Store";
-                  case "START":
-                    return "Start Point";
-                  case "FINISH":
-                    return "Finish Point";
-                  case "HOME":
-                    return "Home";
-                  default:
-                    return "Waypoint";
-                }
+            // --- Waypoint Title Mapping ---
+            function getWaypointTitle(role) {
+              switch ((role || "").toUpperCase()) {
+                case "MEET":
+                  return "Meeting Point";
+                case "GAS":
+                  return "Gas Stop";
+                case "CAMP":
+                  return "Campground";
+                case "HOTEL":
+                  return "Lodging";
+                case "CHARGE":
+                  return "EV Charging Stop";
+                case "FOOD":
+                  return "Meal Stop";
+                case "POI":
+                  return "Point of Interest";
+                case "VIEW":
+                  return "Scenic Point";
+                case "COFFEE":
+                  return "Coffee Shop";
+                case "DRINKS":
+                  return "Drinks";
+                case "GROCERY":
+                  return "Grocery Store";
+                case "START":
+                  return "Start Point";
+                case "FINISH":
+                  return "Finish Point";
+                case "HOME":
+                  return "Home";
+                default:
+                  return "Waypoint";
               }
+            }
 
-              // --- SVG Icon Cache ---
-              window.svgIconCache = window.svgIconCache || {};
-              async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
-                try {
-                  const resp = await fetch(iconPath);
-                  if (!resp.ok) {
-                    console.error('[SVG FETCH ERROR]', iconPath, resp.status, resp.statusText);
-                    return null;
-                  }
-                  let svg = await resp.text();
-                  // Replace any fill="currentColor" or fill="#000" or fill="#fff" with the route color
-                  svg = svg.replace(/fill="(currentColor|#000|#fff)"/gi, `fill="${color}"`);
-                  // Also replace any fill:none with fill:color if needed
-                  svg = svg.replace(/fill:none/gi, `fill:${color}`);
-                  // Set global opacity on SVG root
-                  svg = svg.replace(/<svg /, `<svg opacity=\"${opacity}\" `);
-                  const encoded = encodeURIComponent(svg).replace(/'/g, "%27").replace(/"/g, "%22");
-                  const dataUrl = `data:image/svg+xml;charset=UTF-8,${encoded}`;
-                  console.log('[SVG FETCH OK]', iconPath, { color, opacity, dataUrl });
-                  return dataUrl;
-                } catch (err) {
-                  console.error('[SVG FETCH EXCEPTION]', iconPath, err);
-                  return null;
-                }
-              }
+            // --- SVG Icon Cache ---
+            window.svgIconCache = window.svgIconCache || {};
+            async function getColoredSvgIcon(iconPath, color, opacity = 1.0) {
+              const resp = await fetch(iconPath);
+              let svg = await resp.text();
+              // Replace any fill="currentColor" or fill="#000" or fill="#fff" with the route color
+              svg = svg.replace(/fill="(currentColor|#000|#fff)"/gi, `fill="${color}"`);
+              // Also replace any fill:none with fill:color if needed
+              svg = svg.replace(/fill:none/gi, `fill:${color}`);
+              // Set global opacity on SVG root
+              svg = svg.replace(/<svg /, `<svg opacity=\"${opacity}\" `);
+              const encoded = encodeURIComponent(svg).replace(/'/g, "%27").replace(/"/g, "%22");
+              return `data:image/svg+xml;charset=UTF-8,${encoded}`;
+            }
 
-              // Make number-only markers smaller
-              let isNumberOnly = /^\d+$/.test(name.trim());
-              let iconOpts = {
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: "#fff", // Hollow center
-                fillOpacity: 1,
-                strokeColor: polylineColor, // Border matches line
-                strokeWeight: 4,
-                scale: isNumberOnly ? (i === 0 ? 3 : 2) : i === 0 ? 6 : 4,
-              };
+            // Make number-only markers smaller
+            let isNumberOnly = /^\d+$/.test(name.trim());
+            let iconOpts = {
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: "#fff", // Hollow center
+              fillOpacity: 1,
+              strokeColor: polylineColor, // Border matches line
+              strokeWeight: 4,
+              scale: isNumberOnly ? (i === 0 ? 3 : 2) : i === 0 ? 6 : 4,
+            };
 
-              // Detect roles (slash-delimited, e.g., MEET/COFFEE)
-              let roles = [];
-              let displayName = name;
-              const dashIdx = name.indexOf(' - ');
-              if (dashIdx !== -1) {
-                const rolesStr = name.substring(0, dashIdx);
-                roles = rolesStr.split('/').map(r => r.trim().toUpperCase());
-                displayName = name.substring(dashIdx + 3).trim();
-              } else {
-                // legacy prefix fallback
-                const prefixMatch = name.match(
-                  /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME)\s+-\s+(.*)$/i
-                );
-                if (prefixMatch) {
-                  roles = [prefixMatch[1].toUpperCase()];
-                  displayName = prefixMatch[2];
-                }
-              }
-              console.log('[WAYPOINT DEBUG] name:', name, '| roles:', roles, '| displayName:', displayName);
-              if (roles.length > 0) {
-                // Await SVG marker logic in async loop
-                // Limit to 4 icons
-                // Filter out roles not in roleIconMap and log a warning for missing roles
-                roles = roles.slice(0, 4).filter(role => {
-                  if (!(role in roleIconMap)) {
-                    console.warn('[WAYPOINT DEBUG] Role not in roleIconMap:', role, '| name:', name);
-                    return false;
-                  }
-                  return true;
-                });
-                if (roles.length === 0) {
-                  // fallback marker logic
-                  console.warn('[WAYPOINT DEBUG] All roles missing from roleIconMap, using fallback marker for:', name);
+            // Detect role prefix in name (e.g., MEET, CAMP, etc.)
+            let role = null;
+            let displayName = name;
+            const prefixMatch = name.match(
+              /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME)\s+-\s+(.*)$/i
+            );
+            let markerIcon = iconOpts; // default
+            if (prefixMatch) {
+              role = prefixMatch[1].toUpperCase();
+              displayName = prefixMatch[2];
+              const iconPath = roleIconMap[role];
+              if (iconPath) {
+                // Cache both full and dimmed SVG icons
+                if (!window.svgIconCache[iconPath]) window.svgIconCache[iconPath] = {};
+                Promise.all([
+                  getColoredSvgIcon(iconPath, polylineColor, 1.0),
+                  getColoredSvgIcon(iconPath, polylineColor, 0.3),
+                ]).then(([svgFull, svgDim]) => {
+                  window.svgIconCache[iconPath][polylineColor] = { full: svgFull, dim: svgDim };
                   const marker = new google.maps.Marker({
                     position: { lat, lng },
                     map,
                     title: displayName,
-                    icon: iconOpts,
+                    icon: {
+                      url: svgFull,
+                      scaledSize: new google.maps.Size(25, 25),
+                      anchor: new google.maps.Point(12.5, 12.5),
+                    },
                     optimized: false,
                   });
-                  marker._isCircle = true;
+                  marker._svgIconPaths = { iconPath, polylineColor }; // for later lookup
+                  // Store marker for highlight logic
                   if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
                     window.routeMarkers[currentRouteIndex].push(marker);
                   }
-                  return resolve();
-                }
-                // Fetch all SVGs and compose horizontally
-                const svgFulls = await Promise.all(
-                  roles.map((role) => {
-                    const iconPath = roleIconMap[role];
-                    if (!window.svgIconCache[iconPath]) window.svgIconCache[iconPath] = {};
-                    if (window.svgIconCache[iconPath][polylineColor]) {
-                      return Promise.resolve(window.svgIconCache[iconPath][polylineColor].full);
-                    }
-                    return getColoredSvgIcon(iconPath, polylineColor, 1.0).then((svgFull) => {
-                      if (!svgFull) {
-                        console.error('[SVG COMPOSE ERROR] SVG not returned for', iconPath, role, polylineColor);
-                      }
-                      window.svgIconCache[iconPath][polylineColor] = { full: svgFull };
-                      return svgFull;
-                    });
-                  })
-                );
-                console.log('[SVG FULLS]', svgFulls, { roles, displayName, lat, lng });
-                // Compose SVGs side-by-side
-                const iconSize = 25;
-                const totalWidth = iconSize * svgFulls.length;
-                // Remove data:image/svg+xml... prefix and decode for composition
-                const svgContents = svgFulls.map((dataUrl) => {
-                  const svgRaw = decodeURIComponent(dataUrl.split(",", 2)[1]);
-                  // Remove any standalone width/height attributes to avoid scaling issues
-                  return svgRaw.replace(/(width|height)="[^"]*"/g, "");
+                  const infowindow = new google.maps.InfoWindow({
+                    content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
+                      role
+                    )}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${
+                      waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
+                    }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${
+                      waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
+                    }</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${
+                      desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""
+                    }`,
+                    disableAutoPan: false,
+                    shouldFocus: false,
+                  });
+                  marker.addListener("mouseover", () => infowindow.open({ map, anchor: marker }));
+                  marker.addListener("mouseout", () => infowindow.close());
+                  marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
                 });
-                // Compose group SVG
-                const composedSvg = `<svg width="${totalWidth}" height="${iconSize}" viewBox="0 0 ${totalWidth} ${iconSize}" xmlns="http://www.w3.org/2000/svg">` +
-                  svgContents
-                    .map((svg, idx) => `<g transform="translate(${idx * iconSize},0)">${svg.replace(/<svg[^>]*>|<\/svg>/g, "")}</g>`)
-                    .join("") +
-                  `</svg>`;
-                const composedDataUrl = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(composedSvg)}`;
-                // Debug log for composed marker icon
-                console.log('[MARKER ICON]', { roles, displayName, composedDataUrl });
-                // Try to open this dataUrl in a new tab if needed for debugging
-                // Check if SVG is valid (not empty, not just header)
-                let markerIconUrl = composedDataUrl;
-                console.log('[MARKER ICON OBJ]', markerIconUrl, {
-                  url: markerIconUrl,
-                  scaledSize: new google.maps.Size(totalWidth, iconSize),
-                  anchor: new google.maps.Point(totalWidth / 2, iconSize / 2),
-                  roles,
-                  displayName,
-                  lat,
-                  lng
-                });
-                if (!svgFulls || svgFulls.some(svg => !svg)) {
-                  // Fallback to default Google Maps icon if any SVG failed
-                  markerIconUrl = undefined;
-                  console.error('[MARKER ICON FALLBACK] Using default pin for', { roles, displayName, lat, lng });
-                }
-                const marker = new google.maps.Marker({
-                  position: { lat, lng },
-                  map,
-                  title: displayName,
-                  icon: markerIconUrl
-                    ? {
-                        url: markerIconUrl,
-                        scaledSize: new google.maps.Size(totalWidth, iconSize),
-                        anchor: new google.maps.Point(totalWidth / 2, iconSize / 2),
-                      }
-                    : undefined, // Use default pin if SVG is broken
-                  optimized: false,
-                });
-                marker._svgIconPaths = { roles, polylineColor };
-                if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
-                  window.routeMarkers[currentRouteIndex].push(marker);
-                }
-                const infowindow = new google.maps.InfoWindow({
-                  content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${roles.map(getWaypointTitle).join(" | ")}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${
-                    waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
-                  }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${
-                    waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
-                  }</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${
-                    desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""
-                  }`,
-                  disableAutoPan: false,
-                  shouldFocus: false,
-                });
-                marker.addListener("mouseover", () => infowindow.open({ map, anchor: marker }));
-                marker.addListener("mouseout", () => infowindow.close());
-                marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
-              
-              console.log('[WAYPOINT DEBUG] Marker created with roles:', roles, '| displayName:', displayName, '| position:', lat, lng);
-              return; // skip normal marker creation below
+                return; // skip normal marker creation below
+              }
             }
 
-            console.log('[WAYPOINT DEBUG] Fallback marker (no roles or not matched):', name, '| displayName:', displayName, '| position:', lat, lng);
             // Fallback: use default iconOpts
-            let role = roles && roles.length === 1 ? roles[0] : null;
             const marker = new google.maps.Marker({
               position: { lat, lng },
               map,
@@ -640,6 +545,7 @@ window.initMap = async function () {
               marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
             }
           });
+        })
         .catch((err) => {
           console.error(`Error loading KML route ${kmlUrl}:`, err);
           reject(err);
@@ -740,7 +646,6 @@ window.initMap = async function () {
       tr.className = "route-download-row";
       // --- Checkbox TD ---
       const tdCheckbox = document.createElement("td");
-tdCheckbox.className = "route-checkbox-cell";
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = true;
@@ -924,11 +829,11 @@ window.addEventListener("load", function () {
     console.log("[collapse] panel.classList:", panel.classList.toString());
     if (collapsed) {
       const icon = toggle.querySelector('.collapse-icon');
-      if (icon) icon.src = '/img/icons/icon-expand.svg';
+      if (icon) icon.src = 'img/icons/icon-expand.svg';
       toggle.setAttribute("aria-label", "Expand panel");
     } else {
       const icon = toggle.querySelector('.collapse-icon');
-      if (icon) icon.src = '/img/icons/icon-collapse.svg';
+      if (icon) icon.src = 'img/icons/icon-collapse.svg';
       toggle.setAttribute("aria-label", "Collapse panel");
     }
   }
@@ -938,18 +843,16 @@ window.addEventListener("load", function () {
   });
 });
 
-function initMap() {
+  }
   console.log("DEBUG: End of initMap function reached");
 };
 
-  // Add a global error handler to catch any uncaught errors
-  window.addEventListener("error", function (event) {
-    console.error("GLOBAL ERROR CAUGHT:", event.error);
-  });
+// Add a global error handler to catch any uncaught errors
+window.addEventListener("error", function (event) {
+  console.error("GLOBAL ERROR CAUGHT:", event.error);
+});
 
-  document.addEventListener("DOMContentLoaded", function () {
-    console.log("Inline JS: body tag parsed, running under", location.href);
-    console.log("Post-map script: map in DOM:", document.getElementById("map"));
-  });
-}
-}
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Inline JS: body tag parsed, running under", location.href);
+  console.log("Post-map script: map in DOM:", document.getElementById("map"));
+});
