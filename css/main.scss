@@ -1,5 +1,22 @@
 @import url("https://feralcreative.dev/utils.min.css");
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+.crater-lake {
+  width: 100vw;
+  min-width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url("../img/crater-lake.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 // Google Maps overrides
 .gm-ui-hover-effect {
   display: none !important;
@@ -113,7 +130,6 @@ a {
 }
 
 #info-panel {
-  box-shadow: 0 2px 12px $panel-shadow;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -124,6 +140,7 @@ a {
   z-index: 1000;
   bottom: 2vw;
   left: 2vw;
+  box-shadow: 0 2px 12px $panel-shadow;
   box-sizing: border-box;
   width: auto !important;
   min-width: 0;
@@ -134,6 +151,7 @@ a {
   transition: max-width 0.5s cubic-bezier(0.77, 0, 0.175, 1), max-height 0.5s cubic-bezier(0.77, 0, 0.175, 1);
   background: $panel-bg;
   border-radius: 12px;
+
   div.details {
     max-width: 100%;
     padding-bottom: 1em;
@@ -157,6 +175,93 @@ a {
     }
     table.details-table {
       width: 100%;
+    }
+  }
+
+  .panel-title {
+    transition: font-size 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    font-size: 3rem;
+    font-weight: 500;
+    color: $text;
+    max-width: 500px !important;
+    display: inline-block;
+    margin: 0 0.5em 0 0;
+  }
+
+  .collapse-toggle {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 10;
+    top: 6px;
+    right: 6px;
+    height: 30px;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    margin: 0;
+    .collapse-icon {
+      pointer-events: none;
+      display: block;
+      width: 18px;
+      height: 18px;
+      margin: auto;
+      background: none;
+      border: none;
+    }
+    &:hover {
+    }
+    flex: 0 0 auto !important;
+    width: auto !important;
+  }
+
+  .panel-contents-wrapper {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  &.collapsed {
+    display: inline-flex !important;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 0 0 auto !important;
+    align-self: flex-start !important;
+
+    overflow: visible !important;
+    box-sizing: border-box;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    padding: 1em 3em 1em 1em !important;
+    background: $panel-bg;
+    // border: 2px solid green;
+
+    .panel-title,
+    .collapse-toggle {
+      display: inline-flex !important;
+      flex: 0 0 auto !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      padding: 0 !important;
+      background: none !important;
+    }
+    .panel-contents-wrapper {
+      display: none !important;
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+    .panel-title {
+      position: relative;
+      z-index: 2;
+      font-size: 1rem;
+      font-weight: 800;
     }
   }
 }
@@ -237,7 +342,7 @@ table.route-table {
       border: 1px solid $grey;
       border-radius: 5px;
       font-size: 0.95em;
-      &.btn.url-btn {
+      &.btn {
         width: fit-content;
         white-space: nowrap;
         &::before {
@@ -264,7 +369,7 @@ table.route-table {
         }
       }
       &.btn.kml-btn {
-        background: url("../../img/dl.svg") no-repeat center/contain;
+        background-color: $kml;
         border-color: darken($kml, 20%);
         color: $white;
         &:hover {
@@ -276,7 +381,7 @@ table.route-table {
         }
       }
       &.btn.url-btn {
-        background: url("../../img/dl.svg") no-repeat center/contain;
+        background-color: $url;
         border-color: darken($url, 20%);
         color: $white;
         &:hover {
@@ -284,6 +389,7 @@ table.route-table {
           border-color: darken($url, 20%);
         }
         &::before {
+          content: "";
           background: url("/img/link.svg") no-repeat center/contain;
         }
       }
@@ -291,164 +397,18 @@ table.route-table {
   }
 }
 
-.floating-panel {
-}
-.floating-panel.collapsed {
-  display: inline-flex !important;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex: 0 0 auto !important;
-  align-self: flex-start !important;
-  left: unset !important;
-  right: unset !important;
-  overflow: visible !important;
-  box-sizing: border-box;
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  min-height: 0 !important;
-  padding: 1em 3em 1em 1em !important;
-  background: $panel-bg;
-  border: none !important;
-}
-
-.floating-panel.collapsed .panel-title,
-.floating-panel.collapsed .collapse-toggle {
-  display: inline-flex !important;
-  flex: 0 0 auto !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: none !important;
-}
-
-.floating-panel.collapsed .panel-contents-wrapper {
-  display: none !important;
-}
-
-.floating-panel.collapsed .panel-title,
-.floating-panel.collapsed .collapse-toggle {
-  display: inline-flex !important;
-  flex: 0 0 auto !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: none !important;
-}
-
-.floating-panel.collapsed .panel-contents-wrapper {
-  display: none !important;
-}
-
-.floating-panel .panel-contents-wrapper {
-  pointer-events: auto;
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-}
-.floating-panel.collapsed .panel-contents-wrapper {
-  pointer-events: none;
-  visibility: hidden;
-  opacity: 0;
-}
-/* Remove .floating-panel.collapsed .panel-title force rules, as .panel-title will be outside panel-contents-wrapper */
 .panel-content {
   will-change: opacity, max-height;
   opacity: 1;
   max-height: 2000px;
   transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1), max-height 0.5s cubic-bezier(0.77, 0, 0.175, 1);
 }
-.panel-title {
-  margin-bottom: 2px;
-  transition: font-size 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-  font-size: 3rem;
-  font-weight: 500;
-  color: $text;
-}
-.floating-panel.collapsed .panel-title {
-  position: relative;
-  z-index: 2;
-  font-size: 1rem;
-  font-weight: 800;
-}
-
-.floating-panel {
-  &.collapsed {
-    .panel-title {
-      pointer-events: auto !important;
-      opacity: 1 !important;
-      overflow: visible !important;
-      max-height: none !important;
-    }
-    .panel-content > :not(.panel-title) {
-      pointer-events: none;
-      opacity: 0;
-      overflow: hidden;
-      max-height: 0;
-    }
-  }
-}
-.floating-panel {
-  .collapse-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 10;
-    top: 6px;
-    right: 6px;
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    transition: background 0.2s;
-    background: rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    border: none;
-    border-radius: 50%;
-    .collapse-icon {
-      pointer-events: none;
-      display: block;
-      width: 18px;
-      height: 18px;
-      margin: auto;
-      background: none;
-      border: none;
-    }
-    &:hover {
-      background: rgba(0, 0, 0, 0.14);
-    }
-  }
-
-  &.collapsed {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    overflow: hidden;
-    box-sizing: border-box;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: fit-content !important;
-    min-height: 0;
-    padding: 0.2em 0.5em;
-    border: none;
-  }
-  .panel-title {
-    display: inline-block;
-    margin: 0 0.5em 0 0;
-    border: none;
-  }
-  .collapse-toggle {
-    display: inline-flex !important;
-    flex: 0 0 auto !important;
-    width: auto !important;
-    margin: 0;
-  }
-}
 
 @media (min-width: 768px) {
+  #info-panel {
+    max-width: 550px;
+  }
+
   table.route-table {
     table.route-table:has(.route-label:hover) .route-label {
       opacity: 0.3;
@@ -458,7 +418,6 @@ table.route-table {
       z-index: 1;
       opacity: 1 !important;
     }
-    max-width: fit-content;
 
     // Route label cell
     td.label,
