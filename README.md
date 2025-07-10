@@ -4,91 +4,82 @@ A flexible web template for visualizing and sharing motorcycle routes online.
 
 ![Project Screenshot](img/screenshot.jpg)
 
-## How to Use
+---
 
-1. **Plan Your Route:**  
-   Use any route planning tool or app—such as [MyRoute-app](https://www.myrouteapp.com/), [Google My Maps](https://mymaps.google.com/), [Garmin BaseCamp](https://www.garmin.com/en-US/software/basecamp/), [Sygic](https://maps.sygic.com/), or [RouteYou](https://www.routeyou.com/)—to create your motorcycle ride.
-2. **Export Your Route Files:**
-   - Export a `.kml` file: **Required.** This is what generates the interactive map on the site.
-   - Optionally export a `.gpx` file: This is for download only, making it easy for your fellow riders to import the route into their navigation app or device of choice.
-   - Optionally create a `.url` file: Place the original route link (from your planning tool) here to provide a "View/Edit Original" button for others who want to edit or fork the ride.
-3. **Add Your Files:**  
-   Place the exported file(s) in the `data/` folder of this project.
-4. **Visualize & Share:**  
-   Your ride will be displayed on an interactive map. Download buttons for GPX/KML and a link to the original route (if provided) will appear automatically. You can customize the user experience and share the site with friends or the public.
+## 🚦 Quick Start
 
-> **File Roles:**
->
-> - **KML:** Generates the map—this is the only required file.
-> - **GPX:** For download only, to help riders use your route in their preferred navigation platform.
-> - **URL:** Optional, adds a button linking to the original route for editing or repurposing.
+1. **Plan and Export Your Route**
+
+   - Use any route planning tool—[MyRoute-app](https://www.myrouteapp.com/), [Google My Maps](https://mymaps.google.com/), [Garmin BaseCamp](https://www.garmin.com/en-US/software/basecamp/), etc.
+   - Export your route as a `.kml` file (**required**), and optionally as `.gpx` (for downloads) and `.url` (for original route links).
+
+2. **Project Structure**
+
+   - **`/template/`**: Base files for new ride route pages.
+     - `index.html`: Main HTML file (uses Bootstrap, loads Google Maps, references `/js/main.js` and `/css/main.min.css`).
+   - **`data/`**: Route-specific data files.
+     - `.kml`, `.gpx`, `.url`: GPS tracks and route links for each segment (e.g., `01-Sample-Route-One.kml`).
+     - `routes.json`: List of route base names (e.g., `{ "base": "01-Sample-Route-One" }`).
+     - `build.sh`: Helper script to auto-generate `routes.json`.
+
+3. **Create a New Route Page**
+
+   - Duplicate the `/template` directory and rename it for your ride (e.g., `/2025-spring-ride`).
+   - Place your exported files in the new directory's `data/` folder.
+   - Update `routes.json` to include your new segments. Optionally, use `build.sh` to automate this.
+   - Edit `index.html` to customize titles, descriptions, and content for your ride.
+   - Add a link to your new route page in your site's navigation if needed.
+
+   **Example:**
+
+   ```sh
+   cp -r template coastal-adventure-2025
+   # Edit coastal-adventure-2025/index.html and data/*
+   ```
+
+   After setup, visiting `/coastal-adventure-2025/` will show your new ride page with interactive maps and downloads.
 
 ---
 
-## 📁 Project Structure
+## 🗂️ File Roles
 
-### `/template` Directory
-
-This directory contains the base files and structure for creating new ride route pages.
-
-**Contents:**
-
-## 📁 Project Structure
-
-### `/template` Directory
-
-This directory contains the base files and structure for creating new ride route pages.
-
-**Contents:**
-
-- **`index.html`**  
-  The main HTML file for the route page.
-
-  - Uses Bootstrap for layout and styling.
-  - Loads Google Maps for route visualization.
-  - Includes a panel for route information and downloads.
-  - References `/js/main.js` (map logic) and `/css/main.min.css` (custom styles).
-
-- **`data/`**  
-  Folder for all route-specific data files:
-  - `.gpx`, `.kml`, and `.url`: GPS tracks and route links for each ride segment (see sample files like `01-Sample-Route-One.kml`, `01-Sample-Route-One.gpx`, `01-Sample-Route-One.url`).
-  - `routes.json`: List of route base names (e.g., `{ "base": "01-Sample-Route-One" }`).
-    - Used by page scripts to display routes and downloads.
-  - `build.sh`: Helper script to auto-generate `routes.json` from available tracks.
+- **KML:** Generates the map (required).
+- **GPX:** For download only.
+- **URL:** Adds a button linking to the original route for editing or repurposing.
 
 ---
 
-## 🚦 Quick Start: Creating a New Route Page
+## ⚠️ Important Notes
 
-1. **Copy the Template:**  
-   Duplicate the `/template` directory and rename it for your ride (e.g., `/2025-spring-ride`).
-
-2. **Update Data Files:**  
-   Replace/add `.gpx`/`.kml` files and update `routes.json` to match your new segments. Optionally, use `build.sh` to automate this.
-
-   **Add route URL Links:**
+- **Manual Data Sync:**  
+  Run `build.sh` whenever you add, remove, or rename `.kml` files in `data/` to update `routes.json`.
+- **Route Pages:**  
+  Main ride pages live in subdirectories copied from `/template/`, not at the project root.
 
 ---
 
-### 🆕 Marker Types & Multi-Marker Waypoints
+## 🛠️ Local Development
 
-#### New Features
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+2. **Set up environment variables:**
+   - Create a `.env` file in the project root with your Google Maps API key:
+     ```env
+     GOOGLE_MAPS_API_KEY=your-key-here
+     ```
 
-- **Multiple Markers per Waypoint:**  
-  Each waypoint on the map can now display up to 4 distinct markers, stacked or clustered visually at a single location. This allows richer representation of complex waypoints (e.g., a spot that is both a gas stop, food, and scenic view).
-- **Expanded Marker Types:**  
-  The set of marker roles has been expanded. Supported types (case-insensitive) include:
-  - `START`, `FINISH`, `MEET`, `GAS`, `CAMP`, `HOTEL`, `CHARGE`, `FOOD`, `POI`, `VIEW`, `COFFEE`, `DRINKS`, `GROCERY`, `HOME`, `BREAK`, and more.
-  - Each type is rendered with a unique SVG icon and color.
-- **Custom SVG Icons:**  
-  Marker icons are generated dynamically from SVG assets and colored according to route/role. New marker types can be added by placing a new SVG in `/img/icons/` and updating the `roleIconMap` in `/js/main.js`.
+---
 
-#### How It Works
+## 🆕 Marker Types & Multi-Marker Waypoints
 
-- **Waypoint Roles:**  
-  In the KML or GPX data, a waypoint can have multiple roles, delimited by `/` (e.g., `GAS/FOOD/VIEW`). The map will show all corresponding icons at that location.
-- **Marker Stacking:**  
-  When a waypoint has multiple roles, up to 4 icons are shown, offset around the point for clarity.
+- Each waypoint can display up to 4 icons (e.g., `GAS/FOOD/VIEW`).
+- Marker icons are SVGs, colored by role, and can be extended by adding SVGs to `/img/icons/` and updating `roleIconMap` in `/js/main.js`.
+- See comments in `index.html` and `/js/main.js` for advanced customizations.
+
+---
+
 - **Legend & Tooltips:**  
   The map’s legend and waypoint tooltips reflect all assigned roles and their meanings.
 
