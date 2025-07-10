@@ -2,6 +2,8 @@
 
 A flexible web template for visualizing and sharing motorcycle routes online.
 
+![Project Screenshot](img/screenshot.jpg)
+
 ## How to Use
 
 1. **Plan Your Route:**  

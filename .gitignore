@@ -11,3 +11,7 @@ node_modules/
 **/*.env
 .well-known/
 logs
+docs
+.windsurfrules
+.htpasswd
+.htaccess
