@@ -145,6 +145,7 @@ This ensures the correct icon is displayed for each waypoint on the map.
 | START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   | BEGIN                               |
 | FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  | END                                 |
 | HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    | HOUSE                               |
+| BREAK   | <img src="/img/icons/icon-break.svg" width="25" height="25" alt="Break" />     | /img/icons/icon-break.svg   | REST                                |
 
 ### Route Colors
 
