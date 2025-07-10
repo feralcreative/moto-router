@@ -389,6 +389,7 @@ window.initMap = async function () {
               START: "/img/icons/icon-start.svg",
               FINISH: "/img/icons/icon-finish.svg",
               HOME: "/img/icons/icon-home.svg",
+              BREAK: "/img/icons/icon-break.svg",
             };
             // --- Waypoint Title Mapping ---
             function getWaypointTitle(role) {
@@ -421,6 +422,8 @@ window.initMap = async function () {
                   return "Finish Point";
                 case "HOME":
                   return "Home";
+                case "BREAK":
+                  return "Break";
                 default:
                   return "Waypoint";
               }
@@ -436,12 +439,38 @@ window.initMap = async function () {
               const encoded = encodeURIComponent(svg).replace(/'/g, "%27").replace(/"/g, "%22");
               return `data:image/svg+xml;charset=UTF-8,${encoded}`;
             }
-            // Split marker types by '/' (up to 4)
+            // Canonical roles and their alternate terms (copied from route label logic)
+            const roleTerms = {
+              MEET: ["MEET", "MEETING"],
+              CAMP: ["CAMP", "CAMPGROUND", "CAMPING"],
+              GAS: ["GAS", "FUEL"],
+              CHARGE: ["CHARGE"],
+              FOOD: ["FOOD", "LUNCH", "DINNER", "BREAKFAST"],
+              HOTEL: ["HOTEL", "LODGING", "MOTEL", "AIRBNB"],
+              DRINKS: ["DRINKS", "BAR", "COCKTAILS", "BEER"],
+              COFFEE: ["COFFEE", "CAFE"],
+              POI: ["POI", "STOP"],
+              VIEW: ["VIEW", "SCENIC", "LOOKOUT"],
+              GROCERY: ["GROCERY", "GROCERIES"],
+              START: ["START", "BEGIN"],
+              FINISH: ["FINISH", "END"],
+              HOME: ["HOME", "HOUSE"],
+              BREAK: ["BREAK", "REST"],
+            };
+            // Split marker types by '/' (up to 4) and canonicalize
             let markerTypes = name
               .split("/")
               .map((s) => s.trim())
               .filter(Boolean)
-              .slice(0, 4);
+              .slice(0, 4)
+              .map((type) => {
+                for (const [canonical, terms] of Object.entries(roleTerms)) {
+                  if (terms.some((t) => t.toUpperCase() === type.toUpperCase())) {
+                    return canonical;
+                  }
+                }
+                return type; // fallback to original if not found
+              });
             if (markerTypes.length === 0) markerTypes = [name];
             // Layout offsets for up to 4 markers (px): [x, y] (increased for padding)
             const gridOffsets = [
@@ -468,7 +497,7 @@ window.initMap = async function () {
               let role = null;
               let displayName = type;
               const prefixMatch = type.match(
-                /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME)\s*-\s*(.*)$/i
+                /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK)\s*-\s*(.*)$/i
               );
               if (prefixMatch) {
                 role = prefixMatch[1].toUpperCase();
@@ -486,7 +515,7 @@ window.initMap = async function () {
                 const setMarker = (svgFull) => {
                   markerIcon = {
                     url: svgFull,
-                    scaledSize: new google.maps.Size(25, 25),
+                    scaledSize: new google.maps.Size(30, 30),
                     anchor: new google.maps.Point(12.5 - offsets[idx][0], 12.5 - offsets[idx][1]),
                   };
                   const marker = new google.maps.Marker({
@@ -704,11 +733,38 @@ window.initMap = async function () {
         const match = base.match(/^[0-9]{2}-(.+)$/);
         friendlyName = match ? match[1].replace(/-/g, " ") : base;
       }
-      // Detect role prefix (e.g., MEET, CAMP, etc.)
-      const roleMatch = friendlyName.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|COFFEE|POI|VIEW|GROCERY)\b/i);
+      // Canonical roles and their alternate terms
+      const roleTerms = {
+        MEET: ["MEET", "MEETING"],
+        CAMP: ["CAMP", "CAMPGROUND", "CAMPING"],
+        GAS: ["GAS", "FUEL"],
+        CHARGE: ["CHARGE"],
+        FOOD: ["FOOD", "LUNCH", "DINNER", "BREAKFAST"],
+        HOTEL: ["HOTEL", "LODGING", "MOTEL", "AIRBNB"],
+        DRINKS: ["DRINKS", "BAR", "COCKTAILS", "BEER"],
+        COFFEE: ["COFFEE", "CAFE"],
+        POI: ["POI", "STOP"],
+        VIEW: ["VIEW", "SCENIC", "LOOKOUT"],
+        GROCERY: ["GROCERY", "GROCERIES"],
+        START: ["START", "BEGIN"],
+        FINISH: ["FINISH", "END"],
+        HOME: ["HOME", "HOUSE"],
+        BREAK: ["BREAK", "REST"],
+      };
+      // Build regex and lookup for alternates
+      const allTerms = Object.values(roleTerms).flat();
+      const roleRegex = new RegExp(`^(${allTerms.join("|")})\\b`, "i");
+      const roleMatch = friendlyName.match(roleRegex);
       let iconHtml = "";
       if (roleMatch) {
-        const role = roleMatch[1].toUpperCase();
+        // Find canonical role
+        let foundRole = null;
+        for (const [canonical, terms] of Object.entries(roleTerms)) {
+          if (terms.some((t) => t.toUpperCase() === roleMatch[1].toUpperCase())) {
+            foundRole = canonical;
+            break;
+          }
+        }
         const iconMap = {
           MEET: "icon-meet.svg",
           CAMP: "icon-camp.svg",
@@ -724,6 +780,7 @@ window.initMap = async function () {
           START: "icon-start.svg",
           FINISH: "icon-finish.svg",
           HOME: "icon-home.svg",
+          BREAK: "icon-break.svg",
         };
         const iconFile = iconMap[role];
         if (iconFile) {
