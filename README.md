@@ -1,8 +1,35 @@
-# Motorcycle Ride Planner
+# Motorcycle Ride Template
 
-A platform for sharing and visualizing motorcycle ride routes, featuring interactive maps and downloadable GPS tracks. Designed for easy extension with new ride route pages using a reusable template system.
+A flexible web template for visualizing and sharing motorcycle routes online.
+
+## How to Use
+
+1. **Plan Your Route:**  
+   Use any route planning tool or app—such as [MyRoute-app](https://www.myrouteapp.com/), [Google My Maps](https://mymaps.google.com/), [Garmin BaseCamp](https://www.garmin.com/en-US/software/basecamp/), [Sygic](https://maps.sygic.com/), or [RouteYou](https://www.routeyou.com/)—to create your motorcycle ride.
+2. **Export Your Route Files:**
+   - Export a `.kml` file: **Required.** This is what generates the interactive map on the site.
+   - Optionally export a `.gpx` file: This is for download only, making it easy for your fellow riders to import the route into their navigation app or device of choice.
+   - Optionally create a `.url` file: Place the original route link (from your planning tool) here to provide a "View/Edit Original" button for others who want to edit or fork the ride.
+3. **Add Your Files:**  
+   Place the exported file(s) in the `data/` folder of this project.
+4. **Visualize & Share:**  
+   Your ride will be displayed on an interactive map. Download buttons for GPX/KML and a link to the original route (if provided) will appear automatically. You can customize the user experience and share the site with friends or the public.
+
+> **File Roles:**
+>
+> - **KML:** Generates the map—this is the only required file.
+> - **GPX:** For download only, to help riders use your route in their preferred navigation platform.
+> - **URL:** Optional, adds a button linking to the original route for editing or repurposing.
 
 ---
+
+## 📁 Project Structure
+
+### `/template` Directory
+
+This directory contains the base files and structure for creating new ride route pages.
+
+**Contents:**
 
 ## 📁 Project Structure
 
@@ -37,20 +64,60 @@ This directory contains the base files and structure for creating new ride route
 2. **Update Data Files:**  
    Replace/add `.gpx`/`.kml` files and update `routes.json` to match your new segments. Optionally, use `build.sh` to automate this.
 
-   **Add route URL Links:**  
-   For each route, create a `.kml`, `.gpx`, and (optionally) `.url` file with the same base name (e.g., `01-Sample-Route-One`).
+   **Add route URL Links:**
 
-   - The `.url` file should contain the route URL on the first line (if you want a URL button).
-   - When you run `build.sh`, the script will add an entry for each route base name in `routes.json`.
-   - The site will automatically show download buttons for each format that exists.
+---
 
-   **Example:**
+### 🆕 Marker Types & Multi-Marker Waypoints
 
-   ```
-   01-Sample-Route-One.kml
-   01-Sample-Route-One.gpx
-   01-Sample-Route-One.url  # contains: https://www.myrouteapp.com/route/123456
-   ```
+#### New Features
+
+- **Multiple Markers per Waypoint:**  
+  Each waypoint on the map can now display up to 4 distinct markers, stacked or clustered visually at a single location. This allows richer representation of complex waypoints (e.g., a spot that is both a gas stop, food, and scenic view).
+- **Expanded Marker Types:**  
+  The set of marker roles has been expanded. Supported types (case-insensitive) include:
+  - `START`, `FINISH`, `MEET`, `GAS`, `CAMP`, `HOTEL`, `CHARGE`, `FOOD`, `POI`, `VIEW`, `COFFEE`, `DRINKS`, `GROCERY`, `HOME`, `BREAK`, and more.
+  - Each type is rendered with a unique SVG icon and color.
+- **Custom SVG Icons:**  
+  Marker icons are generated dynamically from SVG assets and colored according to route/role. New marker types can be added by placing a new SVG in `/img/icons/` and updating the `roleIconMap` in `/js/main.js`.
+
+#### How It Works
+
+- **Waypoint Roles:**  
+  In the KML or GPX data, a waypoint can have multiple roles, delimited by `/` (e.g., `GAS/FOOD/VIEW`). The map will show all corresponding icons at that location.
+- **Marker Stacking:**  
+  When a waypoint has multiple roles, up to 4 icons are shown, offset around the point for clarity.
+- **Legend & Tooltips:**  
+  The map’s legend and waypoint tooltips reflect all assigned roles and their meanings.
+
+#### Relevant Files
+
+- **`/template/index.html`**  
+  No markup changes required for marker logic; all handled in JS.
+- **`/js/main.js`**
+  - Marker creation logic parses multiple roles and assigns up to 4 icons per waypoint.
+  - See `loadKmlRoute`, `setMarker`, and `getWaypointTitle` for role/marker handling.
+- **`/css/main.scss`**
+  - Styles for stacked/clustered markers and waypoint tooltips.
+  - Responsive adjustments for marker display.
+
+#### Example
+
+A waypoint with the name `GAS/FOOD/VIEW` will display three icons: a gas pump, a fork & knife, and a scenic view icon, each with its own color.
+
+For each route, create a `.kml`, `.gpx`, and (optionally) `.url` file with the same base name (e.g., `01-Sample-Route-One`).
+
+- The `.url` file should contain the route URL on the first line (if you want a URL button).
+- When you run `build.sh`, the script will add an entry for each route base name in `routes.json`.
+- The site will automatically show download buttons for each format that exists.
+
+**Example:**
+
+```
+01-Sample-Route-One.kml
+01-Sample-Route-One.gpx
+01-Sample-Route-One.url  # contains: https://www.myrouteapp.com/route/123456
+```
 
 3. **Customize `index.html`:**  
    Edit titles, descriptions, and content for your ride.
@@ -342,22 +409,22 @@ Each waypoint on the map can be assigned a type, which determines the icon used 
 
 ---
 
-| Type    | Icon                                                                           | File Location               |
-| ------- | ------------------------------------------------------------------------------ | --------------------------- |
-| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    |
-| CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />       | /img/icons/icon-camp.svg    |
-| GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />         | /img/icons/icon-gas.svg     |
-| CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" />   | /img/icons/icon-charge.svg  |
-| FOOD    | <img src="/img/icons/icon-food.svg" width="25" height="25" alt="Food" />       | /img/icons/icon-food.svg    |
-| HOTEL   | <img src="/img/icons/icon-hotel.svg" width="25" height="25" alt="Hotel" />     | /img/icons/icon-hotel.svg   |
-| DRINKS  | <img src="/img/icons/icon-drinks.svg" width="25" height="25" alt="Drinks" />   | /img/icons/icon-drinks.svg  |
-| COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" />   | /img/icons/icon-coffee.svg  |
-| GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg |
-| POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     |
-| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    |
-| START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   |
-| FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  |
-| HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    |
+| Type    | Icon                                                                           | File Location               | Alternate Accepted Words            |
+| ------- | ------------------------------------------------------------------------------ | --------------------------- | ----------------------------------- |
+| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    | MEETING                             |
+| CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />       | /img/icons/icon-camp.svg    | CAMPGROUND, CAMPING                 |
+| GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />         | /img/icons/icon-gas.svg     | FUEL                                |
+| CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" />   | /img/icons/icon-charge.svg  | CHARGER                             |
+| FOOD    | <img src="/img/icons/icon-food.svg" width="25" height="25" alt="Food" />       | /img/icons/icon-food.svg    | LUNCH, DINNER, BREAKFAST            |
+| HOTEL   | <img src="/img/icons/icon-hotel.svg" width="25" height="25" alt="Hotel" />     | /img/icons/icon-hotel.svg   | LODGING, MOTEL, AIRBNB, SLEEP, STAY |
+| DRINKS  | <img src="/img/icons/icon-drinks.svg" width="25" height="25" alt="Drinks" />   | /img/icons/icon-drinks.svg  | BAR, COCKTAILS, BEER, BEERS         |
+| COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" />   | /img/icons/icon-coffee.svg  | CAFE                                |
+| GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg | GROCERIES                           |
+| POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     | STOP                                |
+| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    | SCENIC, LOOKOUT                     |
+| START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   | BEGIN                               |
+| FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  | END                                 |
+| HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    | HOUSE                               |
 
 ### Route Colors
 
