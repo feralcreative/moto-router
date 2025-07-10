@@ -1,6 +1,9 @@
 # Motorcycle Ride Template
 
-A flexible web template for visualizing and sharing motorcycle routes online. It's flexible in that it will automatically adjust/add routes by dropping a new `.kml` file in the `/data/` directory, and it will add gpx and url buttons if they also exist, and remove them if they don’t.
+This project consists of flexible web template for visualizing and sharing motorcycle routes online with fellow riders. It’s flexible in that it will automatically adjust/add routes by dropping a new `.kml` file in the `/data/` directory, and it will add gpx and url buttons if they also exist, and remove them if they don’t.
+
+I've made a concerted effort to construct the `/template/` directory with real-world examples that can be parsed and mimicked, so if the instructions below don't make complete sense, simply clone the repo and pick through it.
+
 
 ![Project Screenshot](img/screenshot.jpg)
 
@@ -138,7 +141,7 @@ Where `TYPE` is one of the supported types below (e.g., `GAS - Chevron Station`)
 GAS/BREAK/LUNCH - Waypoint Name
 ```
 
-The icons in this project were designed in Figma, and can be accessed and forked by copying [this Figma File](https://www.figma.com/design/pFQck3CUIa5twKqMu1IxD5/moto-router?node-id=66-2&t=0WKGatLYE2TZ02Gb-1).
+The icons in this project were designed in Figma, and can be accessed and forked by copying [this Figma doc](https://www.figma.com/design/pFQck3CUIa5twKqMu1IxD5/moto-router?node-id=66-2&t=0WKGatLYE2TZ02Gb-1).
 
 **Note:** To allow the icons to change color with the route lines, manually edit your SVG code to change the fill value from `black` to `currentColor`.
 
