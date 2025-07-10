@@ -1,6 +1,6 @@
 # Motorcycle Ride Template
 
-A flexible web template for visualizing and sharing motorcycle routes online.
+A flexible web template for visualizing and sharing motorcycle routes online. It's flexible in that it will automatically adjust/add routes by dropping a new `.kml` file in the `/data/` directory, and it will add gpx and url buttons if they also exist, and remove them if they don’t.
 
 ![Project Screenshot](img/screenshot.jpg)
 
@@ -27,6 +27,7 @@ A flexible web template for visualizing and sharing motorcycle routes online.
 - **KML:** Generates the map (required).
 - **GPX:** For download only.
 - **URL:** Adds a button linking to the original route for editing or repurposing.
+  > NOTE: _A `.url` file in this context is simply a plain text file containing only a URL in ASCII format, with no extra formatting, metadata, or encoding—just the URL itself on a single line._
 - **`routes.json`**: List of route base names (e.g., `{ "base": "01-Sample-Route-One" }`).
 - **`build.sh`**: Helper script to auto-generate `routes.json`.
 
@@ -110,24 +111,38 @@ If you share this project, share instructions for setting up the `.env` file but
 
 ## Waypoint Types, Icons, and Route Colors
 
-### Waypoint Types and Icons
+### Standard Waypoints
 
-Each waypoint on the map can be assigned a type, which determines the icon used to represent it. The mapping is defined in the script as follows:
+Each waypoint on the map can be assigned a type, which determines the icon used to represent it. Custom icons are chosen by prepending keywords to the waypoint name as described below. Non-named waypoints are styled with a dot, depending on if they were added manually by the user or automatically by the mapping app.
+
+#### Standard Waypoint Types
+
+| Type      | Icon                                                                                            | Notes                                                                                                                                                                                                                  |
+| --------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Manual    | <img src="/img/icons/icon-waypoint-manual.svg" width="25" height="25" alt="Manual Waypoint" />  | Waypoints defined by you manually, ostensibly a human, in your mapping app of choice                                                                                                                                   |
+| Automatic | <img src="/img/icons/icon-waypoint-auto.svg" width="25" height="25" alt="Automatic Waypoint" /> | Waypoints added automatically (e.g. using the <a href="https://support.myrouteapp.com/en/support/solutions/articles/12000102514-manual-toolkits-#Expand" target="_blank" rel="noopener">Expand</a> tool in MyRouteApp) |
 
 ---
 
-**IMPORTANT: How to Trigger Waypoint Icons**
+### Custom Waypoints
 
-To display the correct icon for a waypoint, **name the waypoint in your mapping software with a prefix in this format:**
+Each waypoint can have up to four custom icons. To display the correct icon for a waypoint, **name the waypoint in your mapping software with a prefix in this format:**
 
 ```
 TYPE - Waypoint Name
 ```
 
-Where `TYPE` is one of the supported types above (e.g., `GAS - Chevron Station`).
-This ensures the correct icon is displayed for each waypoint on the map.
+Where `TYPE` is one of the supported types below (e.g., `GAS - Chevron Station`). To add additional types to a single waypoint, delimit the terms with a `/` like:
 
----
+```
+GAS/BREAK/LUNCH - Waypoint Name
+```
+
+The icons in this project were designed in Figma, and can be accessed and forked by copying [this Figma File](https://www.figma.com/design/pFQck3CUIa5twKqMu1IxD5/moto-router?node-id=66-2&t=0WKGatLYE2TZ02Gb-1).
+
+**Note:** To allow the icons to change color with the route lines, manually edit your SVG code to change the fill value from `black` to `currentColor`.
+
+#### Custom Waypoint Types
 
 | Type    | Icon                                                                           | File Location               | Alternate Accepted Words            |
 | ------- | ------------------------------------------------------------------------------ | --------------------------- | ----------------------------------- |
@@ -178,4 +193,4 @@ This makes it easy to control the visual identity of your maps and ensure each r
 | 12    | `#550000` | Burgundy   | ![Burgundy](img/colors/swatch-burgundy.png)    |
 | 13    | `#8800DD` | Violet     | ![Violet](img/colors/swatch-violet.png)        |
 
-This is the actual palette used for route polylines. You can update or expand it as needed for your project.
+This is the actual palette used for route polylines—you can update or expand it as needed. By default, if you add more than 13 routes to your map it will cycle back through the colors in the same order again.
