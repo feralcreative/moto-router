@@ -131,7 +131,8 @@ This ensures the correct icon is displayed for each waypoint on the map.
 
 | Type    | Icon                                                                           | File Location               | Alternate Accepted Words            |
 | ------- | ------------------------------------------------------------------------------ | --------------------------- | ----------------------------------- |
-| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    | MEETING                             |
+| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    | MEETUP, JOIN, MEETING, CONVERGE     |
+| SPLIT   | <img src="/img/icons/icon-split.svg" width="25" height="25" alt="Camp" />      | /img/icons/icon-split.svg   | DEPART, DIVERGE, LEAVE              |
 | CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />       | /img/icons/icon-camp.svg    | CAMPGROUND, CAMPING                 |
 | GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />         | /img/icons/icon-gas.svg     | FUEL                                |
 | CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" />   | /img/icons/icon-charge.svg  | CHARGER                             |
@@ -141,7 +142,7 @@ This ensures the correct icon is displayed for each waypoint on the map.
 | COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" />   | /img/icons/icon-coffee.svg  | CAFE                                |
 | GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg | GROCERIES                           |
 | POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     | STOP                                |
-| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    | SCENIC, LOOKOUT                     |
+| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    | SCENIC, LOOKOUT, VIEWPOINT          |
 | START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   | BEGIN                               |
 | FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  | END                                 |
 | HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    | HOUSE                               |

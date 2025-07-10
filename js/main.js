@@ -1,8 +1,8 @@
 /**
  * @fileoverview Interactive map logic for motorcycle ride route pages.
- * @version 00.01
+ * @version 02.01
  * @author ziad@feralcreative.co
- * @lastModified 2025.06.15.1429
+ * @lastModified 2025.07.10.0926
  *
  * This script initializes a Google Map, loads and parses KML route files,
  * computes route mileage, builds a dynamic legend and download buttons,
@@ -349,7 +349,9 @@ window.initMap = async function () {
             if (i === 0) {
               isGas = true;
             } else {
-              const prefixMatch = name.match(/^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW)\s+-\s+(.*)$/i);
+              const prefixMatch = name.match(
+                /^(MEET|SPLIT|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK)\s+-\s+(.*)$/i
+              );
               if (prefixMatch && prefixMatch[1].toUpperCase() === "GAS") {
                 isGas = true;
               }
@@ -376,6 +378,7 @@ window.initMap = async function () {
             // --- Custom SVG marker logic ---
             const roleIconMap = {
               MEET: "/img/icons/icon-meet.svg",
+              SPLIT: "/img/icons/icon-split.svg",
               CAMP: "/img/icons/icon-camp.svg",
               GAS: "/img/icons/icon-gas.svg",
               CHARGE: "/img/icons/icon-charge.svg",
@@ -395,7 +398,9 @@ window.initMap = async function () {
             function getWaypointTitle(role) {
               switch ((role || "").toUpperCase()) {
                 case "MEET":
-                  return "Meeting Point";
+                  return "Meetup";
+                case "SPLIT":
+                  return "Departure";
                 case "GAS":
                   return "Gas Stop";
                 case "CAMP":
@@ -441,7 +446,8 @@ window.initMap = async function () {
             }
             // Canonical roles and their alternate terms (copied from route label logic)
             const roleTerms = {
-              MEET: ["MEET", "MEETING"],
+              MEET: ["MEET", "MEETUP", "MEETING", "CONVERGE", "JOIN"],
+              SPLIT: ["SPLIT", "DEPART", "DIVERGE", "LEAVE"],
               CAMP: ["CAMP", "CAMPGROUND", "CAMPING"],
               GAS: ["GAS", "FUEL"],
               CHARGE: ["CHARGE"],
@@ -450,7 +456,7 @@ window.initMap = async function () {
               DRINKS: ["DRINKS", "BAR", "COCKTAILS", "BEER"],
               COFFEE: ["COFFEE", "CAFE"],
               POI: ["POI", "STOP"],
-              VIEW: ["VIEW", "SCENIC", "LOOKOUT"],
+              VIEW: ["VIEW", "SCENIC", "LOOKOUT", "VIEWPOINT"],
               GROCERY: ["GROCERY", "GROCERIES"],
               START: ["START", "BEGIN"],
               FINISH: ["FINISH", "END"],
@@ -497,7 +503,7 @@ window.initMap = async function () {
               let role = null;
               let displayName = type;
               const prefixMatch = type.match(
-                /^(MEET|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK)\s*-\s*(.*)$/i
+                /^(MEET|SPLIT|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK)\s*-\s*(.*)$/i
               );
               if (prefixMatch) {
                 role = prefixMatch[1].toUpperCase();
