@@ -22,131 +22,19 @@ A flexible web template for visualizing and sharing motorcycle routes online.
      - `routes.json`: List of route base names (e.g., `{ "base": "01-Sample-Route-One" }`).
      - `build.sh`: Helper script to auto-generate `routes.json`.
 
-3. **Create a New Route Page**
-
-   - Duplicate the `/template` directory and rename it for your ride (e.g., `/2025-spring-ride`).
-   - Place your exported files in the new directory's `data/` folder.
-   - Update `routes.json` to include your new segments. Optionally, use `build.sh` to automate this.
-   - Edit `index.html` to customize titles, descriptions, and content for your ride.
-   - Add a link to your new route page in your site's navigation if needed.
-
-   **Example:**
-
-   ```sh
-   cp -r template coastal-adventure-2025
-   # Edit coastal-adventure-2025/index.html and data/*
-   ```
-
-   After setup, visiting `/coastal-adventure-2025/` will show your new ride page with interactive maps and downloads.
-
----
-
-## 🗂️ File Roles
+3. **File Roles & Data Management**
 
 - **KML:** Generates the map (required).
 - **GPX:** For download only.
 - **URL:** Adds a button linking to the original route for editing or repurposing.
+- **`routes.json`**: List of route base names (e.g., `{ "base": "01-Sample-Route-One" }`).
+- **`build.sh`**: Helper script to auto-generate `routes.json`.
 
 ---
 
-## ⚠️ Important Notes
-
-- **Manual Data Sync:**  
-  Run `build.sh` whenever you add, remove, or rename `.kml` files in `data/` to update `routes.json`.
-- **Route Pages:**  
-  Main ride pages live in subdirectories copied from `/template/`, not at the project root.
-
 ---
 
-## 🛠️ Local Development
-
-1. **Install dependencies:**
-   ```sh
-   npm install
-   ```
-2. **Set up environment variables:**
-   - Create a `.env` file in the project root with your Google Maps API key:
-     ```env
-     GOOGLE_MAPS_API_KEY=your-key-here
-     ```
-
----
-
-## 🆕 Marker Types & Multi-Marker Waypoints
-
-- Each waypoint can display up to 4 icons (e.g., `GAS/FOOD/VIEW`).
-- Marker icons are SVGs, colored by role, and can be extended by adding SVGs to `/img/icons/` and updating `roleIconMap` in `/js/main.js`.
-- See comments in `index.html` and `/js/main.js` for advanced customizations.
-
----
-
-- **Legend & Tooltips:**  
-  The map’s legend and waypoint tooltips reflect all assigned roles and their meanings.
-
-#### Relevant Files
-
-- **`/template/index.html`**  
-  No markup changes required for marker logic; all handled in JS.
-- **`/js/main.js`**
-  - Marker creation logic parses multiple roles and assigns up to 4 icons per waypoint.
-  - See `loadKmlRoute`, `setMarker`, and `getWaypointTitle` for role/marker handling.
-- **`/css/main.scss`**
-  - Styles for stacked/clustered markers and waypoint tooltips.
-  - Responsive adjustments for marker display.
-
-#### Example
-
-A waypoint with the name `GAS/FOOD/VIEW` will display three icons: a gas pump, a fork & knife, and a scenic view icon, each with its own color.
-
-For each route, create a `.kml`, `.gpx`, and (optionally) `.url` file with the same base name (e.g., `01-Sample-Route-One`).
-
-- The `.url` file should contain the route URL on the first line (if you want a URL button).
-- When you run `build.sh`, the script will add an entry for each route base name in `routes.json`.
-- The site will automatically show download buttons for each format that exists.
-
-**Example:**
-
-```
-01-Sample-Route-One.kml
-01-Sample-Route-One.gpx
-01-Sample-Route-One.url  # contains: https://www.myrouteapp.com/route/123456
-```
-
-3. **Customize `index.html`:**  
-   Edit titles, descriptions, and content for your ride.
-
-4. **Add to Navigation:**  
-   If the site has a main navigation or index, add a link to your new route page.
-
-**Example:**
-
-```sh
-cp -r template coastal-adventure-2025
-# Edit coastal-adventure-2025/index.html and data/* as needed
-```
-
-Visiting `/coastal-adventure-2025/` will show your new ride page with interactive maps and downloads.
-
----
-
-## ⚠️ Important Notes
-
-- **Manual Data Sync:**  
-  Update `routes.json` whenever you add, remove, or rename `.kml` files in `data/` by running `build.sh`.  
-  The map and download buttons will appear for each route base listed in `routes.json`, and for each file format that exists.
-
-- **Route File Integration:**  
-  For each route, just create files with the same base name and the `.kml`, `.gpx`, and (optionally) `.url` extensions (e.g., `02-Sample-Route-Two.kml`, `02-Sample-Route-Two.gpx`, `02-Sample-Route-Two.url`).
-
-  - The `.url` file should contain the route URL on the first line. If no `.url` file is present, there will be no URL button for that route.
-  - You do NOT need to list each file in `routes.json`; just the base name is required.
-
-- **Route Pages:**  
-  The main ride pages live in subdirectories copied from `/template` (e.g., `/2025-spring-ride/`), not at the project root.
-
----
-
-## 🛠️ Local Development & Running the Project
+## Local Development & Environment
 
 1. **Install dependencies:**
    ```sh
@@ -170,33 +58,7 @@ Visiting `/coastal-adventure-2025/` will show your new ride page with interactiv
 
 ---
 
-## 💻 SCSS/CSS Workflow
-
-- Edit styles in `/css/main.scss`.
-- Compile to `/css/main.min.css` (and `/css/main.css` if needed) using your preferred SCSS build tool (e.g., `sass`, `node-sass`, or an editor extension):
-  ```sh
-  sass css/main.scss css/main.min.css --style=compressed
-  ```
-- The HTML references `/css/main.min.css`.
-
----
-
-## 🔄 Live Reload & BrowserSync (Optional)
-
-- For a better development experience, use BrowserSync to auto-reload the browser on file changes.
-- A separate Browsersync config and script is provided (see `/www/_browsersync/bs-config-moto.js`).
-- To start BrowserSync for this project:
-  ```sh
-  cd ../_browsersync
-  npm run start-moto
-  ```
-- Make sure your Express server is running before starting BrowserSync.
-
----
-
-## 🗺️ JavaScript Map Logic (`js/main.js`)
-
-Handles all interactive map logic for ride route pages.
+## Map Features & Logic
 
 ### Features:
 
@@ -223,151 +85,16 @@ Handles all interactive map logic for ride route pages.
 - Creates download buttons for GPX/KML if available.
 - Interactive features are generated based on loaded data.
 
-### Usage:
-
-- Script is loaded by `index.html` and runs on page load.
-- Requires Google Maps JS API (with Geometry library).
-- Map container must have ID `map`.
-- Data files (`.kml`, `.gpx`, `routes.json`) must be present in `data/`.
-
----
-
-## 🗺️ Route Loading Logic
-
-The map template loads and displays routes through the following process:
-
-1. **Configuration**:
-
-   - Routes are configured in `data/routes.json` as an array of objects: `[{ "base": "route-name" }, ...]`
-   - Each route's `base` property defines the filename prefix for its KML/GPX files
-   - Example: `{ "base": "01-Sample-Route-One" }` will load `data/01-Sample-Route-One.kml`
-
-2. **Loading Process**:
-
-   - The map initializes when Google Maps API loads and calls `window.initMap()`
-   - `initMap()` fetches route configuration from `/data/routes.json`
-   - For each route, it fetches and parses the corresponding KML file
-   - Coordinates are extracted from KML and converted to Google Maps polylines
-   - Each route is assigned a color from a predefined palette
-   - Polylines are added to the map and stored in `window.routePolylines`
-
-3. **UI Elements**:
-
-   - Download buttons are generated for each route's GPX/KML files
-   - A color-coded legend is created matching routes to their display colors
-   - Interactive elements allow highlighting routes on hover
-
 4. **Important Notes**:
-   - All data files must be accessible at `/data/` relative to the server root
-   - KML files must contain valid coordinate data in standard KML format
-   - The map container must have ID `map`
+
+- **`initMap()`**: Entry point, sets up map, loads KML routes, builds UI.
+- **`loadKmlRoute()`**: Fetches/parses KML, draws polyline, computes mileage.
+- **`addRouteDownloadButtons()`**: Builds download table, sets up UI interactions.
+- **`updateRouteLegend()`**: Updates color-coded route legend.
 
 ---
 
-## 📚 Further Customization
-
-- See comments in `index.html` and `/js/main.js` for advanced customizations or to contribute new features.
-
-- On macOS:
-  ```sh
-  brew install jq
-  ```
-- On Ubuntu/Linux:
-  ```sh
-  sudo apt-get install jq
-  ```
-
-### How to Use the Template
-
-1. **Copy the Template**: Duplicate the `/template` directory and give it a new name relevant to your ride (e.g., `/2025-spring-ride`).
-2. **Update Data Files**: Replace or add `.gpx`/`.kml` files and update `routes.json` to match your new route segments.
-3. **Customize `index.html`**: Edit the HTML to update titles, descriptions, and any custom content for your ride.
-4. **Add to Navigation**: If your site has a main navigation or index, add a link to your new route page.
-
-### Example
-
-Suppose you want to add a new ride called "Coastal Adventure 2025":
-
-```sh
-cp -r template coastal-adventure-2025
-# Edit coastal-adventure-2025/index.html and data/* as needed
-```
-
-Now, visiting `/coastal-adventure-2025/` on your site will show the new ride page, with interactive maps and downloadable routes.
-
----
-
-For more details on customizing the template or contributing new features, see the comments in `index.html` and the scripts in `/js/main.js`.
-
----
-
-## JavaScript Map Logic (`js/main.js`)
-
-This file provides all the interactive logic for the ride route map pages. It is responsible for:
-
-- Initializing the Google Map and configuring its appearance.
-- Loading and parsing `.kml` route files to display ride paths as colored polylines on the map.
-- Calculating route mileage using the Google Maps Geometry API.
-- Dynamically generating the route legend and download buttons for each available route.
-- Managing interactive features such as route highlighting and marker display.
-- Reading route data from `data/routes.json` to determine which routes to display.
-
-### Main Components:
-
-- **`initMap()`**: Entry point called by Google Maps API. Sets up the map, loads all KML routes, and builds the UI.
-- **`loadKmlRoute(kmlUrl, polylineColor, fitBounds, routeIndex)`**: Fetches and parses a KML file, draws its polyline, computes mileage, and stores references for interactivity.
-- **`addRouteDownloadButtons()`**: Builds a table of available routes with download buttons for GPX/KML files, and sets up UI interactions for highlighting and selection.
-- **`updateRouteLegend()`**: Updates the route legend UI with color coding.
-- **Helpers:**
-  - `getWaypointTitle(role)`: Maps waypoint roles to display titles.
-  - `getColoredSvgIcon(iconPath, color, opacity)`: Generates custom SVG icons for map markers.
-  - `setRouteHighlight(activeIndex)`: Centralizes logic for highlighting/dimming routes and markers.
-  - `hexToRgba(hex, alpha)`: Converts hex colors to RGBA for CSS.
-
-### Data Flow:
-
-- The script loads a list of available routes from `data/routes.json`.
-- For each `.kml` file listed, it loads the file, parses the coordinates, and draws the route on the map.
-- For each route, it creates download buttons for GPX and KML formats if available.
-- Interactive features (highlighting, legends, marker icons) are dynamically generated based on the loaded data.
-
-### Usage
-
-- The script is loaded by `index.html` and is automatically called when the page loads.
-- It requires the Google Maps JavaScript API (with Geometry library) and expects the map container to have the ID `map`.
-- The route data files (`.kml`, `.gpx`, `routes.json`) must be present in the `data/` directory.
-
-### Adding route URL Links
-
-To display a blue **URL** button for each route (linking directly to route URL), edit `template/data/routes.json` and add the route URL for each route in the `url` field. Example:
-
-```json
-[
-  { "base": "01-Oakland-to-Mt-Madonna" },
-  { "base": "02-Campsite-to-Meeting-Point" },
-  { "base": "03-Boardwalk-to-Campsite" }
-]
-```
-
-- For each base, the site will show download buttons for `.kml`, `.gpx`, and (if present) a URL button for `.url`.
-
-### Dependencies and Environment
-
-This project uses the Google Maps JavaScript API with the Geometry library. You must provide your own API key.
-
-**Additional dependencies:**
-
-- The project uses a shell script (`build.sh`) and [`jq`](https://stedolan.github.io/jq/) for processing route files. `jq` must be installed on your system to run the script.
-
-#### Setting the Google Maps API Key
-
-For security and flexibility, the Google Maps API key is now loaded from an environment variable using a `.env` file. The template at `template/index.html` expects the key to be injected as `GOOGLE_MAPS_API_KEY`.
-
-Create a file named `.env` in the project root with the following contents:
-
-```env
-GOOGLE_MAPS_API_KEY=your-google-maps-api-key-here
-```
+## Customization & Advanced Topics
 
 Replace `your-google-maps-api-key-here` with your actual API key.
 
@@ -389,16 +116,16 @@ Each waypoint on the map can be assigned a type, which determines the icon used 
 
 ---
 
-> **IMPORTANT: How to Trigger Waypoint Icons**
->
-> To display the correct icon for a waypoint, **name the waypoint in your mapping software with a prefix in this format:**
->
-> ```
-> TYPE - Waypoint Name
-> ```
->
-> Where `TYPE` is one of the supported types above (e.g., `GAS - Chevron Station`).
-> This ensures the correct icon is displayed for each waypoint on the map.
+**IMPORTANT: How to Trigger Waypoint Icons**
+
+To display the correct icon for a waypoint, **name the waypoint in your mapping software with a prefix in this format:**
+
+```
+TYPE - Waypoint Name
+```
+
+Where `TYPE` is one of the supported types above (e.g., `GAS - Chevron Station`).
+This ensures the correct icon is displayed for each waypoint on the map.
 
 ---
 
