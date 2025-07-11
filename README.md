@@ -1,8 +1,8 @@
 # Moto-Rooter
 
-Behold, a flexible framework for visualizing and sharing motorcycle routes with other riders. Just drop a new `.kml` file into the `/data/` directory and register its name in `routes.json` to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
+Behold, a flexible framework for visualizing and sharing motorcycle routes. Just drop a new `.kml` file into the `/data/` directory and make sure its name is registered in `routes.json`. Your map will update accordingly—new routes will be displayed, route lengths and distance from start/fuel stops are automagically calculated, and GPX/URL buttons added or removed as needed.
 
-This is a _static_ site—it does not rely on any server-side language or database. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed.
+This is a _static_ site—it does not rely on any server-side language or database—just HTML, CSS, and a bit of vanilla JS. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed. For example, the [live demo](https://moto-rooter.feralcreative.dev/template/) linked below is hosted on a Synology NAS in my dining room. 🥳
 
 ![Project Screenshot](img/screenshot.png)
 
@@ -121,7 +121,7 @@ Each waypoint on the map can be assigned a type, which determines the icon used 
 
 | Type      | Icon                                                                                            | Notes                                                                                                                                                                                                                  |
 | --------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Manual    | <img src="/img/icons/icon-waypoint-manual.svg" width="25" height="25" alt="Manual Waypoint" />  | Waypoints defined by you manually, ostensibly a human, in your mapping app of choice                                                                                                                                   |
+| Manual    | <img src="/img/icons/icon-waypoint-manual.svg" width="25" height="25" alt="Manual Waypoint" />  | Waypoints defined by you manually, a human (ostensibly) in your mapping app of choice                                                                                                                                  |
 | Automatic | <img src="/img/icons/icon-waypoint-auto.svg" width="25" height="25" alt="Automatic Waypoint" /> | Waypoints added automatically (e.g. using the <a href="https://support.myrouteapp.com/en/support/solutions/articles/12000102514-manual-toolkits-#Expand" target="_blank" rel="noopener">Expand</a> tool in MyRouteApp) |
 
 ---
