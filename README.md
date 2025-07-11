@@ -1,10 +1,12 @@
 # Moto-Rooter
 
-Behold, a flexible framework for visualizing and sharing motorcycle routes with fellow riders. Just drop a new `.kml` file into the `/data/` directory to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
+Behold, a flexible framework for visualizing and sharing motorcycle routes with other riders. Just drop a new `.kml` file into the `/data/` directory to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
 
-This is a _static_ site—it does not rely on any server-side language or database. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scaled up or down as needed.
+This is a _static_ site—it does not rely on any server-side language or database. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed.
 
 ![Project Screenshot](img/screenshot.jpg)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-bb00bb?style=for-the-badge)](https://moto.ezzat.com/template)
 
 ---
 
@@ -27,13 +29,11 @@ This is a _static_ site—it does not rely on any server-side language or databa
 3. **File Roles & Data Management**
 
 - **KML:** Generates the map (required).
-- **GPX:** For download only.
+- **GPX:** For easy download, sharing, and use in most navigation apps and devices.
 - **URL:** Adds a button linking to the original route for editing or repurposing.
   > NOTE: _A `.url` file in this context is simply a plain text file containing only a URL in ASCII format, with no extra formatting, metadata, or encoding—just the URL itself on a single line._
 - **`routes.json`**: List of route base names (e.g., `{ "base": "01-Sample-Route-One" }`).
 - **`build.sh`**: Helper script to auto-generate `routes.json`.
-
----
 
 ---
 
@@ -111,7 +111,7 @@ If you share this project, share instructions for setting up the `.env` file but
 
 ---
 
-## Waypoint Types, Icons, and Route Colors
+## Waypoint Types and Custom Icons
 
 ### Standard Waypoints
 
@@ -128,7 +128,7 @@ Each waypoint on the map can be assigned a type, which determines the icon used 
 
 ### Custom Waypoints
 
-Each waypoint can have up to four custom icons. To display the correct icon for a waypoint, **name the waypoint in your mapping software with a prefix in this format:**
+Each waypoint can have up to four custom icons each. To display the correct icon(s) for a waypoint, **name the waypoint in your mapping software with a prefix in this format:**
 
 ```
 TYPE - Waypoint Name
@@ -139,10 +139,6 @@ Where `TYPE` is one of the supported types below (e.g., `GAS - Chevron Station`)
 ```
 GAS/BREAK/LUNCH - Waypoint Name
 ```
-
-The icons in this project were designed in Figma, and can be accessed and forked by copying [this Figma doc](https://www.figma.com/design/pFQck3CUIa5twKqMu1IxD5/moto-router?node-id=66-2&t=0WKGatLYE2TZ02Gb-1).
-
-**Note:** To allow the icons to change color with the route lines, manually edit your SVG code to change the fill value from `black` to `currentColor`.
 
 #### Custom Waypoint Types
 
@@ -165,11 +161,15 @@ The icons in this project were designed in Figma, and can be accessed and forked
 | HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    | HOUSE                               |
 | BREAK   | <img src="/img/icons/icon-break.svg" width="25" height="25" alt="Break" />     | /img/icons/icon-break.svg   | REST                                |
 
-### Route Colors
+The icons in this project were designed in Figma, and can be accessed and forked by copying [this Figma doc](https://www.figma.com/design/pFQck3CUIa5twKqMu1IxD5/moto-router?node-id=66-2&t=0WKGatLYE2TZ02Gb-1).
 
-Each route polyline is assigned a color from a predefined list in the script. Colors are cycled for multiple routes.
+**Note:** To allow the icons to change color with the route lines, manually edit your SVG code to change the fill value from `black` to `currentColor`.
 
-#### How to Customize Route Colors
+## Route Coloring
+
+Each route polyline is assigned a color from a predefined list in `main.js`.
+
+### How to Customize Route Colors
 
 1. Open `js/main.js` and search for `const colors = [` to locate the color palette.
 2. Edit the hex color values in the array to your preference. You can add, remove, or rearrange colors as needed.
@@ -177,7 +177,7 @@ Each route polyline is assigned a color from a predefined list in the script. Co
 
 This makes it easy to control the visual identity of your maps and ensure each route is clearly distinguishable.
 
-**Current Color Palette (as defined in the script):**
+### Default Color Palette
 
 | Order | Hex Code  | Label      | Swatch                                         |
 | ----- | --------- | ---------- | ---------------------------------------------- |
@@ -195,12 +195,14 @@ This makes it easy to control the visual identity of your maps and ensure each r
 | 12    | `#550000` | Burgundy   | ![Burgundy](img/colors/swatch-burgundy.png)    |
 | 13    | `#8800DD` | Violet     | ![Violet](img/colors/swatch-violet.png)        |
 
-This is the actual palette used for route polylines—you can update or expand it as needed. By default, if you add more than 13 routes to your map it will cycle back through the colors in the same order again.
+---
 
-## Development Roadmap / Harebrained Ideas
+## Development Roadmap
 
-- [ ] Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route.
+### Harebrained Ideas:
+
+- [ ] Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes).
 - [ ] Add mailto links to email route files (kml, gpx, etc.) rather than just downloading
   - [ ] Social sharing and/or embed code generation might be nice too
 - [ ] Enable the ability to easily add a logo or banner of your club, riding group, etc.
-  - [ ] Alternately,  a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.
+  - [ ] Alternately, a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.
