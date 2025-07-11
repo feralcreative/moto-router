@@ -1,10 +1,10 @@
 # Moto-Rooter
 
-Behold, a flexible framework for visualizing and sharing motorcycle routes with other riders. Just drop a new `.kml` file into the `/data/` directory to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
+Behold, a flexible framework for visualizing and sharing motorcycle routes with other riders. Just drop a new `.kml` file into the `/data/` directory and register its name in `routes.json` to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
 
 This is a _static_ site—it does not rely on any server-side language or database. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed.
 
-![Project Screenshot](img/screenshot.jpg)
+![Project Screenshot](img/screenshot.png)
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-bb00bb?style=for-the-badge)](https://moto-rooter.feralcreative.dev/template/)
 
@@ -199,10 +199,12 @@ This makes it easy to control the visual identity of your maps and ensure each r
 
 ## Development Roadmap
 
-### Harebrained Ideas:
+### Harebrained ideas:
 
-- [ ] Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes).
-- [ ] Add mailto links to email route files (kml, gpx, etc.) rather than just downloading
-  - [ ] Social sharing and/or embed code generation might be nice too
-- [ ] Enable the ability to easily add a logo or banner of your club, riding group, etc.
-  - [ ] Alternately, a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.
+| Done | Description                                                                                                                                                                                       | Added      | Completed  | By                                                 |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ---------- | -------------------------------------------------- |
+| ☑️   | Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes). | 2024.07.11 | 2025.07.11 | [@feralcreative](https://github.com/feralcreative) |
+| ⬜   | Add mailto links to email route files (kml, gpx, etc.) rather than just downloading                                                                                                               | 2025.07.10 |            |                                                    |
+| ⬜   | Social sharing and/or embed code generation might be nice too                                                                                                                                     | 2025.07.11 |            |                                                    |
+| ⬜   | Enable the ability to easily add a logo or banner of your club, riding group, etc.                                                                                                                | 2025.07.11 |            |                                                    |
+| ⬜   | Alternately, a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.                                                                                           | 2025.07.11 |            |                                                    |

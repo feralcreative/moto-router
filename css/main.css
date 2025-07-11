@@ -136,6 +136,18 @@ a:hover {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
 }
+#info-panel .toggle-checkbox {
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.4em;
+  font-size: 0.7em;
+}
+#info-panel .toggle-checkbox input[type=checkbox] {
+  accent-color: gray;
+}
 #info-panel div.details {
   max-width: 100%;
   padding-bottom: 1em;

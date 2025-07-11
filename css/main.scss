@@ -153,6 +153,18 @@ a {
   background: $panel-bg;
   border-radius: 12px;
 
+  .toggle-checkbox {
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.4em;
+    font-size: 0.7em;
+    input[type="checkbox"] {
+      accent-color: gray;
+    }
+  }
   div.details {
     max-width: 100%;
     padding-bottom: 1em;
