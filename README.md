@@ -4,7 +4,7 @@ Behold, a flexible framework for visualizing and sharing motorcycle routes with 
 
 This is a _static_ site—it does not rely on any server-side language or database. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed.
 
-![Project Screenshot](img/screenshot.jpg)
+![Project Screenshot](img/screenshot.png)
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-bb00bb?style=for-the-badge)](https://moto-rooter.feralcreative.dev/template/)
 
