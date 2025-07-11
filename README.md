@@ -15,7 +15,7 @@ This is a _static_ site—it does not rely on any server-side language or databa
 1. **Plan and Export Your Route**
 
    - Use any route planning tool—[MyRoute-app](https://www.myrouteapp.com/), [Google My Maps](https://mymaps.google.com/), [Garmin BaseCamp](https://www.garmin.com/en-US/software/basecamp/), etc.
-   - Export your route as a `.kml` file (**required**), and optionally as `.gpx` (for downloads) and `.url` (for original route links).
+   - Export your route as a `.kml` file (**required**), and optionally as `.gpx` (for sharing and/or loading to a navigation app or device) and `.url` (for links to the original route in your mapping app).
 
 2. **Project Structure**
 
@@ -142,24 +142,24 @@ GAS/BREAK/LUNCH - Waypoint Name
 
 #### Custom Waypoint Types
 
-| Type    | Icon                                                                           | File Location               | Alternate Accepted Words            |
-| ------- | ------------------------------------------------------------------------------ | --------------------------- | ----------------------------------- |
-| MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    | MEETUP, JOIN, MEETING, CONVERGE     |
-| SPLIT   | <img src="/img/icons/icon-split.svg" width="25" height="25" alt="Camp" />      | /img/icons/icon-split.svg   | DEPART, DIVERGE, LEAVE              |
-| CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />       | /img/icons/icon-camp.svg    | CAMPGROUND, CAMPING                 |
-| GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />         | /img/icons/icon-gas.svg     | FUEL                                |
-| CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" />   | /img/icons/icon-charge.svg  | CHARGER                             |
-| FOOD    | <img src="/img/icons/icon-food.svg" width="25" height="25" alt="Food" />       | /img/icons/icon-food.svg    | LUNCH, DINNER, BREAKFAST            |
-| HOTEL   | <img src="/img/icons/icon-hotel.svg" width="25" height="25" alt="Hotel" />     | /img/icons/icon-hotel.svg   | LODGING, MOTEL, AIRBNB, SLEEP, STAY |
-| DRINKS  | <img src="/img/icons/icon-drinks.svg" width="25" height="25" alt="Drinks" />   | /img/icons/icon-drinks.svg  | BAR, COCKTAILS, BEER, BEERS         |
-| COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" />   | /img/icons/icon-coffee.svg  | CAFE                                |
-| GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg | GROCERIES                           |
-| POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     | STOP                                |
-| VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    | SCENIC, LOOKOUT, VIEWPOINT          |
-| START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   | BEGIN                               |
-| FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  | END                                 |
-| HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    | HOUSE                               |
-| BREAK   | <img src="/img/icons/icon-break.svg" width="25" height="25" alt="Break" />     | /img/icons/icon-break.svg   | REST                                |
+| Group                    | Type    | Icon                                                                           | File Location               | Alternate Accepted Words            |
+| ------------------------ | ------- | ------------------------------------------------------------------------------ | --------------------------- | ----------------------------------- |
+| **Logistical**           | START   | <img src="/img/icons/icon-start.svg" width="25" height="25" alt="Start" />     | /img/icons/icon-start.svg   | BEGIN                               |
+| &rdsh;                   | FINISH  | <img src="/img/icons/icon-finish.svg" width="25" height="25" alt="Finish" />   | /img/icons/icon-finish.svg  | END                                 |
+| &rdsh;                   | HOME    | <img src="/img/icons/icon-home.svg" width="25" height="25" alt="Home" />       | /img/icons/icon-home.svg    | HOUSE                               |
+| &rdsh;                   | MEET    | <img src="/img/icons/icon-meet.svg" width="25" height="25" alt="Meet" />       | /img/icons/icon-meet.svg    | MEETUP, JOIN, MEETING, CONVERGE     |
+| &rdsh;                   | SPLIT   | <img src="/img/icons/icon-split.svg" width="25" height="25" alt="Split" />     | /img/icons/icon-split.svg   | DEPART, DIVERGE, LEAVE              |
+| **Journey Essentials**   | GAS     | <img src="/img/icons/icon-gas.svg" width="25" height="25" alt="Gas" />         | /img/icons/icon-gas.svg     | FUEL                                |
+| &rdsh;                   | CHARGE  | <img src="/img/icons/icon-charge.svg" width="25" height="25" alt="Charge" />   | /img/icons/icon-charge.svg  | CHARGER                             |
+| &rdsh;                   | BREAK   | <img src="/img/icons/icon-break.svg" width="25" height="25" alt="Break" />     | /img/icons/icon-break.svg   | REST                                |
+| **Amenities & Comfort**  | CAMP    | <img src="/img/icons/icon-camp.svg" width="25" height="25" alt="Camp" />       | /img/icons/icon-camp.svg    | CAMPGROUND, CAMPING                 |
+| &rdsh;                   | HOTEL   | <img src="/img/icons/icon-hotel.svg" width="25" height="25" alt="Hotel" />     | /img/icons/icon-hotel.svg   | LODGING, MOTEL, AIRBNB, SLEEP, STAY |
+| &rdsh;                   | FOOD    | <img src="/img/icons/icon-food.svg" width="25" height="25" alt="Food" />       | /img/icons/icon-food.svg    | LUNCH, DINNER, BREAKFAST            |
+| &rdsh;                   | COFFEE  | <img src="/img/icons/icon-coffee.svg" width="25" height="25" alt="Coffee" />   | /img/icons/icon-coffee.svg  | CAFE                                |
+| &rdsh;                   | DRINKS  | <img src="/img/icons/icon-drinks.svg" width="25" height="25" alt="Drinks" />   | /img/icons/icon-drinks.svg  | BAR, COCKTAILS, BEER, BEERS         |
+| &rdsh;                   | GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg | GROCERIES                           |
+| **Interesting & Scenic** | VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    | SCENIC, LOOKOUT, VIEWPOINT          |
+| &rdsh;                   | POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     | STOP                                |
 
 The icons in this project were designed in Figma, and can be accessed and forked by copying [this Figma doc](https://www.figma.com/design/pFQck3CUIa5twKqMu1IxD5/moto-router?node-id=66-2&t=0WKGatLYE2TZ02Gb-1).
 
@@ -203,8 +203,8 @@ This makes it easy to control the visual identity of your maps and ensure each r
 
 | Done | Description                                                                                                                                                                                       | Added      | Completed  | By                                                 |
 | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ---------- | -------------------------------------------------- |
-| ☑️   | Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes). | 2024.07.11 | 2025.07.11 | [@feralcreative](https://github.com/feralcreative) |
-| ⬜   | Add mailto links to email route files (kml, gpx, etc.) rather than just downloading                                                                                                               | 2025.07.10 |            |                                                    |
-| ⬜   | Social sharing and/or embed code generation might be nice too                                                                                                                                     | 2025.07.11 |            |                                                    |
-| ⬜   | Enable the ability to easily add a logo or banner of your club, riding group, etc.                                                                                                                | 2025.07.11 |            |                                                    |
-| ⬜   | Alternately, a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.                                                                                           | 2025.07.11 |            |                                                    |
+| ☑️   | Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes). | 2024.07.05 | 2025.07.11 | [@feralcreative](https://github.com/feralcreative) |
+| ⬜   | Add mailto links to email route files (kml, gpx, etc.) rather than just downloading                                                                                                               | 2025.07.09 |            |                                                    |
+| ⬜   | Social sharing and/or embed code generation might be nice too                                                                                                                                     | 2025.07.10 |            |                                                    |
+| ⬜   | Enable the ability to easily add a logo or banner of your club, riding group, etc.                                                                                                                | 2025.07.10 |            |                                                    |
+| ⬜   | Alternately, a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.                                                                                           | 2025.07.10 |            |                                                    |
