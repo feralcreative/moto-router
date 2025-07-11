@@ -6,7 +6,7 @@ This is a _static_ site—it does not rely on any server-side language or databa
 
 ![Project Screenshot](img/screenshot.jpg)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-bb00bb?style=for-the-badge)](https://moto.ezzat.com/template)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-bb00bb?style=for-the-badge)](https://moto-rooter.feralcreative.dev/template/)
 
 ---
 
