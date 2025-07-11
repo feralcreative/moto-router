@@ -12,7 +12,7 @@ node_modules/
 .well-known/
 logs
 docs
-vmc
+*vmc*
 .windsurfrules
 .htpasswd
 .htaccess

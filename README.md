@@ -1,9 +1,8 @@
-# Motorcycle Ride Template
+# Moto-Rooter
 
-This project consists of flexible web template for visualizing and sharing motorcycle routes online with fellow riders. It’s flexible in that it will automatically adjust/add routes by dropping a new `.kml` file in the `/data/` directory, and it will add gpx and url buttons if they also exist, and remove them if they don’t.
+Behold, a flexible framework for visualizing and sharing motorcycle routes with fellow riders. Just drop a new `.kml` file into the `/data/` directory to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
 
-I've made a concerted effort to construct the `/template/` directory with real-world examples that can be parsed and mimicked, so if the instructions below don't make complete sense, simply clone the repo and pick through it.
-
+This is a _static_ site—it does not rely on any server-side language or database. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scaled up or down as needed.
 
 ![Project Screenshot](img/screenshot.jpg)
 
@@ -197,3 +196,11 @@ This makes it easy to control the visual identity of your maps and ensure each r
 | 13    | `#8800DD` | Violet     | ![Violet](img/colors/swatch-violet.png)        |
 
 This is the actual palette used for route polylines—you can update or expand it as needed. By default, if you add more than 13 routes to your map it will cycle back through the colors in the same order again.
+
+## Development Roadmap / Harebrained Ideas
+
+- [ ] Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route.
+- [ ] Add mailto links to email route files (kml, gpx, etc.) rather than just downloading
+  - [ ] Social sharing and/or embed code generation might be nice too
+- [ ] Enable the ability to easily add a logo or banner of your club, riding group, etc.
+  - [ ] Alternately,  a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.
