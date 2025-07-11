@@ -649,11 +649,19 @@ window.initMap = async function () {
             const { iconPath, polylineColor } = marker._svgIconPaths;
             const cache = window.svgIconCache[iconPath] && window.svgIconCache[iconPath][polylineColor];
             if (cache) {
-              marker.setIcon({
+               const iconObj = {
                 url: isActive === null ? cache.full : isActive ? cache.full : cache.dim,
                 scaledSize: new google.maps.Size(25, 25),
                 anchor: new google.maps.Point(12.5, 12.5),
-              });
+              };
+              if (
+                (typeof iconObj === 'string') ||
+                (iconObj && (typeof iconObj.url === 'string' || typeof iconObj.path === 'string'))
+              ) {
+                marker.setIcon(iconObj);
+              } else {
+                console.warn('[setRouteHighlight] Skipping setIcon: invalid icon object', iconObj);
+              }
             }
           } else if (marker._isCircle) {
             // Circle
@@ -666,7 +674,14 @@ window.initMap = async function () {
               newIcon.strokeOpacity = isActive ? 1.0 : 0.3;
               newIcon.fillOpacity = isActive ? 1.0 : 0.3;
             }
-            marker.setIcon(newIcon);
+            if (
+              (typeof newIcon === 'string') ||
+              (newIcon && (typeof newIcon.url === 'string' || typeof newIcon.path === 'string'))
+            ) {
+              marker.setIcon(newIcon);
+            } else {
+              console.warn('[setRouteHighlight] Skipping setIcon: invalid icon object', newIcon);
+            }
           }
           marker.setZIndex(isActive === null ? 1 : isActive ? 2 : 1);
         });
@@ -892,39 +907,7 @@ window.initMap = async function () {
     console.log("DEBUG: All helper functions defined");
     // Removed duplicate calls to addRouteDownloadButtons and updateRouteLegend
 
-    // --- Panel collapse/expand logic ---
-    // (Moved out of initMap)
-    window.addEventListener("load", function () {
-      const panel = document.getElementById("info-panel");
-      if (!panel) {
-        console.warn("[collapse] #info-panel not found");
-        return;
-      }
-      const toggle = panel.querySelector(".collapse-toggle");
-      const content = panel.querySelector(".panel-content");
-      if (!toggle) {
-        console.warn("[collapse] .collapse-toggle not found");
-        return;
-      }
-      function setCollapsed(collapsed) {
-        console.log("[collapse] setCollapsed called with", collapsed);
-        panel.classList.toggle("collapsed", collapsed);
-        console.log("[collapse] panel.classList:", panel.classList.toString());
-        if (collapsed) {
-          const icon = toggle.querySelector(".collapse-icon");
-          if (icon) icon.src = "/img/icons/icon-expand.svg";
-          toggle.setAttribute("aria-label", "Expand panel");
-        } else {
-          const icon = toggle.querySelector(".collapse-icon");
-          if (icon) icon.src = "/img/icons/icon-collapse.svg";
-          toggle.setAttribute("aria-label", "Collapse panel");
-        }
-      }
-      toggle.addEventListener("click", function (e) {
-        console.log("[collapse] collapse-toggle clicked");
-        setCollapsed(!panel.classList.contains("collapsed"));
-      });
-    });
+
   }
   console.log("DEBUG: End of initMap function reached");
 };
@@ -937,4 +920,43 @@ window.addEventListener("error", function (event) {
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Inline JS: body tag parsed, running under", location.href);
   console.log("Post-map script: map in DOM:", document.getElementById("map"));
+
+  // Robust panel collapse/expand logic
+  (function initPanelToggle() {
+    const panel = document.getElementById("info-panel");
+    if (!panel) {
+      console.warn("[collapse] #info-panel not found");
+      return;
+    }
+    const toggle = panel.querySelector(".collapse-toggle");
+    if (!toggle) {
+      console.warn("[collapse] .collapse-toggle not found");
+      return;
+    }
+    // Prevent duplicate event listeners
+    if (toggle.dataset.collapseBound === "true") {
+      console.log("[collapse] Toggle event already bound");
+      return;
+    }
+    function setCollapsed(collapsed) {
+      console.log("[collapse] setCollapsed called with", collapsed);
+      panel.classList.toggle("collapsed", collapsed);
+      console.log("[collapse] panel.classList:", panel.classList.toString());
+      const icon = toggle.querySelector(".collapse-icon");
+      if (collapsed) {
+        if (icon) icon.src = "/img/icons/icon-expand.svg";
+        toggle.setAttribute("aria-label", "Expand panel");
+      } else {
+        if (icon) icon.src = "/img/icons/icon-collapse.svg";
+        toggle.setAttribute("aria-label", "Collapse panel");
+      }
+    }
+    toggle.addEventListener("click", function (e) {
+      console.log("[collapse] collapse-toggle clicked");
+      setCollapsed(!panel.classList.contains("collapsed"));
+    });
+    toggle.dataset.collapseBound = "true";
+    // Optionally: initialize to collapsed or expanded as desired
+    // setCollapsed(panel.classList.contains("collapsed"));
+  })();
 });
