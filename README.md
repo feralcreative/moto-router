@@ -199,10 +199,12 @@ This makes it easy to control the visual identity of your maps and ensure each r
 
 ## Development Roadmap
 
-### Harebrained Ideas:
+### Harebrained ideas:
 
-- [x] ~~Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes).~~
-- [ ] Add mailto links to email route files (kml, gpx, etc.) rather than just downloading
-  - [ ] Social sharing and/or embed code generation might be nice too
-- [ ] Enable the ability to easily add a logo or banner of your club, riding group, etc.
-  - [ ] Alternately, a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.
+| Done | Description                                                                                                                                                                                       | Added      | Completed  | By                                                 |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ---------- | -------------------------------------------------- |
+| ☑️   | Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes). | 2024.07.11 | 2025.07.11 | [@feralcreative](https://github.com/feralcreative) |
+| ⬜   | Add mailto links to email route files (kml, gpx, etc.) rather than just downloading                                                                                                               | 2025.07.10 |            |                                                    |
+| ⬜   | Social sharing and/or embed code generation might be nice too                                                                                                                                     | 2025.07.11 |            |                                                    |
+| ⬜   | Enable the ability to easily add a logo or banner of your club, riding group, etc.                                                                                                                | 2025.07.11 |            |                                                    |
+| ⬜   | Alternately, a lightweight banner with top nav to allow wayfinding for a trips with multiple map pages.                                                                                           | 2025.07.11 |            |                                                    |
