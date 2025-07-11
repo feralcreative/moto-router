@@ -20,6 +20,7 @@ console.log("main.js loaded");
 // Track if map has been initialized to prevent multiple initializations
 window.mapInitialized = window.mapInitialized || false;
 
+window.showDirectionArrows = true;
 window.initMap = async function () {
   console.log("[initMap] ENTER");
 
@@ -256,10 +257,22 @@ window.initMap = async function () {
           const routePolyline = new google.maps.Polyline({
             path,
             strokeColor: polylineColor,
-            strokeOpacity: 0.6,
-            strokeWeight: 3,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
             map,
             zIndex: 2,
+            icons: (window.showDirectionArrows !== false) ? [
+              {
+                icon: {
+                  path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+                  scale: 1.5, // Adjust size if needed
+                  strokeColor: polylineColor,
+                  strokeWeight: 2,
+                },
+                offset: "0%",
+                repeat: "50px", // Arrow every 50px along the line
+              },
+            ] : [],
           });
           // --- Calculate total mileage for this route ---
           let totalMeters = 0;
@@ -649,18 +662,18 @@ window.initMap = async function () {
             const { iconPath, polylineColor } = marker._svgIconPaths;
             const cache = window.svgIconCache[iconPath] && window.svgIconCache[iconPath][polylineColor];
             if (cache) {
-               const iconObj = {
+              const iconObj = {
                 url: isActive === null ? cache.full : isActive ? cache.full : cache.dim,
                 scaledSize: new google.maps.Size(25, 25),
                 anchor: new google.maps.Point(12.5, 12.5),
               };
               if (
-                (typeof iconObj === 'string') ||
-                (iconObj && (typeof iconObj.url === 'string' || typeof iconObj.path === 'string'))
+                typeof iconObj === "string" ||
+                (iconObj && (typeof iconObj.url === "string" || typeof iconObj.path === "string"))
               ) {
                 marker.setIcon(iconObj);
               } else {
-                console.warn('[setRouteHighlight] Skipping setIcon: invalid icon object', iconObj);
+                console.warn("[setRouteHighlight] Skipping setIcon: invalid icon object", iconObj);
               }
             }
           } else if (marker._isCircle) {
@@ -675,12 +688,12 @@ window.initMap = async function () {
               newIcon.fillOpacity = isActive ? 1.0 : 0.3;
             }
             if (
-              (typeof newIcon === 'string') ||
-              (newIcon && (typeof newIcon.url === 'string' || typeof newIcon.path === 'string'))
+              typeof newIcon === "string" ||
+              (newIcon && (typeof newIcon.url === "string" || typeof newIcon.path === "string"))
             ) {
               marker.setIcon(newIcon);
             } else {
-              console.warn('[setRouteHighlight] Skipping setIcon: invalid icon object', newIcon);
+              console.warn("[setRouteHighlight] Skipping setIcon: invalid icon object", newIcon);
             }
           }
           marker.setZIndex(isActive === null ? 1 : isActive ? 2 : 1);
@@ -906,8 +919,6 @@ window.initMap = async function () {
     // End of helper function definitions
     console.log("DEBUG: All helper functions defined");
     // Removed duplicate calls to addRouteDownloadButtons and updateRouteLegend
-
-
   }
   console.log("DEBUG: End of initMap function reached");
 };
@@ -918,6 +929,33 @@ window.addEventListener("error", function (event) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Direction arrows checkbox logic
+  var arrowsCheckbox = document.getElementById("toggle-arrows");
+  if (arrowsCheckbox) {
+    arrowsCheckbox.checked = window.showDirectionArrows !== false;
+    arrowsCheckbox.addEventListener("change", function (e) {
+      window.showDirectionArrows = e.target.checked;
+      if (window.routePolylines) {
+        window.routePolylines.forEach(function(poly) {
+          if (poly) {
+            poly.set('icons', window.showDirectionArrows ? [
+              {
+                icon: {
+                  path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+                  scale: 1.5,
+                  strokeColor: poly.get('strokeColor'),
+                  strokeWeight: 2,
+                },
+                offset: "0%",
+                repeat: "50px"
+              }
+            ] : []);
+          }
+        });
+      }
+    });
+  }
+
   console.log("Inline JS: body tag parsed, running under", location.href);
   console.log("Post-map script: map in DOM:", document.getElementById("map"));
 

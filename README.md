@@ -1,6 +1,6 @@
 # Moto-Rooter
 
-Behold, a flexible framework for visualizing and sharing motorcycle routes with other riders. Just drop a new `.kml` file into the `/data/` directory to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
+Behold, a flexible framework for visualizing and sharing motorcycle routes with other riders. Just drop a new `.kml` file into the `/data/` directory and register its name in `routes.json` to add a route—the system will automatically update the map, and add or remove GPX and URL buttons as those files appear or disappear.
 
 This is a _static_ site—it does not rely on any server-side language or database. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed.
 
@@ -201,7 +201,7 @@ This makes it easy to control the visual identity of your maps and ensure each r
 
 ### Harebrained Ideas:
 
-- [ ] Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes).
+- [x] ~~Augment the look of non-custom waypoints and/or polylines to indicate intended direction of travel along a given route (e.g. chevrons instead of dots, or perhaps polylines with pointed dashes).~~
 - [ ] Add mailto links to email route files (kml, gpx, etc.) rather than just downloading
   - [ ] Social sharing and/or embed code generation might be nice too
 - [ ] Enable the ability to easily add a logo or banner of your club, riding group, etc.
