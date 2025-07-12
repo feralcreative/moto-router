@@ -24,8 +24,15 @@
  */
 -->
 
+
+
 <!-- Google Maps API Key: DO NOT COMMIT THIS KEY TO PUBLIC REPOS -->
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmn_vo6Zy65qtOH47AKdrQhP9L-j2q9mE&v=beta&libraries=maps,geometry&callback=initMap" onload="console.log('maps API loaded');" onerror="console.error('maps API failed to load');"></script>
+
+<!--
+  The Google Maps API key is injected at build/serve time from your .env file.
+  Do not hardcode the key here—use the {{ GOOGLE_MAPS_API_KEY }} placeholder.
+-->
+<script defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&v=beta&libraries=maps,geometry&callback=initMap" onload="console.log('maps API loaded');" onerror="console.error('maps API failed to load');"></script>
 <noscript>
   <div class="alert alert-danger text-center">JavaScript is required to view the map.</div>
 </noscript>
