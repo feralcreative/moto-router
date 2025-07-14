@@ -39,6 +39,17 @@ This is a _static_ site—it does not rely on any server-side language or databa
 
 ## Local Development & Environment
 
+> **API Key Setup:**
+> 
+> You can provide your Google Maps API key in one of two ways:
+> 
+> 1. **Direct HTML approach (no Node required):** If you don't want to use Node/npm at all, simply add your API key directly to the `<script>` tag that loads Google Maps in your `index.html` (inside `/template/`). For example:
+>    ```html
+>    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+>    ```
+>    If you use this method, you can skip the steps below.
+> 2. **Node/.env approach:** Use the [dotenv](https://www.npmjs.com/package/dotenv) package (already included) to load your API key from a `.env` file as shown in the steps below. This is the recommended method for local development or when using Node-based tooling.
+
 1. **Install dependencies:**
    ```sh
    npm install
@@ -48,6 +59,15 @@ This is a _static_ site—it does not rely on any server-side language or databa
      ```env
      GOOGLE_MAPS_API_KEY=your-key-here
      ```
+
+     > **Note:** You can provide your Google Maps API key in one of two ways:
+     > 
+     > 1. **Node/.env approach:** Use the [dotenv](https://www.npmjs.com/package/dotenv) package (already included) to load your API key from a `.env` file as shown above. This is the recommended method for local development or when using Node-based tooling.
+     > 2. **Direct HTML approach:** If you prefer not to use Node at all, you can simply add your API key directly to the `<script>` tag that loads Google Maps in your `index.html` (inside `/template/`). For example:
+     >    ```html
+     >    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+     >    ```
+     > Both methods are supported—choose whichever best fits your workflow.
 3. **Start the server:**
    - For production:
      ```sh

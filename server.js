@@ -7,8 +7,8 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configure Nunjucks for template rendering
-nunjucks.configure("template", {
+// Configure Nunjucks for demo rendering
+nunjucks.configure("demo", {
   autoescape: true,
   express: app,
   noCache: true, // Disable template caching for development
@@ -18,7 +18,7 @@ nunjucks.configure("template", {
 app.use("/js", express.static(path.join(__dirname, "js")));
 app.use("/css", express.static(path.join(__dirname, "style")));
 app.use("/img", express.static(path.join(__dirname, "img")));
-app.use("/data", express.static(path.join(__dirname, "template/data")));
+app.use("/data", express.static(path.join(__dirname, "demo/data")));
 app.use("/css", express.static(path.join(__dirname, "css")));
 app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
 
@@ -27,9 +27,9 @@ app.get("/", (req, res) => {
   res.render("index.html", {
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY || "",
   });
-});
+}); // now serves demo/index.html
 
-// Fallback for other HTML files in template/
+// Fallback for other HTML files in demo/
 app.get("/:page", (req, res) => {
   res.render(req.params.page, {
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY || "",
