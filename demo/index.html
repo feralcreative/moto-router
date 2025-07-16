@@ -30,9 +30,22 @@
 
 <!--
   The Google Maps API key is injected at build/serve time from your .env file.
-  Do not hardcode the key here—use the {{ GOOGLE_MAPS_API_KEY }} placeholder.
+  We're using a direct script tag with async/defer attributes as recommended by Google.
 -->
-<script defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&v=beta&libraries=maps,geometry&callback=initMap" onload="console.log('maps API loaded');" onerror="console.error('maps API failed to load');"></script>
+<script>
+  // This variable will be set by the server
+  window.GOOGLE_MAPS_API_KEY = "{{ GOOGLE_MAPS_API_KEY }}";
+  
+  // Log the API key for debugging
+  console.log('API Key before loading Maps:', window.GOOGLE_MAPS_API_KEY);
+</script>
+
+<!-- Load Google Maps API directly with async/defer -->
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsXolW444wQAL47rEnNKrUrI_wLHcIFsY&v=beta&libraries=maps,geometry&callback=initMap"
+  onload="console.log('Maps API loaded directly')"
+  onerror="console.error('Maps API failed to load directly')">
+</script>
 <noscript>
   <div class="alert alert-danger text-center">JavaScript is required to view the map.</div>
 </noscript>
@@ -41,7 +54,7 @@
 <body>
 
 
-  <!--/ VIEWPORT WIDGET FOR DEVELOPMENT USE 
+  <!--/ BEGIN: VIEWPORT WIDGET FOR DEVELOPMENT USE  -->
 
   <section id="viewport-widget" class="viewport-widget top container-fluid">
     <div class="row">
@@ -51,19 +64,22 @@
     </div>
   </section>
 
-  VIEWPORT WIDGET FOR DEVELOPMENT USE -->
+  <!--/ END: VIEWPORT WIDGET FOR DEVELOPMENT USE -->
 
 
 
-  <div id="map"></div>
+  <div id="map">
+
+    <div class="map-logo"><img class="map-logo" src="img/logos/map-logo.png" alt="">what the actual fuck is going on?</div>
+  </div>
   <div id="info-panel" class="floating-panel">
-    <button class="collapse-toggle" aria-label="Collapse panel"><img src="../img/icons/icon-collapse.svg" alt="Collapse" class="collapse-icon"></button>
+    <button class="collapse-toggle" aria-label="Collapse panel"><img src="/img/icons/icon-collapse.svg" alt="Collapse" class="collapse-icon"></button>
 
+    <!--/ BEGIN MANUAL EDITS -->
 
-
-    <!--/ EDIT THIS PART MANUALLY -->
-
-    <h1 class="panel-title">Ride/Event Title</h1>
+    <h1 class="panel-title">
+      <div class="panel-logo"><img class="panel-logo" src="img/logos/panel-logo.png" alt="" class="panel-logo"></div>Ride/Event Title
+    </h1>
     <div class="panel-contents-wrapper">
       <div class="panel-content">
         <div class="details">
@@ -90,7 +106,7 @@
 
             <!-- ADDITIONAL ROWS
 
-              <tr>
+            <tr>
               <th class="label">Lorem</th>
               <td class="value">Ipsum</td>
             </tr>
@@ -99,12 +115,9 @@
 
           </table>
 
-          <!--/ EDIT THIS PART MANUALLY -->
-
-
+          <!--/ END MANUAL EDITS -->
 
         </div>
-
         <div class="routes">
           <table class="route-table">
             <tr>
@@ -112,7 +125,6 @@
                 <div id="route-downloads" class="buttons"></div>
               </td>
             </tr>
-
           </table>
           <label class="toggle-checkbox">
             <input type="checkbox" id="toggle-arrows" checked>
@@ -120,8 +132,6 @@
           </label>
         </div>
       </div>
-
     </div>
-
 </body>
 </html>

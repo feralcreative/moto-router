@@ -33,10 +33,38 @@ $text: #333;
 $panel-bg: rgba(255, 255, 255, 0.9);
 $panel-shadow: rgba(0, 0, 0, 0.18);
 $font: lato;
+$panel-logo-size: 1em;
 
 html,
 body {
   font: 400 14px/1.1em $font;
+}
+
+div.map-logo {
+  img {
+    top: 50px;
+    left: 50px;
+    z-index: 500;
+    position: fixed;
+  }
+}
+
+div.panel-logo {
+  display: inline-block;
+  max-width: fit-content;
+  max-height: fit-content;
+  img {
+    height: $panel-logo-size;
+    width: $panel-logo-size;
+    margin-right: calc($panel-logo-size * 0.25);
+    vertical-align: middle;
+    transform: translateY(-0.1em);
+  }
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
 }
 
 // Waypoint Tooltip Styles

@@ -875,7 +875,24 @@ window.addEventListener("error", function (event) {
   console.error("GLOBAL ERROR CAUGHT:", event.error);
 });
 
+/**
+ * Hides any element with the given selector if its <img> child fails to load.
+ * @param {string} selector - CSS selector for the container (e.g. '.panel-logo')
+ */
+function hideContainerIfImageMissing(selector) {
+  document.querySelectorAll(selector).forEach(function(container) {
+    var img = container.querySelector('img');
+    if (img) {
+      img.onerror = function() {
+        container.style.display = 'none';
+      };
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  hideContainerIfImageMissing('.panel-logo');
+  hideContainerIfImageMissing('.map-logo');
   // Direction arrows checkbox logic
   var arrowsCheckbox = document.getElementById("toggle-arrows");
   if (arrowsCheckbox) {

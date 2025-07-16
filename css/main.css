@@ -27,6 +27,31 @@ body {
   font: 400 14px/1.1em lato;
 }
 
+div.map-logo img {
+  top: 50px;
+  left: 50px;
+  z-index: 500;
+  position: fixed;
+}
+
+div.panel-logo {
+  display: inline-block;
+  max-width: fit-content;
+  max-height: fit-content;
+}
+div.panel-logo img {
+  height: 1em;
+  width: 1em;
+  margin-right: 0.25em;
+  vertical-align: middle;
+  transform: translateY(-0.1em);
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+}
+
 .waypoint-tooltip-toprow {
   display: flex;
   flex-direction: row;
