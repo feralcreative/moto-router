@@ -28,14 +28,16 @@ body {
 }
 
 div.map-logo {
-  position: absolute;
+  position: fixed; /* Changed to fixed to match the map container */
   top: 50px;
   left: 50px;
   z-index: 15000;
   pointer-events: none; /* Allow clicks to pass through to map */
+  padding: 25px;
+  border-radius: 10%;
 }
 div.map-logo img {
-  max-width: 150px; /* Control the size of your logo */
+  max-width: 100px; /* Control the size of your logo */
   height: auto;
   display: block;
 }
@@ -51,6 +53,7 @@ div.panel-logo img {
   margin-right: 0.25em;
   vertical-align: middle;
   transform: translateY(-0.1em);
+  border-radius: 10%;
 }
 
 .panel-title {

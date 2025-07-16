@@ -39,45 +39,69 @@ This is a _static_ site—it does not rely on any server-side language or databa
 
 ## Local Development & Environment
 
-> **API Key Setup:**
-> 
-> You can provide your Google Maps API key in one of two ways:
-> 
-> 1. **Direct HTML approach (no Node required):** If you don't want to use Node/npm at all, simply add your API key directly to the `<script>` tag that loads Google Maps in your `index.html` (inside `/template/`). For example:
->    ```html
->    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
->    ```
->    If you use this method, you can skip the steps below.
-> 2. **Node/.env approach:** Use the [dotenv](https://www.npmjs.com/package/dotenv) package (already included) to load your API key from a `.env` file as shown in the steps below. This is the recommended method for local development or when using Node-based tooling.
+### API Key Setup
 
-1. **Install dependencies:**
-   ```sh
-   npm install
-   ```
-2. **Set up environment variables:**
-   - Create a `.env` file in the project root with your Google Maps API key:
-     ```env
-     GOOGLE_MAPS_API_KEY=your-key-here
-     ```
+You can provide your Google Maps API key in one of two ways:
 
-     > **Note:** You can provide your Google Maps API key in one of two ways:
-     > 
-     > 1. **Node/.env approach:** Use the [dotenv](https://www.npmjs.com/package/dotenv) package (already included) to load your API key from a `.env` file as shown above. This is the recommended method for local development or when using Node-based tooling.
-     > 2. **Direct HTML approach:** If you prefer not to use Node at all, you can simply add your API key directly to the `<script>` tag that loads Google Maps in your `index.html` (inside `/template/`). For example:
-     >    ```html
-     >    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-     >    ```
-     > Both methods are supported—choose whichever best fits your workflow.
-3. **Start the server:**
-   - For production:
-     ```sh
-     npm start
-     ```
-   - For development (with live reload, see below):
-     ```sh
-     npm run dev
-     ```
-   - The Express server runs on port 3000 by default.
+#### 1. Direct HTML approach (no Node required)
+
+If you don't want to use Node/npm at all, you can add your API key directly to the HTML files. In `demo/index.html`, comment out the Node.js block and uncomment the direct API block, replacing `YOUR_API_KEY_HERE` with your actual API key:
+
+```html
+<!-- <script>
+      window.GOOGLE_MAPS_API_KEY = "{{ GOOGLE_MAPS_API_KEY }}";
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&v=beta&libraries=maps,geometry&callback=initMap">
+    </script> -->
+
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&v=beta&libraries=maps,geometry&callback=initMap"></script>
+```
+
+#### 2. Node/dotenv approach: Use the Express server with [dotenv](https://www.npmjs.com/package/dotenv) to inject your API key from a `.env` file. This is the recommended method for development and keeps your API key secure.
+
+Create a `.env` file in the project root with your Google Maps API key:
+
+```env
+GOOGLE_MAPS_API_KEY=your-key-here
+PORT=6686  # Optional, defaults to 6686
+```
+
+- The server will automatically inject this key into any HTML files it serves.
+- HTML files contain placeholder tags: `{{ GOOGLE_MAPS_API_KEY }}` that get replaced at runtime.
+
+##### Install dependencies:
+
+```sh
+npm install
+```
+
+##### Set up environment variables:
+
+- Create a `.env` file in the project root with your Google Maps API key:
+
+```env
+GOOGLE_MAPS_API_KEY=your-key-here
+PORT=6686  # Optional, defaults to 6686
+```
+
+##### Start the server:
+
+- For production:
+
+      ```sh
+      npm start
+      ```
+
+- For development (with live reload, see below):
+
+      ```sh
+      npm run dev
+      ```
+
+  - The Express server runs on port 6686 by default, configurable in the .env file.
 
 ---
 
