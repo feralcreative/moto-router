@@ -35,6 +35,23 @@ This is a _static_ site—it does not rely on any server-side language or databa
 - **`routes.json`**: List of route base names (e.g., `{ "base": "01-Sample-Route-One" }`).
 - **`build.sh`**: Helper script to auto-generate `routes.json`.
 
+## 🏍️ Customizing Logos
+
+Logo images for the demo and route pages live in the local `./img/logos/` directory (not `/img` at the project root). There are two main logos used in the UI:
+
+- **`panel-logo.png`** — appears to the left of the title in the info panel.
+- **`map-logo.png`** — appears at the top right of the map.
+
+Both are referenced with relative paths like `./img/logos/map-logo.png` and can be customized by swapping out the image files or updating the HTML/CSS as needed.
+
+By default, both logo images are wrapped in anchor tags (links) in the HTML. You can change or remove these links as desired to point to your own site, a club page, or nowhere at all.
+
+- **To remove a logo:** Just delete or rename the relevant PNG in `./img/logos/`. The code will automatically hide the placeholder if the image is missing—no further action required.
+- **To use your own logo:** Replace any placeholder PNG with your own image (using the same filename for instant results, or update the HTML if you use a different name).
+- **No server restart needed:** Logo changes appear as soon as you reload the page.
+
+_This makes it easy to brand your map pages with your club, group, or event logo—or remove logos entirely for a minimalist look._
+
 ---
 
 ## Local Development & Environment
@@ -204,6 +221,7 @@ GAS/BREAK/LUNCH - Waypoint Name
 | &rdsh;                   | GROCERY | <img src="/img/icons/icon-grocery.svg" width="25" height="25" alt="Grocery" /> | /img/icons/icon-grocery.svg | GROCERIES                           |
 | **Interesting & Scenic** | VIEW    | <img src="/img/icons/icon-view.svg" width="25" height="25" alt="View" />       | /img/icons/icon-view.svg    | SCENIC, LOOKOUT, VIEWPOINT          |
 | &rdsh;                   | POI     | <img src="/img/icons/icon-poi.svg" width="25" height="25" alt="POI" />         | /img/icons/icon-poi.svg     | STOP                                |
+| &rdsh;                   | WTF     | <img src="/img/icons/icon-wtf.svg" width="25" height="25" alt="WTF" />         | /img/icons/icon-wtf.svg     | WEIRD, RANDOM                       |
 
 The icons in this project were designed in Figma, and can be accessed and forked by copying [this Figma doc](https://www.figma.com/design/pFQck3CUIa5twKqMu1IxD5/moto-router?node-id=66-2&t=0WKGatLYE2TZ02Gb-1).
 

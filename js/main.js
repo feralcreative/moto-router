@@ -316,7 +316,7 @@ window.initMap = async function () {
               isGas = true;
             } else {
               const prefixMatch = name.match(
-                /^(MEET|SPLIT|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK)\s+-\s+(.*)$/i
+                /^(MEET|SPLIT|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK|WTF)\s+-\s+(.*)$/i
               );
               if (prefixMatch && prefixMatch[1].toUpperCase() === "GAS") {
                 isGas = true;
@@ -359,6 +359,7 @@ window.initMap = async function () {
               FINISH: "/img/icons/icon-finish.svg",
               HOME: "/img/icons/icon-home.svg",
               BREAK: "/img/icons/icon-break.svg",
+              WTF: "img/icons/icon-wtf.svg",
             };
             // --- Waypoint Title Mapping ---
             function getWaypointTitle(role) {
@@ -395,6 +396,8 @@ window.initMap = async function () {
                   return "Home";
                 case "BREAK":
                   return "Break";
+                case "WTF":
+                  return "Some Weird Random Shit";
                 default:
                   return "Waypoint";
               }
@@ -428,6 +431,7 @@ window.initMap = async function () {
               FINISH: ["FINISH", "END"],
               HOME: ["HOME", "HOUSE"],
               BREAK: ["BREAK", "REST"],
+              WTF: ["WEIRD", "RANDOM"],
             };
             // Split marker types by '/' (up to 4) and canonicalize
             let markerTypes = name
@@ -464,18 +468,32 @@ window.initMap = async function () {
               ], // 4 icons (2x2, ~12px apart)
             ];
             const offsets = gridOffsets[markerTypes.length - 1] || [[0, 0]];
+            const allTerms = Object.values(roleTerms).flat();
+            const roleRegex = new RegExp(`^(${allTerms.join("|")})\\b\\s*-\\s*(.*)$`, "i");
             markerTypes.forEach((type, idx) => {
-              // Try to extract role prefix (as in original logic)
               let role = null;
               let displayName = type;
-              const prefixMatch = type.match(
-                /^(MEET|SPLIT|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK)\s*-\s*(.*)$/i
-              );
+              const prefixMatch = type.match(roleRegex);
               if (prefixMatch) {
-                role = prefixMatch[1].toUpperCase();
-                displayName = prefixMatch[2] || prefixMatch[1];
+                // Find canonical role for this alias
+                const matchedAlias = prefixMatch[1].toUpperCase();
+                displayName = prefixMatch[2] || matchedAlias;
+                for (const [canonical, terms] of Object.entries(roleTerms)) {
+                  if (terms.map(t => t.toUpperCase()).includes(matchedAlias)) {
+                    role = canonical;
+                    break;
+                  }
+                }
+                if (!role) role = matchedAlias; // fallback, shouldn't happen
               } else {
-                role = type.toUpperCase();
+                // No prefix, fallback to canonicalization logic
+                for (const [canonical, terms] of Object.entries(roleTerms)) {
+                  if (terms.map(t => t.toUpperCase()).includes(type.toUpperCase())) {
+                    role = canonical;
+                    break;
+                  }
+                }
+                if (!role) role = type.toUpperCase();
                 displayName = type;
               }
               const iconPath = roleIconMap[role] || null;
@@ -538,12 +556,15 @@ window.initMap = async function () {
                   scale: isNumberOnly ? (i === 0 ? 3 : 2) : i === 0 ? 6 : 4,
                   anchor: new google.maps.Point(0 - offsets[idx][0], 0 - offsets[idx][1]),
                 };
+                const standardRoles = Object.keys(roleIconMap).filter(k => k !== 'WTF');
+                const isCustomIcon = !standardRoles.includes(role);
                 const marker = new google.maps.Marker({
                   position: { lat, lng },
                   map,
                   title: displayName,
                   icon: iconOpts,
                   optimized: false,
+                  zIndex: isCustomIcon ? 10 : 1,
                 });
                 marker._isCircle = true;
                 if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
@@ -717,7 +738,7 @@ window.initMap = async function () {
       // Canonical roles and their alternate terms
       const roleTerms = {
         MEET: ["MEET", "MEETING"],
-        CAMP: ["CAMP", "CAMPGROUND", "CAMPING"],
+        CAMP: ["CAMP", "CAMPGROUND", "CAMPING", "CAMPSITE"],
         GAS: ["GAS", "FUEL"],
         CHARGE: ["CHARGE", "CHARGER"],
         FOOD: ["FOOD", "LUNCH", "DINNER", "BREAKFAST"],
@@ -762,6 +783,7 @@ window.initMap = async function () {
           FINISH: "icon-finish.svg",
           HOME: "icon-home.svg",
           BREAK: "icon-break.svg",
+          WTF: "icon-wtf.svg",
         };
         const iconFile = iconMap[foundRole];
         if (iconFile) {
@@ -880,19 +902,19 @@ window.addEventListener("error", function (event) {
  * @param {string} selector - CSS selector for the container (e.g. '.panel-logo')
  */
 function hideContainerIfImageMissing(selector) {
-  document.querySelectorAll(selector).forEach(function(container) {
-    var img = container.querySelector('img');
+  document.querySelectorAll(selector).forEach(function (container) {
+    var img = container.querySelector("img");
     if (img) {
-      img.onerror = function() {
-        container.style.display = 'none';
+      img.onerror = function () {
+        container.style.display = "none";
       };
     }
   });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  hideContainerIfImageMissing('.panel-logo');
-  hideContainerIfImageMissing('.map-logo');
+  hideContainerIfImageMissing(".panel-logo");
+  hideContainerIfImageMissing(".map-logo");
   // Direction arrows checkbox logic
   var arrowsCheckbox = document.getElementById("toggle-arrows");
   if (arrowsCheckbox) {
