@@ -19,52 +19,13 @@ const nunjucksEnv = nunjucks.configure(__dirname, {
 app.engine("html", nunjucksEnv.render.bind(nunjucksEnv));
 app.set("view engine", "html");
 
-// Serve static files (JS, CSS, data, images)
+// Serve specific static files (but not HTML files which need processing)
 app.use("/js", express.static(path.join(__dirname, "js")));
 app.use("/style", express.static(path.join(__dirname, "style")));
-// Serve /img from root for main crater lake image and all universal assets
 app.use("/img", express.static(path.join(__dirname, "img")));
-// Serve the entire project root statically for true portability
-app.use(express.static(__dirname));
+app.use("/data", express.static(path.join(__dirname, "demo/data")));
 app.use("/favicon.ico", express.static(path.join(__dirname, "favicon.ico")));
 
-// Dynamic route for handling HTML files with direct file reading and string replacement
-app.get("/*", (req, res, next) => {
-  // Ignore Chrome DevTools requests
-  if (req.path.includes(".well-known/appspecific/com.chrome.devtools")) {
-    return next();
-  }
-
-  // Only handle .html files or directory requests
-  if (req.path.endsWith(".html") || req.path.endsWith("/") || (!req.path.includes(".") && req.path !== "/")) {
-    let template = req.path.startsWith("/") ? req.path.slice(1) : req.path;
-
-    // Handle directory requests by appending index.html
-    if (req.path.endsWith("/") || !req.path.includes(".")) {
-      template = template.endsWith("/") ? `${template}index.html` : `${template}/index.html`;
-    }
-
-    const filePath = path.join(__dirname, template);
-    fs.readFile(filePath, "utf8", (err, content) => {
-      if (err) {
-        console.error(`Error reading template ${template}:`, err);
-        return next(err);
-      }
-      const apiKey = process.env.GOOGLE_MAPS_API_KEY || "";
-      const apiKeyScript = `<script>window.GOOGLE_MAPS_API_KEY = "${apiKey}";</script>`;
-      let processedContent = content.replace("<head>", `<head>\n  ${apiKeyScript}`);
-      processedContent = processedContent.replace(/\{\{\s*GOOGLE_MAPS_API_KEY\s*\}\}/g, apiKey);
-      processedContent = processedContent.replace(
-        /window\\.GOOGLE_MAPS_API_KEY\\s*=\\s*['\"](.*?)['\"];?/g,
-        `window.GOOGLE_MAPS_API_KEY = "${apiKey}";`
-      );
-      res.setHeader("Content-Type", "text/html");
-      res.send(processedContent);
-    });
-  } else {
-    next();
-  }
-});
 // Test route for Nunjucks template rendering
 app.get("/test", (req, res) => {
   res.render(
@@ -90,13 +51,11 @@ app.get("/*", (req, res, next) => {
   }
 
   // Check if it's an HTML request or a directory request
-  if (req.path.endsWith(".html") || req.path.endsWith("/") || req.path.split("/").pop() === req.path.split("/").pop()) {
+  if (req.path.endsWith(".html") || req.path.endsWith("/") || (!req.path.includes(".") && req.path !== "/")) {
     let template = req.path.startsWith("/") ? req.path.slice(1) : req.path;
 
     // Handle directory requests by appending index.html
     if (req.path.endsWith("/") || !req.path.includes(".")) {
-      // If path ends with / or doesn't contain a file extension, assume it's a directory
-      // and append index.html
       template = template.endsWith("/") ? `${template}index.html` : `${template}/index.html`;
     }
 
@@ -111,18 +70,8 @@ app.get("/*", (req, res, next) => {
 
       const apiKey = process.env.GOOGLE_MAPS_API_KEY || "";
 
-      // Create a completely new script tag with the API key hardcoded
-      const apiKeyScript = `<script>window.GOOGLE_MAPS_API_KEY = "${apiKey}";</script>`;
-
-      // Insert this script tag at the beginning of the head section
-      let processedContent = content.replace("<head>", `<head>\n  ${apiKeyScript}`);
-
-      // Also replace any existing placeholders
-      processedContent = processedContent.replace(/\{\{\s*GOOGLE_MAPS_API_KEY\s*\}\}/g, apiKey);
-      processedContent = processedContent.replace(
-        /window\.GOOGLE_MAPS_API_KEY\s*=\s*['"](.*?)['"];?/g,
-        `window.GOOGLE_MAPS_API_KEY = "${apiKey}";`
-      );
+      // Replace all instances of {{ GOOGLE_MAPS_API_KEY }} with the actual API key
+      let processedContent = content.replace(/\{\{\s*GOOGLE_MAPS_API_KEY\s*\}\}/g, apiKey);
 
       // Set content type to HTML
       res.setHeader("Content-Type", "text/html");
@@ -133,10 +82,9 @@ app.get("/*", (req, res, next) => {
   }
 });
 
-// Serve the project root as the web root for full portability
 // Static files fallback (must come after dynamic HTML routes)
+// This serves all remaining files that weren't handled by specific routes above
 app.use(express.static(__dirname));
-// Removed custom static middleware for /demo and /img
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
