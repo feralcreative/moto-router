@@ -44,11 +44,11 @@ window.initMap = async function () {
   // 12 visually distinct, contrasting colors spaced around the color wheel
   // Dark, high-contrast, visually distinct route colors
   const colors = [
-    "#0000cc", // Blue
     "#cc0000", // Red
-    "#00aaaa", // Cyan
+    "#0000cc", // Blue
     "#DD00DD", // Magenta
     "#4A148C", // Purple
+    "#00aaaa", // Cyan
     "#FF6F00", // Orange
     "#4E342E", // Brown
     "#006064", // Teal
