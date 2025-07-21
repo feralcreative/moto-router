@@ -272,6 +272,9 @@ window.initMap = async function () {
           let waypointMilesSinceLastGas = [];
           let lastGasIdx = 0;
           let lastGasMiles = 0;
+          let waypointMilesSinceLastCharge = [];
+          let lastChargeIdx = 0;
+          let lastChargeMiles = 0;
           let cumulativeMeters = 0;
           for (let i = 0; i < pointPMs.length; i++) {
             // Find the index of this waypoint in the path array
@@ -279,12 +282,14 @@ window.initMap = async function () {
             if (!pointEl) {
               waypointCumulativeMiles.push(null);
               waypointMilesSinceLastGas.push(null);
+              waypointMilesSinceLastCharge.push(null);
               continue;
             }
             const coordsEl = pointEl.getElementsByTagNameNS(ns, "coordinates")[0];
             if (!coordsEl) {
               waypointCumulativeMiles.push(null);
               waypointMilesSinceLastGas.push(null);
+              waypointMilesSinceLastCharge.push(null);
               continue;
             }
             const [lng, lat] = coordsEl.textContent.trim().split(",").map(Number);
@@ -312,14 +317,29 @@ window.initMap = async function () {
             let nameEl = pointPMs[i].getElementsByTagNameNS(ns, "name")[0];
             let name = nameEl ? nameEl.textContent : "";
             let isGas = false;
+            let isCharge = false;
             if (i === 0) {
               isGas = true;
+              isCharge = true;
             } else {
+              // Check for prefix format: "GAS - Station Name"
               const prefixMatch = name.match(
                 /^(MEET|SPLIT|CAMP|GAS|CHARGE|FOOD|HOTEL|DRINKS|COFFEE|POI|VIEW|GROCERY|START|FINISH|HOME|BREAK|WTF)\s+-\s+(.*)$/i
               );
               if (prefixMatch && prefixMatch[1].toUpperCase() === "GAS") {
                 isGas = true;
+              } else {
+                // Check for slash-delimited format: "GAS/BREAK/CHARGE - Station Name"
+                const slashMatch = name.match(/^([^-]+)\s+-\s+(.*)$/i);
+                if (slashMatch) {
+                  const types = slashMatch[1].split("/").map((s) => s.trim().toUpperCase());
+                  if (types.includes("GAS") || types.includes("FUEL")) {
+                    isGas = true;
+                  }
+                  if (types.includes("CHARGE")) {
+                    isCharge = true;
+                  }
+                }
               }
             }
             if (isGas) {
@@ -328,6 +348,13 @@ window.initMap = async function () {
               waypointMilesSinceLastGas.push(0);
             } else {
               waypointMilesSinceLastGas.push(miles - lastGasMiles);
+            }
+            if (isCharge) {
+              lastChargeIdx = i;
+              lastChargeMiles = miles;
+              waypointMilesSinceLastCharge.push(0);
+            } else {
+              waypointMilesSinceLastCharge.push(miles - lastChargeMiles);
             }
           }
 
@@ -470,7 +497,12 @@ window.initMap = async function () {
             const offsets = gridOffsets[markerTypes.length - 1] || [[0, 0]];
             const allTerms = Object.values(roleTerms).flat();
             const roleRegex = new RegExp(`^(${allTerms.join("|")})\\b\\s*-\\s*(.*)$`, "i");
-            markerTypes.forEach((type, idx) => {
+            // Refactored: create standard markers first, then custom markers for reliable stacking
+            const standardRoles = Object.keys(roleIconMap);
+            const standardTypes = markerTypes.filter((type) => standardRoles.includes(type));
+            const customTypes = markerTypes.filter((type) => !standardRoles.includes(type));
+            const orderedTypes = [...standardTypes, ...customTypes];
+            orderedTypes.forEach((type, idx) => {
               let role = null;
               let displayName = type;
               const prefixMatch = type.match(roleRegex);
@@ -479,7 +511,7 @@ window.initMap = async function () {
                 const matchedAlias = prefixMatch[1].toUpperCase();
                 displayName = prefixMatch[2] || matchedAlias;
                 for (const [canonical, terms] of Object.entries(roleTerms)) {
-                  if (terms.map(t => t.toUpperCase()).includes(matchedAlias)) {
+                  if (terms.map((t) => t.toUpperCase()).includes(matchedAlias)) {
                     role = canonical;
                     break;
                   }
@@ -488,7 +520,7 @@ window.initMap = async function () {
               } else {
                 // No prefix, fallback to canonicalization logic
                 for (const [canonical, terms] of Object.entries(roleTerms)) {
-                  if (terms.map(t => t.toUpperCase()).includes(type.toUpperCase())) {
+                  if (terms.map((t) => t.toUpperCase()).includes(type.toUpperCase())) {
                     role = canonical;
                     break;
                   }
@@ -508,17 +540,23 @@ window.initMap = async function () {
                     scaledSize: new google.maps.Size(30, 30),
                     anchor: new google.maps.Point(12.5 - offsets[idx][0], 12.5 - offsets[idx][1]),
                   };
+                  const isCustomIcon = !Object.keys(roleIconMap).includes(role);
                   const marker = new google.maps.Marker({
                     position: { lat, lng },
                     map,
                     title: displayName,
                     icon: markerIcon,
                     optimized: false,
+                    zIndex: isCustomIcon ? 2000 : 100,
                   });
                   marker._svgIconPaths = { iconPath, polylineColor };
+                  marker._isCustomIcon = isCustomIcon;
                   if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
                     window.routeMarkers[currentRouteIndex].push(marker);
                   }
+                  console.log(
+                    `[Marker Created] ${displayName} (${role}) at (${lat},${lng}) zIndex=${marker.getZIndex()} custom=${isCustomIcon}`
+                  );
                   const infowindow = new google.maps.InfoWindow({
                     content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
                       role
@@ -526,6 +564,10 @@ window.initMap = async function () {
                       waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
                     }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${
                       waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
+                    }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Charge:</span><span class='waypoint-tooltip-value'>${
+                      waypointMilesSinceLastCharge[i] !== null
+                        ? waypointMilesSinceLastCharge[i].toFixed(1) + " mi"
+                        : "-"
                     }</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${
                       desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""
                     }`,
@@ -556,7 +598,7 @@ window.initMap = async function () {
                   scale: isNumberOnly ? (i === 0 ? 3 : 2) : i === 0 ? 6 : 4,
                   anchor: new google.maps.Point(0 - offsets[idx][0], 0 - offsets[idx][1]),
                 };
-                const standardRoles = Object.keys(roleIconMap).filter(k => k !== 'WTF');
+                const standardRoles = Object.keys(roleIconMap).filter((k) => k !== "WTF");
                 const isCustomIcon = !standardRoles.includes(role);
                 const marker = new google.maps.Marker({
                   position: { lat, lng },
@@ -564,12 +606,16 @@ window.initMap = async function () {
                   title: displayName,
                   icon: iconOpts,
                   optimized: false,
-                  zIndex: isCustomIcon ? 10 : 1,
+                  zIndex: isCustomIcon ? 2000 : 100,
                 });
                 marker._isCircle = true;
+                marker._isCustomIcon = isCustomIcon;
                 if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
                   window.routeMarkers[currentRouteIndex].push(marker);
                 }
+                console.log(
+                  `[Marker Created] ${displayName} (${role}) at (${lat},${lng}) zIndex=${marker.getZIndex()} custom=${isCustomIcon}`
+                );
                 const infowindow = new google.maps.InfoWindow({
                   content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
                     role
@@ -666,7 +712,10 @@ window.initMap = async function () {
               marker.setIcon(newIcon);
             }
           }
-          marker.setZIndex(isActive === null ? 1 : isActive ? 2 : 1);
+          // Use the marker._isCustomIcon flag set at creation for robust z-indexing
+          const newZ = (marker._isCustomIcon ? 2000 : 100) + (isActive === null ? 0 : isActive ? 1 : 0);
+          marker.setZIndex(newZ);
+          console.log(`[Marker zIndex Updated] ${marker.getTitle()} zIndex=${newZ} custom=${marker._isCustomIcon}`);
         });
       });
     }
@@ -752,6 +801,7 @@ window.initMap = async function () {
         FINISH: ["FINISH", "END"],
         HOME: ["HOME", "HOUSE"],
         BREAK: ["BREAK", "REST"],
+        WTF: ["WTF", "WEIRD", "RANDOM"],
       };
       // Build regex and lookup for alternates
       const allTerms = Object.values(roleTerms).flat();
