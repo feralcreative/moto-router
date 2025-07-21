@@ -1,32 +1,18 @@
-<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_129_143)">
-<rect x="100" width="1000" height="1000" rx="500" fill="currentColor" shape-rendering="crispEdges"/>
-<path d="M574 315.435L600 277L626 315.435V497H574V315.435Z" fill="white"/>
-<path d="M798.244 361.777L843.855 360.689L820.108 399.647L604.964 523.86L583.099 485.99L798.244 361.777Z" fill="white"/>
-<ellipse cx="600" cy="499.5" rx="36" ry="36.5" fill="white"/>
-<path d="M627.045 109.442V209.628H577.045V109.442H627.045Z" fill="white"/>
-<path d="M955.083 324.898L868.319 374.99L843.319 331.689L930.083 281.596L955.083 324.898Z" fill="white"/>
-<path d="M987.529 523.806H887.343V473.806H987.529V523.806Z" fill="white"/>
-<path d="M922.192 713.975L835.429 663.882L860.429 620.581L947.192 670.674L922.192 713.975Z" fill="white"/>
-<path d="M770.526 845.998L720.433 759.235L763.734 734.235L813.827 820.998L770.526 845.998Z" fill="white"/>
-<path d="M573.166 884.5V784.315H623.166V884.5H573.166Z" fill="white"/>
-<path d="M382.997 819.164L433.09 732.4L476.391 757.4L426.298 844.164L382.997 819.164Z" fill="white"/>
-<path d="M250.973 667.496L337.736 617.404L362.736 660.705L275.973 710.797L250.973 667.496Z" fill="white"/>
-<path d="M212.471 470.137H312.657V520.137H212.471V470.137Z" fill="white"/>
-<path d="M277.808 279.967L364.571 330.06L339.571 373.361L252.808 323.269L277.808 279.967Z" fill="white"/>
-<path d="M429.474 147.944L479.567 234.707L436.266 259.707L386.173 172.944L429.474 147.944Z" fill="white"/>
-<path d="M601 109C747.572 109 876.012 187.258 944 306.73L855.512 357C805.381 268.906 710.488 210.704 601 210.704V109Z" fill="white" fill-opacity="0.5"/>
-</g>
-<defs>
-<filter id="filter0_d_129_143" x="0" y="0" width="1200" height="1200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="100"/>
-<feGaussianBlur stdDeviation="50"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
-<feBlend mode="multiply" in2="BackgroundImageFix" result="effect1_dropShadow_129_143"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_129_143" result="shape"/>
-</filter>
-</defs>
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="500" height="500" rx="250" fill="currentColor"/>
+<path d="M237 157.718L250 138.5L263 157.718V248.5H237V157.718Z" fill="white"/>
+<path d="M349.122 180.889L371.927 180.345L360.054 199.823L252.482 261.93L241.55 242.995L349.122 180.889Z" fill="white"/>
+<path d="M268 249.75C268 259.829 259.941 268 250 268C240.059 268 232 259.829 232 249.75C232 239.671 240.059 231.5 250 231.5C259.941 231.5 268 239.671 268 249.75Z" fill="white"/>
+<path d="M263.523 54.7212V104.814H238.523V54.7212H263.523Z" fill="white"/>
+<path d="M427.541 162.449L384.16 187.495L371.66 165.845L415.041 140.798L427.541 162.449Z" fill="white"/>
+<path d="M443.764 261.903H393.672V236.903H443.764V261.903Z" fill="white"/>
+<path d="M411.096 356.988L367.715 331.941L380.215 310.291L423.596 335.337L411.096 356.988Z" fill="white"/>
+<path d="M335.263 422.999L310.216 379.617L331.867 367.117L356.913 410.499L335.263 422.999Z" fill="white"/>
+<path d="M236.583 442.25V392.157H261.583V442.25H236.583Z" fill="white"/>
+<path d="M141.498 409.582L166.545 366.2L188.195 378.7L163.149 422.082L141.498 409.582Z" fill="white"/>
+<path d="M75.4866 333.748L118.868 308.702L131.368 330.352L87.9866 355.399L75.4866 333.748Z" fill="white"/>
+<path d="M56.2356 235.068H106.328V260.068H56.2356V235.068Z" fill="white"/>
+<path d="M88.9039 139.984L132.285 165.03L119.785 186.681L76.4039 161.634L88.9039 139.984Z" fill="white"/>
+<path d="M164.737 73.9722L189.784 117.354L168.133 129.854L143.087 86.4722L164.737 73.9722Z" fill="white"/>
+<path opacity="0.5" d="M250.5 54.5C323.786 54.5 388.006 93.6289 422 153.365L377.756 178.5C352.69 134.453 305.244 105.352 250.5 105.352V54.5Z" fill="white"/>
 </svg>

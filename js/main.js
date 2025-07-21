@@ -33,7 +33,7 @@ window.initMap = async function () {
     "#DD00DD", // Magenta
     "#4A148C", // Purple
     "#4E342E", // Brown
-    "#00aaaa", // Cyan 
+    "#00aaaa", // Cyan
     "#0D1335", // Dark Blue
     "#A0740B", // Mustard
     "#003300", // Dark Green
@@ -146,6 +146,8 @@ window.initMap = async function () {
 
   // --- Define loadKmlRoute function ---
   function loadKmlRoute(kmlUrl, polylineColor, fitBounds = false, routeIndex) {
+    // Flag to track if any charging point exists in this route (not counting the starting point)
+    let hasChargingPoint = false;
     if (!kmlUrl) {
       console.error("[loadKmlRoute] No kmlUrl provided!", kmlUrl);
       return;
@@ -302,7 +304,8 @@ window.initMap = async function () {
             let isCharge = false;
             if (i === 0) {
               isGas = true;
-              isCharge = true;
+              // Don't automatically mark first point as charging
+              // isCharge = true;
             } else {
               // Check for prefix format: "GAS - Station Name"
               const prefixMatch = name.match(
@@ -335,6 +338,10 @@ window.initMap = async function () {
               lastChargeIdx = i;
               lastChargeMiles = miles;
               waypointMilesSinceLastCharge.push(0);
+              // Set flag when a charging point is found (not the starting point)
+              if (i > 0) {
+                hasChargingPoint = true;
+              }
             } else {
               waypointMilesSinceLastCharge.push(miles - lastChargeMiles);
             }
@@ -374,39 +381,39 @@ window.initMap = async function () {
             function getWaypointTitle(role) {
               switch ((role || "").toUpperCase()) {
                 case "MEET":
-                  return "Meetup";
+                  return "Meet";
                 case "SPLIT":
-                  return "Departure";
+                  return "Split";
                 case "GAS":
-                  return "Gas Stop";
+                  return "Gas";
                 case "CAMP":
                   return "Campground";
                 case "HOTEL":
                   return "Lodging";
                 case "CHARGE":
-                  return "EV Charging Stop";
+                  return "EV Charger";
                 case "FOOD":
-                  return "Meal Stop";
+                  return "Food";
                 case "POI":
                   return "Point of Interest";
                 case "VIEW":
-                  return "Scenic Point";
+                  return "Scenic Viewpoint";
                 case "COFFEE":
-                  return "Coffee Shop";
+                  return "Coffee";
                 case "DRINKS":
                   return "Drinks";
                 case "GROCERY":
-                  return "Grocery Store";
+                  return "Groceries";
                 case "START":
-                  return "Start Point";
+                  return "Ride Start";
                 case "FINISH":
-                  return "Finish Point";
+                  return "Ride End";
                 case "HOME":
                   return "Home";
                 case "BREAK":
-                  return "Break";
+                  return "Rest Break";
                 case "WTF":
-                  return "Some Weird Random Shit";
+                  return "Weird Random Shit";
                 default:
                   return "Waypoint";
               }
@@ -519,8 +526,8 @@ window.initMap = async function () {
                 const setMarker = (svgFull) => {
                   markerIcon = {
                     url: svgFull,
-                    scaledSize: new google.maps.Size(30, 30),
-                    anchor: new google.maps.Point(12.5 - offsets[idx][0], 12.5 - offsets[idx][1]),
+                    scaledSize: new google.maps.Size(25, 25),
+                    anchor: new google.maps.Point(15 - offsets[idx][0], 15 - offsets[idx][1]),
                   };
                   // Custom icons are those that are in the roleIconMap (like GAS, MEET, etc.)
                   const isCustomIcon = Object.keys(roleIconMap).includes(role);
@@ -537,26 +544,93 @@ window.initMap = async function () {
                   if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
                     window.routeMarkers[currentRouteIndex].push(marker);
                   }
+                  // Create a small icon element for the tooltip with proper coloring
+                  let iconHtml = "";
+                  if (iconPath) {
+                    // Initially use the original icon path
+                    iconHtml = `<img src="${iconPath}" class="waypoint-tooltip-icon" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;" />`;
+                  }
+
                   const infowindow = new google.maps.InfoWindow({
-                    content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
-                      role
-                    )}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${
-                      waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
-                    }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${
-                      waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
-                    }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Charge:</span><span class='waypoint-tooltip-value'>${
-                      waypointMilesSinceLastCharge[i] !== null
-                        ? waypointMilesSinceLastCharge[i].toFixed(1) + " mi"
-                        : "-"
-                    }</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${
-                      desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""
-                    }`,
+                    content: `<div class='waypoint-tooltip-toprow'>
+                      <div class='waypoint-tooltip-title' style="color: ${polylineColor}; display: flex; align-items: center;">
+                        ${iconHtml}
+                        <span>${getWaypointTitle(role)}</span>
+                      </div>
+                      <div class='waypoint-tooltip-num'>
+                        <span class='waypoint-tooltip-label'>From Start:</span>
+                        <span class='waypoint-tooltip-value'>${
+                          waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
+                        }</span>
+                      </div>
+                      <div class='waypoint-tooltip-num'>
+                        <span class='waypoint-tooltip-label'>From Gas:</span>
+                        <span class='waypoint-tooltip-value'>${
+                          waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
+                        }</span>
+                      </div>
+                      ${
+                        hasChargingPoint
+                          ? `<div class='waypoint-tooltip-num'>
+                        <span class='waypoint-tooltip-label'>From Charge:</span>
+                        <span class='waypoint-tooltip-value'>${
+                          waypointMilesSinceLastCharge[i] !== null
+                            ? waypointMilesSinceLastCharge[i].toFixed(1) + " mi"
+                            : "-"
+                        }</span>
+                      </div>`
+                          : ""
+                      }
+                    </div>
+                    <div class='waypoint-tooltip-name'>${displayName}</div>
+                    ${desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""}`,
+
                     disableAutoPan: false,
                     shouldFocus: false,
                   });
-                  marker.addListener("mouseover", () => infowindow.open({ map, anchor: marker }));
-                  marker.addListener("mouseout", () => infowindow.close());
-                  marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
+                  // Update the icon with the colored version after infowindow is created
+                  if (iconPath) {
+                    getColoredSvgIcon(iconPath, polylineColor, 1.0).then((coloredIcon) => {
+                      const content = infowindow.getContent();
+                      if (typeof content === "string") {
+                        // If content is a string, we need to create a DOM element to manipulate it
+                        const tempDiv = document.createElement("div");
+                        tempDiv.innerHTML = content;
+                        const imgElement = tempDiv.querySelector(".waypoint-tooltip-icon");
+                        if (imgElement) {
+                          imgElement.src = coloredIcon;
+                          infowindow.setContent(tempDiv.innerHTML);
+                        }
+                      } else {
+                        // If content is already a DOM element
+                        const imgElement = content.querySelector(".waypoint-tooltip-icon");
+                        if (imgElement) {
+                          imgElement.src = coloredIcon;
+                        }
+                      }
+                    });
+                  }
+
+                  // Open on mouseover, but don't close on mouseout if it was clicked
+                  let wasClicked = false;
+                  marker.addListener("mouseover", () => {
+                    if (!wasClicked) {
+                      infowindow.open({ map, anchor: marker });
+                    }
+                  });
+                  marker.addListener("mouseout", () => {
+                    if (!wasClicked) {
+                      infowindow.close();
+                    }
+                  });
+                  marker.addListener("click", () => {
+                    wasClicked = !wasClicked;
+                    if (wasClicked) {
+                      infowindow.open({ map, anchor: marker });
+                    } else {
+                      infowindow.close();
+                    }
+                  });
                 };
                 if (cache && cache.full) {
                   setMarker(cache.full);
@@ -594,22 +668,92 @@ window.initMap = async function () {
                   window.routeMarkers[currentRouteIndex].push(marker);
                 }
                 // Marker created
+                // Create a small icon element for the tooltip with proper coloring
+                let iconHtml = "";
+                if (iconPath) {
+                  // Initially use the original icon path
+                  iconHtml = `<img src="${iconPath}" class="waypoint-tooltip-icon" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;" />`;
+                }
+
                 const infowindow = new google.maps.InfoWindow({
-                  content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
-                    role
-                  )}</div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Start:</span><span class='waypoint-tooltip-value'>${
-                    waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
-                  }</span></div><div class='waypoint-tooltip-num'><span class='waypoint-tooltip-label'>From Gas:</span><span class='waypoint-tooltip-value'>${
-                    waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
-                  }</span></div></div><div class='waypoint-tooltip-name'>${displayName}</div>${
-                    desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""
-                  }`,
+                  content: `<div class='waypoint-tooltip-toprow'>
+                    <div class='waypoint-tooltip-title' style="color: ${polylineColor}; display: flex; align-items: center;">
+                      ${iconHtml}
+                      <span>${getWaypointTitle(role)}</span>
+                    </div>
+                    <div class='waypoint-tooltip-num'>
+                      <span class='waypoint-tooltip-label'>From Start:</span>
+                      <span class='waypoint-tooltip-value'>${
+                        waypointCumulativeMiles[i] !== null ? waypointCumulativeMiles[i].toFixed(1) + " mi" : "-"
+                      }</span>
+                    </div>
+                    <div class='waypoint-tooltip-num'>
+                      <span class='waypoint-tooltip-label'>From Gas:</span>
+                      <span class='waypoint-tooltip-value'>${
+                        waypointMilesSinceLastGas[i] !== null ? waypointMilesSinceLastGas[i].toFixed(1) + " mi" : "-"
+                      }</span>
+                    </div>
+                    ${
+                      hasChargingPoint
+                        ? `<div class='waypoint-tooltip-num'>
+                      <span class='waypoint-tooltip-label'>From Charge:</span>
+                      <span class='waypoint-tooltip-value'>${
+                        waypointMilesSinceLastCharge[i] !== null
+                          ? waypointMilesSinceLastCharge[i].toFixed(1) + " mi"
+                          : "-"
+                      }</span>
+                    </div>`
+                        : ""
+                    }
+                  </div>
+                  <div class='waypoint-tooltip-name'>${displayName}</div>
+                  ${desc ? `<div class='waypoint-tooltip-desc'>${desc}</div>` : ""}`,
                   disableAutoPan: false,
                   shouldFocus: false,
                 });
-                marker.addListener("mouseover", () => infowindow.open({ map, anchor: marker }));
-                marker.addListener("mouseout", () => infowindow.close());
-                marker.addListener("click", () => infowindow.open({ map, anchor: marker }));
+                // Update the icon with the colored version after infowindow is created
+                if (iconPath) {
+                  getColoredSvgIcon(iconPath, polylineColor, 1.0).then((coloredIcon) => {
+                    const content = infowindow.getContent();
+                    if (typeof content === "string") {
+                      // If content is a string, we need to create a DOM element to manipulate it
+                      const tempDiv = document.createElement("div");
+                      tempDiv.innerHTML = content;
+                      const imgElement = tempDiv.querySelector(".waypoint-tooltip-icon");
+                      if (imgElement) {
+                        imgElement.src = coloredIcon;
+                        infowindow.setContent(tempDiv.innerHTML);
+                      }
+                    } else {
+                      // If content is already a DOM element
+                      const imgElement = content.querySelector(".waypoint-tooltip-icon");
+                      if (imgElement) {
+                        imgElement.src = coloredIcon;
+                      }
+                    }
+                  });
+                }
+
+                // Open on mouseover, but don't close on mouseout if it was clicked
+                let wasClicked = false;
+                marker.addListener("mouseover", () => {
+                  if (!wasClicked) {
+                    infowindow.open({ map, anchor: marker });
+                  }
+                });
+                marker.addListener("mouseout", () => {
+                  if (!wasClicked) {
+                    infowindow.close();
+                  }
+                });
+                marker.addListener("click", () => {
+                  wasClicked = !wasClicked;
+                  if (wasClicked) {
+                    infowindow.open({ map, anchor: marker });
+                  } else {
+                    infowindow.close();
+                  }
+                });
               }
             });
           });
