@@ -108,15 +108,15 @@ PORT=6686  # Optional, defaults to 6686
 
 - For production:
 
-      ```sh
-      npm start
-      ```
+  ```sh
+  npm start
+  ```
 
 - For development (with live reload, see below):
 
-      ```sh
-      npm run dev
-      ```
+  ```sh
+  npm run dev
+  ```
 
   - The Express server runs on port 6686 by default, configurable in the .env file.
 

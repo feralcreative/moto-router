@@ -1,21 +1,3 @@
-/**
- * @fileoverview Interactive map logic for motorcycle ride route pages.
- * @version 02.01
- * @author ziad@feralcreative.co
- * @lastModified 2025.07.10.0926
- *
- * This script initializes a Google Map, loads and parses KML route files,
- * computes route mileage, builds a dynamic legend and download buttons,
- * and manages interactive features for visualizing motorcycle rides.
- *
- * Features:
- * - Loads route data from data/routes.json
- * - Draws colored polylines for each route using KML files
- * - Calculates mileage using Google Maps Geometry API
- * - Generates interactive legend and download buttons for GPX/KML
- * - Supports route highlighting and marker customization
- */
-// Track if map has been initialized to prevent multiple initializations
 window.mapInitialized = window.mapInitialized || false;
 
 window.showDirectionArrows = true;
@@ -44,14 +26,14 @@ window.initMap = async function () {
   // 12 visually distinct, contrasting colors spaced around the color wheel
   // Dark, high-contrast, visually distinct route colors
   const colors = [
-    "#cc0000", // Red
     "#0000cc", // Blue
+    "#cc0000", // Red
+    "#006064", // Teal
+    "#FF6F00", // Orange
     "#DD00DD", // Magenta
     "#4A148C", // Purple
-    "#00aaaa", // Cyan
-    "#FF6F00", // Orange
     "#4E342E", // Brown
-    "#006064", // Teal
+    "#00aaaa", // Cyan 
     "#0D1335", // Dark Blue
     "#A0740B", // Mustard
     "#003300", // Dark Green

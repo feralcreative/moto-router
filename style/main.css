@@ -294,7 +294,7 @@ table.route-table tr:last-child {
 }
 table.route-table tr td {
   overflow: hidden;
-  padding: 0.5em;
+  padding: 0.5em 0;
   font-size: 0.8em;
   text-overflow: ellipsis;
   vertical-align: middle;
@@ -305,7 +305,7 @@ table.route-table tr td br {
 table.route-table tr td.label, table.route-table tr td.route-label-cell {
   width: fit-content;
   height: 1.1em;
-  padding: 0.25em 0.25em;
+  padding: 0.25em 0;
   background: none;
   border: none;
 }
@@ -320,17 +320,20 @@ table.route-table .route-label:focus {
   background: var(--route-color-bg, #b9d6f7);
 }
 table.route-table .route-table-line-icon {
-  display: none;
+  display: inline-flex;
   margin-right: 0;
   vertical-align: middle;
 }
+table.route-table input {
+  margin-right: 0 !important;
+}
 table.route-table .route-checkbox {
-  margin-right: 8px;
+  margin-right: 0;
 }
 table.route-table .btn-group {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 3px;
 }
 table.route-table .btn-group a {
   display: block;
@@ -422,15 +425,17 @@ table.route-table .btn-group a.btn.url-btn::before {
     font-weight: 800;
     color: #333;
     text-align: left;
+    width: fit-content;
   }
   table.route-table td.label div.route-label,
   table.route-table td.route-label-cell div.route-label {
-    padding: 0 1em;
+    padding: 0 0.75em;
     border-radius: 100px;
     white-space: nowrap;
+    width: min-content;
   }
   table.route-table td.route-mileage-cell {
-    min-width: 60px;
+    min-width: fit-content;
     max-width: 80px;
     font-size: 0.8em;
     font-weight: bold;
@@ -444,7 +449,7 @@ table.route-table .btn-group a.btn.url-btn::before {
     text-align: right;
   }
   table.route-table tr td {
-    padding: 0.25em;
+    padding: 0.1em;
   }
   table.route-table tr td br {
     display: inline-block;
