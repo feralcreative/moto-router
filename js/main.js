@@ -28,9 +28,10 @@ window.initMap = async function () {
   const colors = [
     "#0000cc", // Blue
     "#cc0000", // Red
-    "#006064", // Teal
+    "#8800DD", // Violet
     "#FF6F00", // Orange
     "#DD00DD", // Magenta
+    "#006064", // Teal
     "#4A148C", // Purple
     "#4E342E", // Brown
     "#00aaaa", // Cyan
@@ -38,7 +39,6 @@ window.initMap = async function () {
     "#A0740B", // Mustard
     "#003300", // Dark Green
     "#550000", // Burgundy
-    "#8800DD", // Violet
   ];
   window.routePolylines = [];
 
