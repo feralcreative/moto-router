@@ -540,23 +540,21 @@ window.initMap = async function () {
                     scaledSize: new google.maps.Size(30, 30),
                     anchor: new google.maps.Point(12.5 - offsets[idx][0], 12.5 - offsets[idx][1]),
                   };
-                  const isCustomIcon = !Object.keys(roleIconMap).includes(role);
+                  // Custom icons are those that are in the roleIconMap (like GAS, MEET, etc.)
+                  const isCustomIcon = Object.keys(roleIconMap).includes(role);
                   const marker = new google.maps.Marker({
                     position: { lat, lng },
                     map,
                     title: displayName,
                     icon: markerIcon,
                     optimized: false,
-                    zIndex: isCustomIcon ? 2000 : 100,
+                    zIndex: isCustomIcon ? 10 : 1,
                   });
                   marker._svgIconPaths = { iconPath, polylineColor };
                   marker._isCustomIcon = isCustomIcon;
                   if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
                     window.routeMarkers[currentRouteIndex].push(marker);
                   }
-                  console.log(
-                    `[Marker Created] ${displayName} (${role}) at (${lat},${lng}) zIndex=${marker.getZIndex()} custom=${isCustomIcon}`
-                  );
                   const infowindow = new google.maps.InfoWindow({
                     content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
                       role
@@ -598,24 +596,22 @@ window.initMap = async function () {
                   scale: isNumberOnly ? (i === 0 ? 3 : 2) : i === 0 ? 6 : 4,
                   anchor: new google.maps.Point(0 - offsets[idx][0], 0 - offsets[idx][1]),
                 };
-                const standardRoles = Object.keys(roleIconMap).filter((k) => k !== "WTF");
-                const isCustomIcon = !standardRoles.includes(role);
+                // Custom icons are those that are in the roleIconMap (like GAS, MEET, etc.)
+                const isCustomIcon = Object.keys(roleIconMap).includes(role);
                 const marker = new google.maps.Marker({
                   position: { lat, lng },
                   map,
                   title: displayName,
                   icon: iconOpts,
                   optimized: false,
-                  zIndex: isCustomIcon ? 2000 : 100,
+                  zIndex: isCustomIcon ? 10 : 1,
                 });
                 marker._isCircle = true;
                 marker._isCustomIcon = isCustomIcon;
                 if (window.routeMarkers && Array.isArray(window.routeMarkers[currentRouteIndex])) {
                   window.routeMarkers[currentRouteIndex].push(marker);
                 }
-                console.log(
-                  `[Marker Created] ${displayName} (${role}) at (${lat},${lng}) zIndex=${marker.getZIndex()} custom=${isCustomIcon}`
-                );
+                // Marker created
                 const infowindow = new google.maps.InfoWindow({
                   content: `<div class='waypoint-tooltip-toprow'><div class='waypoint-tooltip-title'>${getWaypointTitle(
                     role
@@ -713,9 +709,11 @@ window.initMap = async function () {
             }
           }
           // Use the marker._isCustomIcon flag set at creation for robust z-indexing
-          const newZ = (marker._isCustomIcon ? 2000 : 100) + (isActive === null ? 0 : isActive ? 1 : 0);
+          // Custom markers (z-index 10) should always be above standard markers (z-index 1)
+          // When highlighted, add 1 to the z-index to bring that marker to the top of its category
+          const newZ = (marker._isCustomIcon ? 10 : 1) + (isActive === null ? 0 : isActive ? 1 : 0);
           marker.setZIndex(newZ);
-          console.log(`[Marker zIndex Updated] ${marker.getTitle()} zIndex=${newZ} custom=${marker._isCustomIcon}`);
+          // Marker zIndex updated
         });
       });
     }
@@ -939,7 +937,7 @@ window.initMap = async function () {
     */
     // Removed duplicate calls to addRouteDownloadButtons and updateRouteLegend
   }
-  // /* console.log("DEBUG: End of initMap function reached");
+  // End of initMap function
 };
 
 // Add a global error handler to catch any uncaught errors

@@ -268,15 +268,15 @@ This makes it easy to control the visual identity of your maps and ensure each r
 | 1001  | .map-logo (Map Logo)           | style/main.scss:49  | Map logo overlay (always on top of map/UI elements) |
 | 1000  | #info-panel                    | style/main.scss:176 | Info panel (fixed, bottom left)                     |
 | 100   | .collapse-toggle               | style/main.scss:245 | Collapse toggle button                              |
-| 11    | Marker (custom, highlighted)   | js/main.js:695+     | Custom marker during highlight                      |
-| 10    | Marker (custom, creation)      | js/main.js:545,599  | Custom role marker creation                         |
+| 11    | Marker (custom, highlighted)   | js/main.js:717      | Custom marker during highlight                      |
+| 10    | Marker (custom, creation)      | js/main.js:550,609  | Custom role marker creation                         |
 | 2     | .panel-title (collapsed)       | style/main.scss:311 | Panel title in collapsed state                      |
-| 2     | Marker (standard, highlighted) | js/main.js:695+     | Standard marker during highlight                    |
-| 2     | Polyline (route, highlighted)  | js/main.js:655      | Highlighted route line                              |
+| 2     | Polyline (route, highlighted)  | js/main.js:668      | Highlighted route line                              |
 | 2     | (Other/legacy marker/polyline) | js/main.js:225      | Possibly legacy or unused                           |
+| 2     | Marker (standard, highlighted) | js/main.js:717      | Standard marker during highlight                    |
 | 1     | .route-label:hover (table)     | style/main.scss:467 | Route label hover effect                            |
-| 1     | Marker (standard, creation)    | js/main.js:545,599  | Standard waypoint marker creation                   |
-| 1     | Polyline (route, default)      | js/main.js:655      | Route line stacking                                 |
+| 1     | Marker (standard, creation)    | js/main.js:550,609  | Standard waypoint marker creation                   |
+| 1     | Polyline (route, default)      | js/main.js:668      | Route line stacking                                 |
 
 ---
 
