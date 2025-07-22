@@ -632,11 +632,14 @@ window.initMap = async function () {
                     }
                   });
                 };
-                if (cache && cache.full) {
+                if (cache && cache.full && cache.dim) {
                   setMarker(cache.full);
                 } else {
-                  getColoredSvgIcon(iconPath, polylineColor, 1.0).then((svgFull) => {
-                    window.svgIconCache[iconPath][polylineColor] = { full: svgFull };
+                  Promise.all([
+                    getColoredSvgIcon(iconPath, polylineColor, 1.0),
+                    getColoredSvgIcon(iconPath, polylineColor, 0.3)
+                  ]).then(([svgFull, svgDim]) => {
+                    window.svgIconCache[iconPath][polylineColor] = { full: svgFull, dim: svgDim };
                     setMarker(svgFull);
                   });
                 }
