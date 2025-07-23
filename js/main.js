@@ -637,7 +637,7 @@ window.initMap = async function () {
                 } else {
                   Promise.all([
                     getColoredSvgIcon(iconPath, polylineColor, 1.0),
-                    getColoredSvgIcon(iconPath, polylineColor, 0.3)
+                    getColoredSvgIcon(iconPath, polylineColor, 0.3),
                   ]).then(([svgFull, svgDim]) => {
                     window.svgIconCache[iconPath][polylineColor] = { full: svgFull, dim: svgDim };
                     setMarker(svgFull);
@@ -830,12 +830,7 @@ window.initMap = async function () {
               newIcon.strokeOpacity = isActive ? 1.0 : 0.3;
               newIcon.fillOpacity = isActive ? 1.0 : 0.3;
             }
-            if (
-              typeof newIcon === "string" ||
-              (newIcon && (typeof newIcon.url === "string" || typeof newIcon.path === "string"))
-            ) {
-              marker.setIcon(newIcon);
-            }
+            marker.setIcon(newIcon);
           }
           // Use the marker._isCustomIcon flag set at creation for robust z-indexing
           // Custom markers (z-index 10) should always be above standard markers (z-index 1)
@@ -932,7 +927,7 @@ window.initMap = async function () {
       };
       // Build regex and lookup for alternates
       const allTerms = Object.values(roleTerms).flat();
-      const roleRegex = new RegExp(`^(${allTerms.join("|")})\\b`, "i");
+      const roleRegex = new RegExp(`^(${allTerms.join("|")})\\b\\s*-\\s*(.*)$`, "i");
       const roleMatch = friendlyName.match(roleRegex);
       let iconHtml = "";
       if (roleMatch) {
