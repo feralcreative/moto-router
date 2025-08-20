@@ -2,11 +2,11 @@
 
 Behold, a flexible framework for visualizing and sharing motorcycle routes. Just drop a new `.kml` file into the `/data/` directory and make sure its name is registered in `routes.json`. Your map will update accordingly—new routes will be displayed, route lengths and distance from start/fuel stops are automagically calculated, and GPX/URL buttons added or removed as needed.
 
-This is a _static_ site—it does not rely on any server-side language or database—just HTML, CSS, and a bit of vanilla JS. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed. For example, the [live demo](https://moto-rooter.feralcreative.dev/template/) linked below is hosted on a Synology NAS in my dining room. 🥳
+This is a _static_ site—it does not rely on any server-side language or database—just HTML, CSS, and a bit of vanilla JS. When you're ready to deploy, all you need is a barebones web server (e.g. Apache, Nginx) sans database. It’s designed to be simple and easy to deploy, maintain, and scale as needed. For example, the [live demo](https://moto-rooter.feralcreative.dev/demo/) linked below is hosted on a Synology NAS in my dining room. 🥳
 
 ![Project Screenshot](img/screenshot.png)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-bb00bb?style=for-the-badge)](https://moto-rooter.feralcreative.dev/template/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-bb00bb?style=for-the-badge)](https://moto-rooter.feralcreative.dev/demo/)
 
 ---
 
@@ -19,7 +19,7 @@ This is a _static_ site—it does not rely on any server-side language or databa
 
 2. **Project Structure**
 
-   - **`/template/`**: Base files for new ride route pages.
+   - **`/demo/`**: Base files for new ride route pages.
      - `index.html`: Main HTML file (uses Bootstrap, loads Google Maps, references `/js/main.js` and `/css/main.min.css`).
    - **`data/`**: Route-specific data files.
      - `.kml`, `.gpx`, `.url`: GPS tracks and route links for each segment (e.g., `01-Sample-Route-One.kml`).
