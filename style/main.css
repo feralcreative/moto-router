@@ -317,7 +317,7 @@ table.route-table tr td:hover, table.route-table tr td:focus {
 }
 table.route-table .route-label:hover,
 table.route-table .route-label:focus {
-  background: var(--route-color-bg, #b9d6f7);
+  background: var(--route-color-bg, rgb(184.9605633803, 214.1436619718, 247.3394366197));
 }
 table.route-table .route-table-line-icon {
   display: inline-flex;
@@ -362,36 +362,36 @@ table.route-table .btn-group a.btn::before {
 }
 table.route-table .btn-group a.btn.gpx-btn {
   background: #43a047;
-  border-color: #255827;
+  border-color: rgb(36.8942731278, 88.1057268722, 39.0969162996);
   color: #fff;
 }
 table.route-table .btn-group a.btn.gpx-btn:hover {
-  background: #2c6a2f;
-  border-color: #255827;
+  background: rgb(44.4207048458, 106.0792951542, 47.0726872247);
+  border-color: rgb(36.8942731278, 88.1057268722, 39.0969162996);
 }
 table.route-table .btn-group a.btn.gpx-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
 table.route-table .btn-group a.btn.kml-btn {
   background-color: #d32f2f;
-  border-color: #811b1b;
+  border-color: rgb(128.7619047619, 27.2380952381, 27.2380952381);
   color: #fff;
 }
 table.route-table .btn-group a.btn.kml-btn:hover {
-  background: #ab2424;
-  border-color: #811b1b;
+  background: rgb(170.8571428571, 36.1428571429, 36.1428571429);
+  border-color: rgb(128.7619047619, 27.2380952381, 27.2380952381);
 }
 table.route-table .btn-group a.btn.kml-btn::before {
   background: url("/img/dl.svg") no-repeat center/contain;
 }
 table.route-table .btn-group a.btn.url-btn {
   background-color: #1565c0;
-  border-color: #0b3564;
+  border-color: rgb(10.9436619718, 52.6338028169, 100.0563380282);
   color: #fff;
 }
 table.route-table .btn-group a.btn.url-btn:hover {
-  background: #104d92;
-  border-color: #0b3564;
+  background: rgb(15.9718309859, 76.8169014085, 146.0281690141);
+  border-color: rgb(10.9436619718, 52.6338028169, 100.0563380282);
 }
 table.route-table .btn-group a.btn.url-btn::before {
   content: "";
